@@ -17,8 +17,8 @@ rebel_module_groups: []
 repo_description: Development of customized modules to solve the commercial flow of
     Imporpalac
 repo_name: Custom modules for Imporpalac
-repo_slug: custom-imporpalac
-repo_website: https://github.com/Fenix-ERP/custom-imporpalac
+repo_slug: imporpalac-workflow
+repo_website: https://github.com/Fenix-ERP/imporpalac-workflow
 travis_apt_packages: []
 travis_apt_sources: []
 

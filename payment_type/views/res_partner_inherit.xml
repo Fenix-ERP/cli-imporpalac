@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_pay_res_partner_inherit_imporpalac">
+        <field name="name">view.pay.res.partner.inherit.imporpalac</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='property_payment_term_id']" position="after">
+                <field name="payment_method" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

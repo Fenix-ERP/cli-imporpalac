@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_pay_stock_picking_inherit_imporpalac">
+        <field name="name">view.pay.stock.picking.inherit.imporpalac</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="payment_method" readonly="state in ('assigned', 'cancel')" options="{'no_create': True}"/>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_picking_tree_inherit_imporpalac">
+        <field name="name">view.stock.picking.tree.inherit.imporpalac</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="payment_method" optional="hide"/>
+                <field name="paid" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_order_form_inherit_quick_sale">
+            <field name="name">order.form.inherit.quick.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button
+                        name="action_confirm_quick"
+                        type="object"
+                        string="Confirm and Invoice"
+                        invisible = "state not in ['draft']"
+                        class="btn-primary"
+                    />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

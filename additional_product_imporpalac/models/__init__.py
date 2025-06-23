@@ -1,0 +1,1 @@
+from . import additional_product_inherit
