@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import fields, models
+
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -12,7 +13,7 @@ class AccountMove(models.Model):
 
 
 class AccountPayment(models.Model):
-    _inherit = 'account.payment'
+    _inherit = "account.payment"
 
     def action_post(self):
         res = super().action_post()
@@ -21,13 +22,19 @@ class AccountPayment(models.Model):
             ref_text = pago.move_id.ref
             if ref_text:
                 # Separamos por coma o espacio (por si acaso)
-                nombres_facturas = [r.strip() for r in ref_text.replace(',', ' ').split() if r.strip()]
+                nombres_facturas = [
+                    r.strip() for r in ref_text.replace(",", " ").split() if r.strip()
+                ]
                 for factura_name in nombres_facturas:
-                    factura = self.env['account.move'].search([('name', '=', factura_name)], limit=1)
+                    factura = self.env["account.move"].search(
+                        [("name", "=", factura_name)], limit=1
+                    )
                     if factura and factura.invoice_origin:
-                        orden = self.env['sale.order'].search([('name', '=', factura.invoice_origin)], limit=1)
+                        orden = self.env["sale.order"].search(
+                            [("name", "=", factura.invoice_origin)], limit=1
+                        )
                         if orden:
                             for despacho in orden.picking_ids:
-                                if despacho.state != 'cancel':
+                                if despacho.state != "cancel":
                                     despacho.paid = True
         return res

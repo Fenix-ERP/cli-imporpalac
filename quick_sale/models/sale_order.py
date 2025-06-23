@@ -2,12 +2,13 @@
 
 from odoo import models
 
+
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     def action_confirm_quick(self):
         for order in self:
-            if order.state not in ('sale', 'done'):
+            if order.state not in ("sale", "done"):
                 order.action_confirm()
 
             invoice = order._create_invoices()

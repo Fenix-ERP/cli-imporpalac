@@ -9,7 +9,7 @@
     <record model="payment.type" id="payment_type_check">
         <field name="name">Cheque</field>
     </record>
-    <record model="payment.type" id="payment_type_card">
+    <record model="payment.type" id="payment_type_credit_card">
         <field name="name">Tarjeta Credito</field>
     </record>
     <record model="payment.type" id="payment_type_credit">

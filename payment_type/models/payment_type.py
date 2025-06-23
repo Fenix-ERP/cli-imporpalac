@@ -5,4 +5,4 @@ class PaymentType(models.Model):
     _name = "payment.type"
     _description = "Payments types in sales"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)

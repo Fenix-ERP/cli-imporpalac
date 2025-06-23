@@ -30,7 +30,9 @@ class ImportProductWizard(models.TransientModel):
             c.name.strip(): c.id for c in self.env["product.category"].search([])
         }
         productos_dict = {
-            p.default_code.strip(): p for p in self.env["product.template"].search([]) if p.default_code
+            p.default_code.strip(): p
+            for p in self.env["product.template"].search([])
+            if p.default_code
         }
 
         for i, row in enumerate(data[1:], start=2):  # comienza desde la fila 2
@@ -46,7 +48,9 @@ class ImportProductWizard(models.TransientModel):
                     continue
 
                 if categoria_nombre not in categorias_dict:
-                    errores.append(f"Fila {i+1}: Categoría '{categoria_nombre}' no encontrada")
+                    errores.append(
+                        f"Fila {i+1}: Categoría '{categoria_nombre}' no encontrada"
+                    )
                     continue
 
                 if codigo in productos_dict:
@@ -63,9 +67,9 @@ class ImportProductWizard(models.TransientModel):
             mensaje = f"Archivo válido.\n\n✅ Líneas que se actualizarían: {actualizables}\n🔁 Líneas que se crearían: {creables}"
             return {
                 "type": "ir.actions.client",
-                    "tag": "display_notification",
-                    "params": {
-                        "title": "Simulación de importación",
+                "tag": "display_notification",
+                "params": {
+                    "title": "Simulación de importación",
                     "message": mensaje,
                     "type": "success",
                     "sticky": False,
@@ -233,7 +237,9 @@ class ImportProductWizard(models.TransientModel):
         }
 
         productos_dict = {
-            p.default_code.strip(): p for p in self.env["product.template"].search([]) if p.default_code
+            p.default_code.strip(): p
+            for p in self.env["product.template"].search([])
+            if p.default_code
         }
 
         for i, row in enumerate(data[1:], start=2):  # saltar cabecera
@@ -258,15 +264,27 @@ class ImportProductWizard(models.TransientModel):
                 unidad_venta = row[13].strip()
                 unidad_compra = row[14].strip()
                 categoria = row[15].strip()
-                costo = float(row[16]or 0.0) 
+                costo = float(row[16] or 0.0)
                 pvp = float(row[17] or 0.0)
-                minorista = float(row[18] or 0.0)
-                mayorista = float(row[19] or 0.0)
-                especial = float(row[20] or 0.0)
+                float(row[18] or 0.0)
+                float(row[19] or 0.0)
+                float(row[20] or 0.0)
                 nombre = row[21].strip()
-                vender = row[22].strip().lower() in ["1", "true", "sí", "si"] if row[22] else False
-                comprar = row[23].strip().lower() in ["1", "true", "sí", "si"] if row[23] else False
-                importar = row[24].strip().lower() in ["1", "true", "sí", "si"] if row[24] else False
+                vender = (
+                    row[22].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[22]
+                    else False
+                )
+                comprar = (
+                    row[23].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[23]
+                    else False
+                )
+                importar = (
+                    row[24].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[24]
+                    else False
+                )
                 tipo_producto = row[25].strip()
                 categoria_importacion = row[26].strip() if row[26] else ""
                 politica_control = row[27].strip()
@@ -276,7 +294,7 @@ class ImportProductWizard(models.TransientModel):
                 if not categoria_id:
                     errores.append(f"Fila {i}: Categoría '{categoria}' no encontrada.")
                     continue
-                
+
                 if tipo_producto == "Producto almacenable":
                     tipo_producto = "product"
                 elif tipo_producto == "Consumible":
@@ -294,8 +312,12 @@ class ImportProductWizard(models.TransientModel):
                     "sale_ok": vender,
                     "purchase_ok": comprar,
                     "type": tipo_producto or "product",
-                    "uom_id": self.env["uom.uom"].search([("name", "=ilike", unidad_venta)], limit=1).id,
-                    "uom_po_id": self.env["uom.uom"].search([("name", "=ilike", unidad_compra)], limit=1).id,
+                    "uom_id": self.env["uom.uom"]
+                    .search([("name", "=ilike", unidad_venta)], limit=1)
+                    .id,
+                    "uom_po_id": self.env["uom.uom"]
+                    .search([("name", "=ilike", unidad_compra)], limit=1)
+                    .id,
                     "marca": marca,
                     "modelo": modelo,
                     "anio": anio,
@@ -338,7 +360,6 @@ class ImportProductWizard(models.TransientModel):
                 "sticky": False,
             },
         }
-
 
     def _parse_file(self, file_data, file_format):
         if file_format == "csv":

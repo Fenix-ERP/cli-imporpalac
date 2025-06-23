@@ -1,7 +1,7 @@
 {
     "name": "Quick sale Imporpalac",
     "category": "Sales/Sales",
-    'version': '17.0.1.0.0',
+    "version": "17.0.1.0.0",
     "author": "Jorge Armas",
     "summary": "This module allows to quick confirm the sale order",
     "depends": ["sale", "account", "stock"],
@@ -10,4 +10,5 @@
     ],
     "demo": [],
     "license": "LGPL-3",
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
 }

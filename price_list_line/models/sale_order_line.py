@@ -1,5 +1,4 @@
 from odoo import api, fields, models
-from odoo.tools.misc import get_lang
 
 
 class SaleOrderLine(models.Model):
@@ -41,7 +40,6 @@ class SaleOrderLine(models.Model):
         )._get_product_price(product, self.product_uom_qty, partner)
 
         self.price_unit = price
-
 
     @api.onchange("product_uom", "product_uom_qty")
     def _compute_price_unit(self):

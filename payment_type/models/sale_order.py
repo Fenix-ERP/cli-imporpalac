@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -14,7 +14,9 @@ class SaleOrder(models.Model):
     def _create_delivery(self):
         res = super()._create_delivery()
         for order in self:
-            pickings = order.picking_ids.filtered(lambda p: p.state not in ['done', 'cancel'])
+            pickings = order.picking_ids.filtered(
+                lambda p: p.state not in ["done", "cancel"]
+            )
             for picking in pickings:
                 picking.payment_method = order.payment_method
         return res
