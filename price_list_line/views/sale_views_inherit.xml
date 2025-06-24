@@ -15,7 +15,10 @@
                 expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
                 position="after"
             >
-                <field name="pricelist_line2_id" />
+                <field
+                    name="pricelist_line2_id"
+                    options="{'no_open': True, 'no_create': True}"
+                />
             </xpath>
         </field>
     </record>
