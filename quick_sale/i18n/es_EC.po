@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* quick_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-26 16:57+0000\n"
+"PO-Revision-Date: 2025-06-26 16:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: quick_sale
+#: model_terms:ir.ui.view,arch_db:quick_sale.view_order_form_inherit_quick_sale
+msgid "Confirm and Invoice"
+msgstr "Confirmar y Facturar"
+
+#. module: quick_sale
+#: model:ir.model,name:quick_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"

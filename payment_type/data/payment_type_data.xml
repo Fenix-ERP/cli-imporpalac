@@ -4,30 +4,30 @@
         <field name="name">Efectivo</field>
     </record>
     <record model="payment.type" id="payment_type_card">
-        <field name="name">Credito</field>
+        <field name="name">Crédito</field>
     </record>
     <record model="payment.type" id="payment_type_check">
         <field name="name">Cheque</field>
     </record>
     <record model="payment.type" id="payment_type_credit_card">
-        <field name="name">Tarjeta Credito</field>
+        <field name="name">Tarjeta de Crédito</field>
     </record>
     <record model="payment.type" id="payment_type_credit">
-        <field name="name">Nota de Credito</field>
+        <field name="name">Nota de Crédito</field>
     </record>
     <record model="payment.type" id="payment_type_debit">
-        <field name="name">Nota de Debito</field>
+        <field name="name">Nota de Débito</field>
     </record>
     <record model="payment.type" id="payment_type_digital">
-        <field name="name">Dinero Electronico</field>
+        <field name="name">Dinero Electrónico</field>
     </record>
     <record model="payment.type" id="payment_type_return">
-        <field name="name">Devolucion</field>
+        <field name="name">Devolución</field>
     </record>
     <record model="payment.type" id="payment_type_convenio">
-        <field name="name">Convenio Pago</field>
+        <field name="name">Convenio de Pago</field>
     </record>
     <record model="payment.type" id="payment_type_anticipos">
-        <field name="name">Cruce Anticipos</field>
+        <field name="name">Cruce de Anticipos</field>
     </record>
 </odoo>

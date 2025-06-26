@@ -265,30 +265,26 @@ class ImportProductWizard(models.TransientModel):
                 unidad_compra = row[14].strip()
                 categoria = row[15].strip()
                 costo = float(row[16] or 0.0)
-                pvp = float(row[17] or 0.0)
-                float(row[18] or 0.0)
-                float(row[19] or 0.0)
-                float(row[20] or 0.0)
-                nombre = row[21].strip()
+                nombre = row[17].strip()
                 vender = (
-                    row[22].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[22]
+                    row[18].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[18]
                     else False
                 )
                 comprar = (
-                    row[23].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[23]
+                    row[19].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[19]
                     else False
                 )
                 importar = (
-                    row[24].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[24]
+                    row[20].strip().lower() in ["1", "true", "sí", "si"]
+                    if row[20]
                     else False
                 )
-                tipo_producto = row[25].strip()
-                categoria_importacion = row[26].strip() if row[26] else ""
-                politica_control = row[27].strip()
-                politica_facturacion = row[28].strip()
+                tipo_producto = row[21].strip()
+                categoria_importacion = row[22].strip() if row[22] else ""
+                politica_control = row[23].strip()
+                politica_facturacion = row[24].strip()
 
                 categoria_id = categorias_dict.get(categoria)
                 if not categoria_id:
@@ -307,7 +303,6 @@ class ImportProductWizard(models.TransientModel):
                     "articulo": articulo,
                     "name": nombre,
                     "categ_id": categoria_id,
-                    "list_price": pvp,
                     "standard_price": costo,
                     "sale_ok": vender,
                     "purchase_ok": comprar,
