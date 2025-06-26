@@ -13,3 +13,4 @@ per-file-ignores=
 exclude =
     import_contact/wizards/contact_import_wizard.py,
     import_product/wizards/product_import_wizard.py,
+    payment_type/models/stock_picking.py

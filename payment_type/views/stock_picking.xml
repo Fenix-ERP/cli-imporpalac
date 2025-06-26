@@ -13,6 +13,15 @@
                 />
 
             </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_approve"
+                    string="Approve"
+                    type="object"
+                    class="btn-primary"
+                    icon="fa-check"
+                />
+            </xpath>
         </field>
     </record>
 

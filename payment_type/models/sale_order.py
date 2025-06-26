@@ -11,8 +11,8 @@ class SaleOrder(models.Model):
         readonly=True,
     )
 
-    def _create_delivery(self):
-        res = super()._create_delivery()
+    def action_confirm(self):
+        res = super().action_confirm()
         for order in self:
             pickings = order.picking_ids.filtered(
                 lambda p: p.state not in ["done", "cancel"]

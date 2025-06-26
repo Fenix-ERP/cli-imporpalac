@@ -1,0 +1,158 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_type
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-26 16:54+0000\n"
+"PO-Revision-Date: 2025-06-26 16:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_type
+#: model:ir.model.fields,help:payment_type.field_stock_picking__state
+msgid ""
+" * Draft: The transfer is not confirmed yet. Reservation doesn't apply.\n"
+" * Waiting another operation: This transfer is waiting for another operation before being ready.\n"
+" * Waiting: The transfer is waiting for the availability of some products.\n"
+"(a) The shipping policy is \"As soon as possible\": no product could be reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": not all the products could be reserved.\n"
+" * Ready: The transfer is ready to be processed.\n"
+"(a) The shipping policy is \"As soon as possible\": at least one product has been reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": all product have been reserved.\n"
+" * Done: The transfer has been processed.\n"
+" * Cancelled: The transfer has been cancelled."
+msgstr ""
+"* Borrador: no se ha confirmado el traslado. No se realizan reservas.\n"
+" * En espera de otra operación: el traslado espera otra operación antes de estar listo.\n"
+" * En espera: el traslado está en espera de disponibilidad de algunos productos.\n"
+"(a) La política de envío es \"Tan pronto como sea posible\": no se pudo reservar ningún producto.\n"
+"(b) La política de envío es \"Cuando todos los productos estén listos\": no se pueden reservar todos los productos.\n"
+" * Listo: el traslado está listo para ser procesado.\n"
+"(a) La política de envío es \"Tan pronto como sea posible\": se reservó al menos un producto.\n"
+"(b) La política de envío es \"Cuando todos los productos estén listos\": se reservaron todos los productos.\n"
+" * Hecho: se procesó el traslado.\n"
+" * Cancelado: se canceló el traslado."
+
+#. module: payment_type
+#: model_terms:ir.ui.view,arch_db:payment_type.view_pay_stock_picking_inherit_imporpalac
+msgid "Approve"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields.selection,name:payment_type.selection__stock_picking__state__approved
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: payment_type
+#: model_terms:ir.actions.act_window,help:payment_type.payment_type_action
+msgid "Can you create the first payment type"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__name
+msgid "Name"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_account_move
+msgid "New account move model with electronic documents"
+msgstr "Asiento contable"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_picking__paid
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_account_bank_statement_line__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_account_move__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_account_payment__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_res_partner__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_res_users__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_sale_order__payment_method
+#: model:ir.model.fields,field_description:payment_type.field_stock_picking__payment_method
+msgid "Payment method"
+msgstr "Método Pago"
+
+#. module: payment_type
+#: model:ir.actions.act_window,name:payment_type.payment_type_action
+#: model:ir.ui.menu,name:payment_type.menu_payment_type
+msgid "Payment type"
+msgstr "Método Pago"
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_payment_type
+msgid "Payments types in sales"
+msgstr "Typos de pago en Ventas"
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_picking__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir "
+
+#. module: payment_type
+#: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_form
+msgid "Type Payment Form"
+msgstr "Form Metodo de Pago"
+
+#. module: payment_type
+#: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_list
+msgid "Type Payment List"
+msgstr "Lista Metodo de Pago"
