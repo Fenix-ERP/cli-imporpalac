@@ -19,6 +19,14 @@
                                 required="false"
                             />
                         </div>
+                        <label for="types" class="oe_form_label">Tipo</label>
+                        <div class="o_field_widget o_input_widget">
+                            <field
+                                name="types"
+                                class="oe_form_field_input"
+                                required="true"
+                            />
+                        </div>
                     </group>
                 </sheet>
 
