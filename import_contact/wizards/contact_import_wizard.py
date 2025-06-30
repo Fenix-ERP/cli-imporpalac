@@ -17,10 +17,11 @@ class ImportContactWizard(models.TransientModel):
     _description = "Import Contact Wizard"
 
     file = fields.Binary(string="Archivo", required=False)
-    type = fields.Selection(
+    types = fields.Selection(
         [
-            ("client", "Cliente"),
             ("supplier", "Proveedor"),
+            ("customer", "Cliente"),
+            ("both", "Cliente y Proveedor"),
         ],
         string="Tipo",
         required=True,
@@ -106,7 +107,6 @@ class ImportContactWizard(models.TransientModel):
 
         file_data = base64.b64decode(self.file)
         file_format = self._get_file_format(file_data)
-        data = self._parse_file(file_data, file_format)
 
         errores = []
         actualizables = 0
@@ -119,21 +119,22 @@ class ImportContactWizard(models.TransientModel):
         cuentas_pagar = set()
         plazos_pago = set()
 
-        # Campos obligatorios según el encabezado
         CAMPOS_OBLIGATORIOS = {
             0: "Es Empresa",
             1: "Es Proveedor",
             2: "Nombre",
             4: "Tipo de Identificación",
             5: "Identificación",
-            6: "Provincia",
-            7: "Ciudad",
-            12: "Correo Electrónico",
             15: "Cuenta por Pagar",
             16: "Plazo de Pago",
         }
 
-        for i, row in enumerate(data, start=2):
+        # Primera pasada para recolectar datos
+        data_iter = self._parse_file(file_data, file_format)
+        rows_cache = []  # Guarda temporalmente filas ya recorridas
+
+        for i, row in enumerate(data_iter, start=2):
+            rows_cache.append(row)
             if not any(cell for cell in row if str(cell).strip()):
                 continue
             errores_fila = []
@@ -149,16 +150,11 @@ class ImportContactWizard(models.TransientModel):
                 )
                 continue
 
-            self.get_value(row, 0)
-            self.get_value(row, 1)
-            self.get_value(row, 2)
-            self.get_value(row, 4)
             identificacion = self.get_value(row, 5)
             provincia = self.get_value(row, 6)
             ciudad = self.get_value(row, 7)
             cuenta_por_pagar = self.get_value(row, 15)
             plazo_de_pago = self.get_value(row, 16)
-            self.get_value(row, 17)
             etiquetas_raw = self.get_value(row, 14)
 
             identificaciones.add(identificacion)
@@ -170,7 +166,7 @@ class ImportContactWizard(models.TransientModel):
             for tag in etiquetas_raw.split(","):
                 etiquetas.add(tag.strip())
 
-        # Buscar registros existentes
+        # Validaciones de existencia
         partners = self.env["res.partner"].search(
             [("vat", "in", list(identificaciones))]
         )
@@ -183,8 +179,8 @@ class ImportContactWizard(models.TransientModel):
         )
         cuentas_existentes = set(
             self.env["account.account"]
-            .search([("name", "in", list(cuentas_pagar))])
-            .mapped("name")
+            .search([("code", "in", list(cuentas_pagar))])
+            .mapped("code")
         )
         plazos_existentes = set(
             self.env["account.payment.term"]
@@ -197,7 +193,8 @@ class ImportContactWizard(models.TransientModel):
             .mapped("name")
         )
 
-        for i, row in enumerate(data, start=2):
+        # Segunda pasada sobre las filas almacenadas
+        for i, row in enumerate(rows_cache, start=2):
             identificacion = self.get_value(row, 5)
             provincia = self.get_value(row, 6)
             ciudad = self.get_value(row, 7)
@@ -216,9 +213,8 @@ class ImportContactWizard(models.TransientModel):
                 )
 
             for tag in etiquetas_raw.split(","):
-                tag = tag.strip()
-                if tag and tag not in etiquetas_existentes:
-                    errores.append(f"Fila {i}: Etiqueta '{tag}' no encontrada.")
+                if tag.strip() and tag.strip() not in etiquetas_existentes:
+                    errores.append(f"Fila {i}: Etiqueta '{tag.strip()}' no encontrada.")
 
             if identificacion in identificaciones_existentes:
                 actualizables += 1
@@ -242,11 +238,10 @@ class ImportContactWizard(models.TransientModel):
                         f"Fila {i}: Formato de imagen inválido o enlace de Drive inaccesible."
                     )
 
-        mensaje = f"Archivo válido.\n\nProveedores a crear: {creables}\nProveedores a actualizar: {actualizables}"
         if errores:
             raise ValidationError("\n".join(errores))
         else:
-            mensaje = f"Archivo válido.\n\n✅ Proveedores a crear: {creables}\n🔁 Proveedores a actualizar: {actualizables}"
+            mensaje = f"Archivo válido.\n\n✅ Contactos a crear: {creables}\n🔁 Contactos a actualizar: {actualizables}"
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",
@@ -418,19 +413,24 @@ class ImportContactWizard(models.TransientModel):
                 continue
 
             # Leer valores
-            empresa = self.get_value(row, 0)
-            proveedor = self.get_value(row, 1)
+            self.get_value(row, 0)
+            self.get_value(row, 1)
             nombre = self.get_value(row, 2)
             id_type_clean = self.get_value(row, 4).upper()
             tipo_identificacion = {
                 "CEDULA": "cedula",
                 "RUC": "ruc",
-                "PASAPORTE": "passport",
+                "PASAPORTE": "pasaporte",
             }.get(id_type_clean)
             identificacion = self.get_value(row, 5)
             provincia_nombre = self.get_value(row, 6)
             ciudad = self.get_value(row, 7)
+            calle = self.get_value(row, 8)
+            calle2 = self.get_value(row, 9)
+            telefono = self.get_value(row, 10)
+            celular = self.get_value(row, 11)
             email = self.get_value(row, 12)
+            sitio_web = self.get_value(row, 13)
             etiquetas_raw = self.get_value(row, 14)
             cuenta_nombre = self.get_value(row, 15)
             plazo_nombre = self.get_value(row, 16)
@@ -441,7 +441,7 @@ class ImportContactWizard(models.TransientModel):
                 [("name", "=", provincia_nombre)], limit=1
             )
             cuenta = self.env["account.account"].search(
-                [("name", "=", cuenta_nombre)], limit=1
+                [("code", "=", cuenta_nombre)], limit=1
             )
             plazo = self.env["account.payment.term"].search(
                 [("name", "=", plazo_nombre)], limit=1
@@ -462,17 +462,31 @@ class ImportContactWizard(models.TransientModel):
             partner = self.env["res.partner"].search(
                 [("vat", "=", identificacion)], limit=1
             )
+            supplier_rank = 0
+            customer_rank = 0
 
-            # Preparar valores comunes
+            if self.types == "supplier":
+                supplier_rank = 1
+            elif self.types == "customer":
+                customer_rank = 1
+            elif self.types == "both":
+                supplier_rank = 1
+                customer_rank = 1
+
             vals = {
                 "name": nombre,
                 "identifier": identificacion,
                 "type_identifier": tipo_identificacion,
                 "city": ciudad,
                 "state_id": provincia.id if provincia else False,
+                "street": calle,
+                "street2": calle2,
+                "phone": telefono,
+                "mobile": celular,
                 "email": email,
-                "supplier_rank": 1 if proveedor.lower() in ["1", "si", "yes"] else 0,
-                "customer_rank": 1 if empresa.lower() in ["1", "si", "yes"] else 0,
+                "website": sitio_web,
+                "supplier_rank": supplier_rank,
+                "customer_rank": customer_rank,
                 "property_account_payable_id": cuenta.id if cuenta else False,
                 "property_payment_term_id": plazo.id if plazo else False,
                 "category_id": [(6, 0, etiquetas_ids)],
@@ -498,7 +512,7 @@ class ImportContactWizard(models.TransientModel):
             "tag": "display_notification",
             "params": {
                 "title": "Importación exitosa",
-                "message": "Los proveedores han sido importados correctamente.",
+                "message": "Los contactos han sido importados correctamente.",
                 "type": "success",
                 "sticky": False,
             },
@@ -514,16 +528,15 @@ class ImportContactWizard(models.TransientModel):
         return ""
 
     def _parse_file(self, file_data, file_format):
-        if file_format == "csv":
-            lines = file_data.decode("utf-8").splitlines()
-            reader = csv.reader(lines)
-            next(reader)
-            return list(reader)
-        elif file_format == "xlsx":
-            workbook = load_workbook(io.BytesIO(file_data))
-            sheet = workbook.active
-            return [row for row in sheet.iter_rows(min_row=2, values_only=True)]
-        else:
-            raise UserError(
-                _("Formato de archivo no válido. Solo se permiten archivos CSV o XLSX.")
-            )
+        if file_format != "xlsx":
+            raise UserError(_("Formato de archivo no compatible. Solo se admite .xlsx"))
+
+        wb = load_workbook(filename=BytesIO(file_data), read_only=True, data_only=True)
+        sheet = wb.active
+
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            if not any(
+                cell not in [None, "", " "] and str(cell).strip() != "" for cell in row
+            ):
+                continue
+            yield row
