@@ -117,17 +117,28 @@ class ImportContactWizard(models.TransientModel):
         provincias = set()
         etiquetas = set()
         cuentas_pagar = set()
+        cuentas_cobrar = set()
         plazos_pago = set()
 
-        CAMPOS_OBLIGATORIOS = {
-            0: "Es Empresa",
-            1: "Es Proveedor",
-            2: "Nombre",
-            4: "Tipo de Identificación",
-            5: "Identificación",
-            15: "Cuenta por Pagar",
-            16: "Plazo de Pago",
-        }
+        if self.types == "supplier":
+            CAMPOS_OBLIGATORIOS = {
+                0: "Es Empresa",
+                1: "Nombre",
+                3: "Tipo de Identificación",
+                4: "Identificación",
+                14: "Cuenta por Pagar",
+                15: "Cuenta por Cobrar",
+                16: "Plazo de Pago",
+            }
+        elif self.types == "customer":
+            CAMPOS_OBLIGATORIOS = {
+                0: "Es Empresa",
+                1: "Nombre",
+                3: "Tipo de Identificación",
+                4: "Identificación",
+                14: "Cuenta por Pagar",
+                15: "Cuenta por Cobrar",
+            }
 
         # Primera pasada para recolectar datos
         data_iter = self._parse_file(file_data, file_format)
@@ -150,17 +161,19 @@ class ImportContactWizard(models.TransientModel):
                 )
                 continue
 
-            identificacion = self.get_value(row, 5)
-            provincia = self.get_value(row, 6)
-            ciudad = self.get_value(row, 7)
-            cuenta_por_pagar = self.get_value(row, 15)
+            identificacion = self.get_value(row, 4)
+            provincia = self.get_value(row, 5)
+            ciudad = self.get_value(row, 6)
+            cuenta_por_pagar = self.get_value(row, 14)
+            cuenta_por_cobrar = self.get_value(row, 15)
             plazo_de_pago = self.get_value(row, 16)
-            etiquetas_raw = self.get_value(row, 14)
+            etiquetas_raw = self.get_value(row, 13)
 
             identificaciones.add(identificacion)
             ciudades.add(ciudad)
             provincias.add(provincia)
             cuentas_pagar.add(cuenta_por_pagar)
+            cuentas_cobrar.add(cuenta_por_cobrar)
             plazos_pago.add(plazo_de_pago)
 
             for tag in etiquetas_raw.split(","):
@@ -182,6 +195,13 @@ class ImportContactWizard(models.TransientModel):
             .search([("code", "in", list(cuentas_pagar))])
             .mapped("code")
         )
+        cuentas_existentes.update(
+            set(
+                self.env["account.account"]
+                .search([("code", "in", list(cuentas_cobrar))])
+                .mapped("code")
+            )
+        )
         plazos_existentes = set(
             self.env["account.payment.term"]
             .search([("name", "in", list(plazos_pago))])
@@ -195,18 +215,21 @@ class ImportContactWizard(models.TransientModel):
 
         # Segunda pasada sobre las filas almacenadas
         for i, row in enumerate(rows_cache, start=2):
-            identificacion = self.get_value(row, 5)
-            provincia = self.get_value(row, 6)
-            ciudad = self.get_value(row, 7)
-            cuenta_por_pagar = self.get_value(row, 15)
+            identificacion = self.get_value(row, 4)
+            provincia = self.get_value(row, 5)
+            ciudad = self.get_value(row, 6)
+            cuenta_por_pagar = self.get_value(row, 14)
+            cuenta_por_cobrar = self.get_value(row, 15)
             plazo_de_pago = self.get_value(row, 16)
-            etiquetas_raw = self.get_value(row, 14)
+            etiquetas_raw = self.get_value(row, 13)
             image_input = self.get_value(row, 18)
 
             if provincia and provincia not in provincias_existentes:
                 errores.append(f"Fila {i}: Provincia '{provincia}' no encontrada.")
             if cuenta_por_pagar and cuenta_por_pagar not in cuentas_existentes:
                 errores.append(f"Fila {i}: Cuenta '{cuenta_por_pagar}' no encontrada.")
+            if cuenta_por_cobrar and cuenta_por_cobrar not in cuentas_existentes:
+                errores.append(f"Fila {i}: Cuenta '{cuenta_por_cobrar}' no encontrada.")
             if plazo_de_pago and plazo_de_pago not in plazos_existentes:
                 errores.append(
                     f"Fila {i}: Plazo de pago '{plazo_de_pago}' no encontrado."
@@ -412,36 +435,37 @@ class ImportContactWizard(models.TransientModel):
             if not any(cell for cell in row if str(cell).strip()):
                 continue
 
-            # Leer valores
-            self.get_value(row, 0)
-            self.get_value(row, 1)
-            nombre = self.get_value(row, 2)
-            id_type_clean = self.get_value(row, 4).upper()
+            nombre = self.get_value(row, 1)
+            id_type_clean = self.get_value(row, 3).upper()
             tipo_identificacion = {
                 "CEDULA": "cedula",
                 "RUC": "ruc",
                 "PASAPORTE": "pasaporte",
             }.get(id_type_clean)
-            identificacion = self.get_value(row, 5)
-            provincia_nombre = self.get_value(row, 6)
-            ciudad = self.get_value(row, 7)
-            calle = self.get_value(row, 8)
-            calle2 = self.get_value(row, 9)
-            telefono = self.get_value(row, 10)
-            celular = self.get_value(row, 11)
-            email = self.get_value(row, 12)
-            sitio_web = self.get_value(row, 13)
-            etiquetas_raw = self.get_value(row, 14)
-            cuenta_nombre = self.get_value(row, 15)
+            identificacion = self.get_value(row, 4)
+            provincia_nombre = self.get_value(row, 5)
+            ciudad = self.get_value(row, 6)
+            calle = self.get_value(row, 7)
+            calle2 = self.get_value(row, 8)
+            telefono = self.get_value(row, 9)
+            celular = self.get_value(row, 10)
+            email = self.get_value(row, 11)
+            sitio_web = self.get_value(row, 12)
+            etiquetas_raw = self.get_value(row, 13)
+            cuenta_por_pagar_nombre = self.get_value(row, 14)
+            cuenta_por_cobrar_nombre = self.get_value(row, 15)
             plazo_nombre = self.get_value(row, 16)
+            internacional = self.get_value(row, 17)
             image_input = self.get_value(row, 18)
-
             # Buscar o crear registros relacionados
             provincia = self.env["res.country.state"].search(
                 [("name", "=", provincia_nombre)], limit=1
             )
-            cuenta = self.env["account.account"].search(
-                [("code", "=", cuenta_nombre)], limit=1
+            cuenta_por_pagar = self.env["account.account"].search(
+                [("code", "=", cuenta_por_pagar_nombre)], limit=1
+            )
+            cuenta_por_cobrar = self.env["account.account"].search(
+                [("code", "=", cuenta_por_cobrar_nombre)], limit=1
             )
             plazo = self.env["account.payment.term"].search(
                 [("name", "=", plazo_nombre)], limit=1
@@ -473,24 +497,81 @@ class ImportContactWizard(models.TransientModel):
                 supplier_rank = 1
                 customer_rank = 1
 
-            vals = {
-                "name": nombre,
-                "identifier": identificacion,
-                "type_identifier": tipo_identificacion,
-                "city": ciudad,
-                "state_id": provincia.id if provincia else False,
-                "street": calle,
-                "street2": calle2,
-                "phone": telefono,
-                "mobile": celular,
-                "email": email,
-                "website": sitio_web,
-                "supplier_rank": supplier_rank,
-                "customer_rank": customer_rank,
-                "property_account_payable_id": cuenta.id if cuenta else False,
-                "property_payment_term_id": plazo.id if plazo else False,
-                "category_id": [(6, 0, etiquetas_ids)],
-            }
+            if self.types == "supplier":
+
+                vals = {
+                    "name": nombre,
+                    "identifier": identificacion,
+                    "type_identifier": tipo_identificacion,
+                    "city": ciudad,
+                    "state_id": provincia.id if provincia else False,
+                    "street": calle,
+                    "street2": calle2,
+                    "phone": telefono,
+                    "mobile": celular,
+                    "email": email,
+                    "website": sitio_web,
+                    "supplier_rank": supplier_rank,
+                    "customer_rank": customer_rank,
+                    "property_account_payable_id": cuenta_por_pagar.id
+                    if cuenta_por_pagar
+                    else False,
+                    "property_account_receivable_id": cuenta_por_cobrar.id
+                    if cuenta_por_cobrar
+                    else False,
+                    "property_supplier_payment_term_id": plazo.id if plazo else False,
+                    "is_international": internacional if internacional else False,
+                    "category_id": [(6, 0, etiquetas_ids)],
+                }
+
+            elif self.types == "customer":
+                limite_credito = self.get_value(row, 19)
+                valor_limite = self.get_value(row, 20)
+                lista_precios = self.get_value(row, 21)
+                metodo_pago = self.get_value(row, 22)
+                vendedor = self.get_value(row, 23)
+                price_list = self.env["product.pricelist"].search(
+                    [("name", "=", lista_precios)], limit=1
+                )
+                payment_method = self.env["payment.type"].search(
+                    [("name", "=", metodo_pago)], limit=1
+                )
+                vendor = self.env["res.partner"].search(
+                    [("name", "=", vendedor)], limit=1
+                )
+                vals = {
+                    "name": nombre,
+                    "identifier": identificacion,
+                    "type_identifier": tipo_identificacion,
+                    "city": ciudad,
+                    "state_id": provincia.id if provincia else False,
+                    "street": calle,
+                    "street2": calle2,
+                    "phone": telefono,
+                    "mobile": celular,
+                    "email": email,
+                    "website": sitio_web,
+                    "supplier_rank": supplier_rank,
+                    "customer_rank": customer_rank,
+                    "property_account_payable_id": cuenta_por_pagar.id
+                    if cuenta_por_pagar
+                    else False,
+                    "property_account_receivable_id": cuenta_por_cobrar.id
+                    if cuenta_por_cobrar
+                    else False,
+                    "property_payment_term_id": plazo.id if plazo else False,
+                    "is_international": internacional if internacional else False,
+                    "category_id": [(6, 0, etiquetas_ids)],
+                    "use_partner_credit_limit": limite_credito
+                    if limite_credito
+                    else False,
+                    "credit_limit": valor_limite if valor_limite else False,
+                    "property_product_pricelist": price_list.id
+                    if price_list
+                    else False,
+                    "payment_method": payment_method.id if payment_method else False,
+                    "user_id": vendor.id if vendor else False,
+                }
 
             # Imagen
             if image_input:

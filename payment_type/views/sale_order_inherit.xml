@@ -11,6 +11,7 @@
                     readonly="state in ('sale', 'done')"
                     options="{'no_create': True}"
                 />
+                <field name="warehouse_id" />
             </xpath>
         </field>
     </record>
