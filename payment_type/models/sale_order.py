@@ -20,3 +20,20 @@ class SaleOrder(models.Model):
             for picking in pickings:
                 picking.payment_method = order.payment_method
         return res
+
+    def _create_invoices(self, grouped=False, final=False):
+        """
+        Sobrescritura del método para asignar automáticamente el diario en la factura
+        dependiendo del almacén de la entrega.
+        """
+        invoices = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
+
+        for invoice in invoices:
+            # Obtener el picking relacionado con la orden
+            related_pickings = self.picking_ids.filtered(lambda p: p.state == "done")
+            if related_pickings:
+                warehouse = related_pickings[0].picking_type_id.warehouse_id
+                if warehouse and warehouse.journal_id:
+                    # Asignar el diario de la factura basado en el almacén
+                    invoice.journal_id = warehouse.journal_id
+        return invoices
