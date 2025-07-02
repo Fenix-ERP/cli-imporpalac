@@ -1,6 +1,6 @@
 import base64
-import csv
 import io
+from io import BytesIO
 
 from openpyxl import load_workbook
 
@@ -20,14 +20,14 @@ class ImportProductWizard(models.TransientModel):
 
         file_data = base64.b64decode(self.file)
         file_format = self._get_file_format(file_data)
-        data = self._parse_file(file_data, file_format)
 
         errores = []
         actualizables = 0
         creables = 0
 
         categorias_dict = {
-            c.name.strip(): c.id for c in self.env["product.category"].search([])
+            c.display_name.strip(): c.id
+            for c in self.env["product.category"].search([])
         }
         productos_dict = {
             p.default_code.strip(): p
@@ -35,13 +35,20 @@ class ImportProductWizard(models.TransientModel):
             if p.default_code
         }
 
-        for i, row in enumerate(data[1:], start=2):  # comienza desde la fila 2
+        # Primera pasada para recolectar datos
+        data_iter = self._parse_file(file_data, file_format)
+        rows_cache = []  # Guarda temporalmente filas ya recorridas
+
+        for i, row in enumerate(data_iter, start=2):
+            rows_cache.append(row)
+            if not any(cell for cell in row if str(cell).strip()):
+                continue
             try:
                 if not row or len(row) < 16:
                     continue
 
                 codigo = row[0].strip()
-                categoria_nombre = row[15].strip()
+                categoria_nombre = row[16].strip()
 
                 if not codigo:
                     errores.append(f"Fila {i+1}: Código vacío")
@@ -225,7 +232,6 @@ class ImportProductWizard(models.TransientModel):
 
         file_data = base64.b64decode(self.file)
         file_format = self._get_file_format(file_data)
-        data = self._parse_file(file_data, file_format)
 
         errores = []
         creados = 0
@@ -233,7 +239,8 @@ class ImportProductWizard(models.TransientModel):
 
         # Cache de categorías
         categorias_dict = {
-            c.name.strip(): c.id for c in self.env["product.category"].search([])
+            c.display_name.strip(): c.id
+            for c in self.env["product.category"].search([])
         }
 
         productos_dict = {
@@ -242,30 +249,34 @@ class ImportProductWizard(models.TransientModel):
             if p.default_code
         }
 
-        for i, row in enumerate(data[1:], start=2):  # saltar cabecera
+        data = self._parse_file(file_data, file_format)
+
+        for i, row in enumerate(data, start=2):
+            if not any(cell for cell in row if str(cell).strip()):
+                continue
             try:
-                if len(row) < 29:
+                if len(row) < 24:
                     errores.append(f"Fila {i}: No tiene todas las columnas necesarias.")
                     continue
 
                 codigo = row[0].strip()
-                articulo = row[1].strip()
-                marca = row[2].strip()
-                modelo = row[3].strip()
-                anio = row[4].strip()
-                procedencia = row[5].strip()
-                adicional_1 = row[6].strip() if row[6] else ""
-                adicional_2 = row[7].strip() if row[7] else ""
-                adicional_3 = row[8].strip() if row[8] else ""
-                adicional_4 = row[9].strip() if row[9] else ""
-                adicional_5 = row[10].strip() if row[10] else ""
-                adicional_6 = row[11].strip() if row[11] else ""
-                lado = row[12].strip() if row[12] else ""
-                unidad_venta = row[13].strip()
-                unidad_compra = row[14].strip()
-                categoria = row[15].strip()
-                costo = float(row[16] or 0.0)
-                nombre = row[17].strip()
+                nombre = row[1].strip()
+                articulo = row[2].strip()
+                marca = row[3].strip() if row[3] else ""
+                modelo = row[4].strip() if row[4] else ""
+                anio = row[5].strip() if row[5] else ""
+                procedencia = row[6].strip() if row[6] else ""
+                adicional_1 = row[7].strip() if row[7] else ""
+                adicional_2 = row[8].strip() if row[8] else ""
+                adicional_3 = row[9].strip() if row[9] else ""
+                adicional_4 = row[10].strip() if row[10] else ""
+                adicional_5 = row[11].strip() if row[11] else ""
+                adicional_6 = row[12].strip() if row[12] else ""
+                lado = row[13].strip() if row[13] else ""
+                unidad_venta = row[14].strip()
+                unidad_compra = row[15].strip()
+                categoria = row[16].strip()
+                costo = float(row[17] or 0.0)
                 vender = (
                     row[18].strip().lower() in ["1", "true", "sí", "si"]
                     if row[18]
@@ -298,6 +309,16 @@ class ImportProductWizard(models.TransientModel):
                 elif tipo_producto == "Servicio":
                     tipo_producto = "service"
 
+                if politica_control == "Sobre cantidades recibidas":
+                    purchase_method = "purchase"
+                elif politica_control == "Sobre cantidades vendidas":
+                    purchase_method = "receive"
+
+                if politica_facturacion == "Cantidades entregadas":
+                    invoice_policy = "order"
+                elif politica_facturacion == "Cantidad ordenada":
+                    invoice_policy = "delivery"
+
                 vals = {
                     "default_code": codigo,
                     "articulo": articulo,
@@ -324,10 +345,10 @@ class ImportProductWizard(models.TransientModel):
                     "adicional_5": adicional_5,
                     "adicional_6": adicional_6,
                     "lado": lado,
-                    "importar": importar,
-                    "categoria_importacion": categoria_importacion,
-                    "politica_control": politica_control,
-                    "politica_facturacion": politica_facturacion,
+                    "imported_ok": importar,
+                    "import_category_id": categoria_importacion,
+                    "purchase_method": purchase_method,
+                    "invoice_policy": invoice_policy,
                 }
 
                 producto = productos_dict.get(codigo)
@@ -357,16 +378,15 @@ class ImportProductWizard(models.TransientModel):
         }
 
     def _parse_file(self, file_data, file_format):
-        if file_format == "csv":
-            lines = file_data.decode("utf-8").splitlines()
-            reader = csv.reader(lines)
-            next(reader)
-            return list(reader)
-        elif file_format == "xlsx":
-            workbook = load_workbook(io.BytesIO(file_data))
-            sheet = workbook.active
-            return [row for row in sheet.iter_rows(min_row=2, values_only=True)]
-        else:
-            raise UserError(
-                _("Formato de archivo no válido. Solo se permiten archivos CSV o XLSX.")
-            )
+        if file_format != "xlsx":
+            raise UserError(_("Formato de archivo no compatible. Solo se admite .xlsx"))
+
+        wb = load_workbook(filename=BytesIO(file_data), read_only=True, data_only=True)
+        sheet = wb.active
+
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            if not any(
+                cell not in [None, "", " "] and str(cell).strip() != "" for cell in row
+            ):
+                continue
+            yield row
