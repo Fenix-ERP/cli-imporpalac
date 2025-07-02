@@ -15,6 +15,8 @@ class StockPicking(models.Model):
         default=False,
     )
 
+    invoice_number = fields.Char()
+
     def action_cancel(self):
         res = super().action_cancel()
         order = self.sale_id
@@ -27,4 +29,5 @@ class StockPicking(models.Model):
             invoice = picking.sale_id._create_invoices()
             invoice.write({"payment_method": picking.payment_method.id})
             invoice.action_post()
+            picking.invoice_number = invoice.number
         return res
