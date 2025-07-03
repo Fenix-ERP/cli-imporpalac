@@ -236,88 +236,93 @@ class ImportProductWizard(models.TransientModel):
         errores = []
         creados = 0
         actualizados = 0
+        nuevos_vals = []
 
-        # Cache de categorías
-        categorias_dict = {
-            c.display_name.strip(): c.id
-            for c in self.env["product.category"].search([])
-        }
+        Product = self.env["product.template"]
+        Category = self.env["product.category"]
+        UOM = self.env["uom.uom"]
 
+        categorias_dict = {c.display_name.strip(): c.id for c in Category.search([])}
         productos_dict = {
-            p.default_code.strip(): p
-            for p in self.env["product.template"].search([])
-            if p.default_code
+            p.default_code.strip(): p for p in Product.search([]) if p.default_code
         }
+        uoms_dict = {u.name.lower(): u.id for u in UOM.search([])}
 
         data = self._parse_file(file_data, file_format)
 
+        def procesar_lote(vals_list):
+            nonlocal creados
+            try:
+                Product.create(vals_list)
+                creados += len(vals_list)
+            except Exception:
+                # fallback por cada producto
+                for vals in vals_list:
+                    try:
+                        Product.create(vals)
+                        creados += 1
+                    except Exception as e:
+                        errores.append(
+                            f"Producto con código {vals.get('default_code')}: Error al crear - {str(e)}"
+                        )
+
         for i, row in enumerate(data, start=2):
-            if not any(cell for cell in row if str(cell).strip()):
+            if not any(str(cell).strip() for cell in row):
                 continue
             try:
-                if len(row) < 24:
+                if len(row) < 25:
                     errores.append(f"Fila {i}: No tiene todas las columnas necesarias.")
                     continue
 
-                codigo = row[0].strip()
-                nombre = row[1].strip()
-                articulo = row[2].strip()
-                marca = row[3].strip() if row[3] else ""
-                modelo = row[4] if row[4] else ""
-                anio = row[5] if row[5] else ""
-                procedencia = row[6].strip() if row[6] else ""
-                adicional_1 = row[7] if row[7] else ""
-                adicional_2 = row[8] if row[8] else ""
-                adicional_3 = row[9] if row[9] else ""
-                adicional_4 = row[10] if row[10] else ""
-                adicional_5 = row[11] if row[11] else ""
-                adicional_6 = row[12] if row[12] else ""
-                lado = row[13] if row[13] else ""
+                row = [
+                    str(cell).strip() if isinstance(cell, str) else cell for cell in row
+                ]
+
+                codigo, nombre, articulo = row[0], row[1], row[2]
+                marca, modelo, anio = row[3] or "", row[4] or "", row[5] or ""
+                procedencia = row[6] or ""
+                adicional = row[7:13]
+                lado = row[13] or ""
                 unidad_venta = row[14]
                 unidad_compra = row[15]
                 categoria = row[16]
                 costo = float(row[17] or 0.0)
-                vender = (
-                    row[18].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[18]
-                    else False
-                )
-                comprar = (
-                    row[19].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[19]
-                    else False
-                )
-                importar = (
-                    row[20].strip().lower() in ["1", "true", "sí", "si"]
-                    if row[20]
-                    else False
-                )
-                tipo_producto = row[21].strip()
-                categoria_importacion = row[22].strip() if row[22] else ""
-                politica_control = row[23].strip()
-                politica_facturacion = row[24].strip()
+
+                vender = str(row[18]).lower() in ["1", "true", "sí", "si"]
+                comprar = str(row[19]).lower() in ["1", "true", "sí", "si"]
+                importar = str(row[20]).lower() in ["1", "true", "sí", "si"]
+                tipo_producto = row[21]
+
+                categoria_importacion = row[22] or ""
+                politica_control = row[23]
+                politica_facturacion = row[24]
 
                 categoria_id = categorias_dict.get(categoria)
                 if not categoria_id:
                     errores.append(f"Fila {i}: Categoría '{categoria}' no encontrada.")
                     continue
 
-                if tipo_producto == "Producto almacenable":
-                    tipo_producto = "product"
-                elif tipo_producto == "Consumible":
-                    tipo_producto = "consu"
-                elif tipo_producto == "Servicio":
-                    tipo_producto = "service"
+                tipo_map = {
+                    "Producto almacenable": "product",
+                    "Consumible": "consu",
+                    "Servicio": "service",
+                }
+                tipo_producto = tipo_map.get(tipo_producto, "product")
 
-                if politica_control == "Sobre cantidades recibidas":
-                    purchase_method = "purchase"
-                elif politica_control == "Sobre cantidades vendidas":
-                    purchase_method = "receive"
+                control_map = {
+                    "Sobre cantidades recibidas": "purchase",
+                    "Sobre cantidades vendidas": "receive",
+                }
+                purchase_method = control_map.get(politica_control, "purchase")
 
-                if politica_facturacion == "Cantidades entregadas":
-                    invoice_policy = "order"
-                elif politica_facturacion == "Cantidad ordenada":
-                    invoice_policy = "delivery"
+                factura_map = {
+                    "Cantidades entregadas": "order",
+                    "Cantidad ordenada": "delivery",
+                }
+                invoice_policy = factura_map.get(politica_facturacion, "order")
+
+                uom_id = uoms_dict.get(unidad_venta.lower())
+                uom_po_id = uoms_dict.get(unidad_compra.lower())
 
                 vals = {
                     "default_code": codigo,
@@ -327,23 +332,19 @@ class ImportProductWizard(models.TransientModel):
                     "standard_price": costo,
                     "sale_ok": vender,
                     "purchase_ok": comprar,
-                    "type": tipo_producto or "product",
-                    "uom_id": self.env["uom.uom"]
-                    .search([("name", "=ilike", unidad_venta)], limit=1)
-                    .id,
-                    "uom_po_id": self.env["uom.uom"]
-                    .search([("name", "=ilike", unidad_compra)], limit=1)
-                    .id,
+                    "type": tipo_producto,
+                    "uom_id": uom_id,
+                    "uom_po_id": uom_po_id,
                     "marca": marca,
                     "modelo": modelo,
                     "anio": anio,
                     "procedencia": procedencia,
-                    "adicional_1": adicional_1,
-                    "adicional_2": adicional_2,
-                    "adicional_3": adicional_3,
-                    "adicional_4": adicional_4,
-                    "adicional_5": adicional_5,
-                    "adicional_6": adicional_6,
+                    "adicional_1": adicional[0],
+                    "adicional_2": adicional[1],
+                    "adicional_3": adicional[2],
+                    "adicional_4": adicional[3],
+                    "adicional_5": adicional[4],
+                    "adicional_6": adicional[5],
                     "lado": lado,
                     "imported_ok": importar,
                     "import_category_id": categoria_importacion,
@@ -356,11 +357,17 @@ class ImportProductWizard(models.TransientModel):
                     producto.write(vals)
                     actualizados += 1
                 else:
-                    self.env["product.template"].create(vals)
-                    creados += 1
+                    nuevos_vals.append(vals)
+                    if len(nuevos_vals) >= 100:
+                        procesar_lote(nuevos_vals)
+                        nuevos_vals.clear()
 
             except Exception as e:
                 errores.append(f"Fila {i}: Error inesperado: {str(e)}")
+
+        # Lote final pendiente
+        if nuevos_vals:
+            procesar_lote(nuevos_vals)
 
         mensaje = f"Importación completada.\n\nProductos actualizados: {actualizados}\nProductos creados: {creados}"
         if errores:
