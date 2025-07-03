@@ -24,10 +24,15 @@ class StockPicking(models.Model):
         return res
 
     def button_validate(self):
-        res = super().button_validate()
-        for picking in self:
-            invoice = picking.sale_id._create_invoices()
-            invoice.write({"payment_method": picking.payment_method.id})
-            invoice.action_post()
-            picking.invoice_number = invoice.number
+
+        res = super(StockPicking, self).button_validate()
+
+        if res == True:
+            for picking in self:
+                sale_order = picking.sale_id
+                if sale_order:
+                    invoice = picking.sale_id._create_invoices()
+                    invoice.write({"payment_method": picking.payment_method.id})
+                    invoice.action_post()
+                    picking.invoice_number = invoice.name
         return res
