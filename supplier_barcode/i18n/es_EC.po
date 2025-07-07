@@ -1,0 +1,115 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* supplier_barcode
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-03 20:36+0000\n"
+"PO-Revision-Date: 2025-07-03 20:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: supplier_barcode
+#: model_terms:ir.ui.view,arch_db:supplier_barcode.supplier_product_template_form_view
+msgid "Are you sure to generate a new barcode?"
+msgstr "Está seguro que quiere generar un nuevo código de barras?"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: supplier_barcode
+#: model_terms:ir.ui.view,arch_db:supplier_barcode.supplier_product_product_form_view
+#: model_terms:ir.ui.view,arch_db:supplier_barcode.supplier_product_template_form_view
+msgid "Generate Image"
+msgstr "Generar imagen"
+
+#. module: supplier_barcode
+#: model:ir.model,name:supplier_barcode.model_generate_product_barcode_supp
+msgid "Generate Product Barcode"
+msgstr "Generar código de barras de producto"
+
+#. module: supplier_barcode
+#: model_terms:ir.ui.view,arch_db:supplier_barcode.supplier_product_product_form_view
+#: model_terms:ir.ui.view,arch_db:supplier_barcode.supplier_product_template_form_view
+msgid "Generate the Barcode"
+msgstr "Generar Código de barras"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__id
+msgid "ID"
+msgstr ""
+
+#. module: supplier_barcode
+#: model:ir.model.fields,help:supplier_barcode.field_product_product__barcode_supp
+#: model:ir.model.fields,help:supplier_barcode.field_product_template__barcode_supp
+msgid "International Supplier Article Number used for product identification."
+msgstr ""
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_generate_product_barcode_supp__overwrite_existing
+msgid "Overwrite Barcode If Exists"
+msgstr "Sobrescribir el código de barras si existe"
+
+#. module: supplier_barcode
+#: model:ir.model,name:supplier_barcode.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: supplier_barcode
+#: model:ir.model,name:supplier_barcode.model_product_product
+msgid "Product Variant"
+msgstr "Variante del producto"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_product_product__barcode_supp
+#: model:ir.model.fields,field_description:supplier_barcode.field_product_template__barcode_supp
+msgid "Supplier Barcode"
+msgstr "Código de barras de proveedor"
+
+#. module: supplier_barcode
+#: model:ir.model.fields,field_description:supplier_barcode.field_product_product__sh_product_barcode_img_supp
+#: model:ir.model.fields,field_description:supplier_barcode.field_product_template__sh_product_barcode_img_supp
+msgid "Supplier Barcode Image"
+msgstr "Imagen del código de barras del proveedor"
+
+#. module: supplier_barcode
+#. odoo-python
+#: code:addons/supplier_barcode/models/product_barcode_generator.py:0
+#, python-format
+msgid "You don't have rights to generate product barcode"
+msgstr "Usted no tiene derecho para generar códigos de barras de productos."
+
+#. module: supplier_barcode
+#. odoo-python
+#: code:addons/supplier_barcode/models/product_barcode_generator.py:0
+#, python-format
+msgid "python-barcode is not installed. Please install it."
+msgstr "python-barcode no está instalado. Por favor instálelo."
