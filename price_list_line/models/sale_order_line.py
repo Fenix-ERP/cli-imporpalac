@@ -1,4 +1,8 @@
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrderLine(models.Model):
@@ -28,18 +32,22 @@ class SaleOrderLine(models.Model):
         if not self.product_id or not self.pricelist_line2_id:
             return
 
-        pricelist = self.pricelist_line2_id
-        product = self.product_id
-        partner = self.order_id.partner_id
+        try:
+            pricelist = self.pricelist_line2_id
+            product = self.product_id
+            partner = self.order_id.partner_id
 
-        price = pricelist.with_context(
-            partner_id=partner.id,
-            quantity=self.product_uom_qty,
-            uom=self.product_uom.id,
-            date=self.order_id.date_order,
-        )._get_product_price(product, self.product_uom_qty, partner)
+            price = pricelist.with_context(
+                partner_id=partner.id,
+                quantity=self.product_uom_qty,
+                uom=self.product_uom.id,
+                date=self.order_id.date_order or fields.Date.today(),
+            )._get_product_price(product, self.product_uom_qty, partner)
 
-        self.price_unit = price
+            self.price_unit = price
+        except TypeError as e:
+            _logger.error("Error when calculating the price: %s", str(e))
+            self.price_unit = product.lst_price
 
     @api.onchange("product_uom", "product_uom_qty")
     def _compute_price_unit(self):
