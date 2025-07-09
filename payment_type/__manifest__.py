@@ -15,6 +15,13 @@
         "views/stock_picking.xml",
         "views/stock_warehouse_inherit.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "payment_type/static/src/scss/image_hover.scss",
+            "payment_type/static/src/js/image_zoom.js",
+            "payment_type/static/src/xml/image_modal.xml",
+        ],
+    },
     "demo": [],
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "license": "LGPL-3",

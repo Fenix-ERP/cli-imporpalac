@@ -15,4 +15,17 @@
             </xpath>
         </field>
     </record>
+    <record id="view_order_form_inherit_with_image" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.image</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='order_line']/tree/field[@name='name']"
+                position="before"
+            >
+                <field name="image_1920" widget="image" readonly="1" optional="show" />
+            </xpath>
+        </field>
+    </record>
 </odoo>

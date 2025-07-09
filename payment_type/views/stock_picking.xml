@@ -5,6 +5,15 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.vpicktree" />
         <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_approve"
+                    string="Approve"
+                    type="object"
+                    class="btn-primary"
+                    icon="fa-check"
+                />
+            </xpath>
             <xpath expr="//field[@name='state']" position="after">
                 <field name="payment_method" optional="show" />
                 <field name="paid" optional="show" />

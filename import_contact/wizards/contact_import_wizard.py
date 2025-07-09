@@ -452,8 +452,8 @@ class ImportContactWizard(models.TransientModel):
             email = self.get_value(row, 11)
             sitio_web = self.get_value(row, 12)
             etiquetas_raw = self.get_value(row, 13)
-            cuenta_por_pagar_nombre = self.get_value(row, 14)
-            cuenta_por_cobrar_nombre = self.get_value(row, 15)
+            cuenta_por_cobrar_nombre = self.get_value(row, 14)
+            cuenta_por_pagar_nombre = self.get_value(row, 15)
             plazo_nombre = self.get_value(row, 16)
             internacional = self.get_value(row, 17)
             image_input = self.get_value(row, 18)
@@ -469,6 +469,9 @@ class ImportContactWizard(models.TransientModel):
             )
             plazo = self.env["account.payment.term"].search(
                 [("name", "=", plazo_nombre)], limit=1
+            )
+            company = self.env["res.company"].search(
+                [("name", "=", self.env.company.name)], limit=1
             )
 
             etiquetas_ids = []
@@ -522,6 +525,7 @@ class ImportContactWizard(models.TransientModel):
                     "property_supplier_payment_term_id": plazo.id if plazo else False,
                     "is_international": internacional if internacional else False,
                     "category_id": [(6, 0, etiquetas_ids)],
+                    "company_id": company.id,
                 }
 
             elif self.types == "customer":
@@ -571,6 +575,7 @@ class ImportContactWizard(models.TransientModel):
                     else False,
                     "payment_method": payment_method.id if payment_method else False,
                     "user_id": vendor.id if vendor else False,
+                    "company_id": company.id,
                 }
 
             # Imagen

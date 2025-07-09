@@ -310,16 +310,16 @@ class ImportProductWizard(models.TransientModel):
                 tipo_producto = tipo_map.get(tipo_producto, "product")
 
                 control_map = {
-                    "Sobre cantidades recibidas": "purchase",
-                    "Sobre cantidades vendidas": "receive",
+                    "Sobre cantidades recibidas": "receive",
+                    "Sobre cantidades pedidas": "purchase",
                 }
-                purchase_method = control_map.get(politica_control, "purchase")
+                purchase_method = control_map.get(politica_control, "receive")
 
                 factura_map = {
-                    "Cantidades entregadas": "order",
-                    "Cantidad ordenada": "delivery",
+                    "Cantidades entregadas": "delivery",
+                    "Cantidad ordenada": "order",
                 }
-                invoice_policy = factura_map.get(politica_facturacion, "order")
+                invoice_policy = factura_map.get(politica_facturacion, "delivery")
 
                 uom_id = uoms_dict.get(unidad_venta.lower())
                 uom_po_id = uoms_dict.get(unidad_compra.lower())

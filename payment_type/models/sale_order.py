@@ -19,6 +19,7 @@ class SaleOrder(models.Model):
             )
             for picking in pickings:
                 picking.payment_method = order.payment_method
+                picking.paid = True
         return res
 
     def _create_invoices(self, grouped=False, final=False):
@@ -34,6 +35,11 @@ class SaleOrder(models.Model):
             if related_pickings:
                 warehouse = related_pickings[0].picking_type_id.warehouse_id
                 if warehouse and warehouse.journal_id:
-                    # Asignar el diario de la factura basado en el almacén
                     invoice.journal_id = warehouse.journal_id
         return invoices
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    image_1920 = fields.Image(related="product_id.image_1920", readonly=True)
