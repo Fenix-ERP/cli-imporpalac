@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* additional_product_imporpalac
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-10 19:27+0000\n"
+"PO-Revision-Date: 2025-07-10 19:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: additional_product_imporpalac
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_purchases_order_purchase_reception
+msgid "Actualizar costos"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
+msgid "Additional Information"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_1
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_1
+msgid "Adicional 1"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_2
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_2
+msgid "Adicional 2"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_3
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_3
+msgid "Adicional 3"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_4
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_4
+msgid "Adicional 4"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_5
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_5
+msgid "Adicional 5"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_6
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__adicional_6
+msgid "Adicional 6"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__articulo
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__articulo
+msgid "Articulo"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__anio
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__anio
+msgid "Año"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_purchase_order__evoucher_ids
+msgid "Comprobante Electrónico"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
+msgid "Detalle 1"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
+msgid "Detalle 2"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__lado
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__lado
+msgid "Lado"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__marca
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__marca
+msgid "Marca"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__modelo
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__modelo
+msgid "Modelo"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__procedencia
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__procedencia
+msgid "Procedencia"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de compra"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,help:additional_product_imporpalac.field_purchase_order__evoucher_ids
+msgid "Seleccione un comprobante electrónico de la lista existente"
+msgstr ""
