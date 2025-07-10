@@ -1,0 +1,18 @@
+<odoo>
+    <record id="sale_order_cancel_view_form_counter_sale" model="ir.ui.view">
+        <field name="name">sale.order.cancel.form.inherit.counter.sale</field>
+        <field name="model">sale.order.cancel</field>
+        <field name="inherit_id" ref="sale.sale_order_cancel_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button
+                    type="object"
+                    string="Reprocess"
+                    class="btn btn-primary"
+                    name="action_reprocess"
+                    groups="counter_sale.group_counter_sale_picker"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
