@@ -41,7 +41,7 @@ class SaleOrderPayment(models.Model):
         [
             ("draft", "Pending"),
             ("processed", "Processed"),
-            ("cancel", "cancel"),
+            ("cancel", "Cancel"),
         ],
         default="draft",
     )
