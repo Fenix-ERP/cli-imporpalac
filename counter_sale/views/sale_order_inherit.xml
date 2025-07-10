@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_sale_order_counter_sale">
+        <field name="name">view.sales.order.inherit.counter.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//button[@name='action_confirm' and @id='action_confirm']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_seller</attribute>
+            </xpath>
+            <xpath
+                expr="//button[@name='action_confirm' and not(@id)]"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_seller</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_seller</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@id='create_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_unlock']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_admin</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_lock']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_admin</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
