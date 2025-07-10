@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
         string="Payment method",
         ondelete="cascade",
         readonly=True,
+        required=True,
     )
 
     def action_confirm(self):
@@ -19,7 +20,6 @@ class SaleOrder(models.Model):
             )
             for picking in pickings:
                 picking.payment_method = order.payment_method
-                picking.paid = True
         return res
 
     def _create_invoices(self, grouped=False, final=False):
