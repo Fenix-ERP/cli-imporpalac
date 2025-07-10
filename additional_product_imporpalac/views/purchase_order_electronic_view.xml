@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_purchases_order_purchase_reception" model="ir.ui.view">
+        <field name="name">purchase.order.form.purchase.reception.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="evoucher_ids" />
+                    <button 
+                        name="action_update_costs" 
+                        string="Actualizar costos" 
+                        type="object" 
+                        class="oe_highlight" 
+                        invisible= "evoucher_ids == False" 
+                    />
+                
+                <!-- <field name="evoucher_ids" widget="many2one" options="{'no_open': True}"/> -->
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
