@@ -23,9 +23,8 @@ class SaleOrderPayment(models.Model):
     rectified_date_order = fields.Date(string="Rectified Order Date")
 
     hour_register = fields.Datetime(string="Payment Register Time")
-    hour_register_rectified = fields.Datetime(string="Rectified Payment Time")
 
-    amount_total = fields.Monetary(
+    amount = fields.Monetary(
         string="Total Amount", compute="_compute_amount", currency_field="currency_id"
     )
     rectified_amount = fields.Monetary()
@@ -41,8 +40,8 @@ class SaleOrderPayment(models.Model):
     state = fields.Selection(
         [
             ("draft", "Pending"),
-            ("paid", "Paid"),
-            ("cancelled", "Cancelled"),
+            ("processed", "Processed"),
+            ("cancel", "Cancel"),
         ],
         default="draft",
     )
@@ -57,16 +56,17 @@ class SaleOrderPayment(models.Model):
     @api.depends("order_id")
     def _compute_amount(self):
         for rec in self:
-            rec.amount_total = rec.order_id.amount_total
+            rec.amount = rec.order_id.amount
 
-    @api.depends("amount_total", "rectified_amount", "state")
+    @api.depends("amount", "rectified_amount", "state")
     def _compute_difference(self):
         for rec in self:
-            rec.difference = rec.amount_total - rec.rectified_amount
+            rec.difference = rec.amount - rec.rectified_amount
 
-    def action_open_payment_wizard(self):
+    def process_payment(self):
         for payment in self:
-            payment.state = "paid"
+            payment.state = "processed"
+            payment.hour_register = datetime.now()
 
 
 class SaleOrder(models.Model):
@@ -98,26 +98,3 @@ class SaleOrder(models.Model):
             "domain": [("order_id", "=", self.id)],
             "context": {"default_order_id": self.id},
         }
-
-    def action_cancel_payment(self):
-        res = super(SaleOrder, self).action_cancel_payment()
-        for payment in self.payment_ids:
-            if payment.state != "paid":
-                payment.state = "cancelled"
-        return res
-
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        self.env["sale.order.payment"].create(
-            {
-                "order_id": self.id,
-                "client_id": self.partner_id.id,
-                "date_order": self.date_order,
-                "hour_register": datetime.now(),
-                "amount_total": self.amount_total,
-                "journal_id": self.warehouse_id.journal_payment_id.id,
-                "payment_method": self.payment_method.id,
-                "state": "draft",
-            }
-        )
-        return res
