@@ -2,14 +2,16 @@
     <record id="view_order_form_inherit_payment_button" model="ir.ui.view">
         <field name="name">sale.order.form.inherit.payment.button</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[@class='oe_button_box']" position="inside">
-                <button type="object"
-                        class="oe_stat_button"
-                        name="action_open_payments"
-                        icon="fa-credit-card">
-                    <field name="payment_count" widget="statinfo" string="Payments"/>
+                <button
+                    type="object"
+                    class="oe_stat_button"
+                    name="action_open_payments"
+                    icon="fa-credit-card"
+                >
+                    <field name="payment_count" widget="statinfo" string="Payments" />
                 </button>
             </xpath>
         </field>

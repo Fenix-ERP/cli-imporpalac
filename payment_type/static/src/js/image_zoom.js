@@ -1,6 +1,6 @@
 /** @odoo-module **/
-import { ImageField } from '@web/views/fields/image/image_field';
-import { patch } from "@web/core/utils/patch";
+import {ImageField} from "@web/views/fields/image/image_field";
+import {patch} from "@web/core/utils/patch";
 
 function removeEnlargedImage() {
     const enlargedImg = document.querySelector(".enlarged-image");
@@ -24,9 +24,12 @@ patch(ImageField.prototype, {
         }
 
         const newImg = document.createElement("img");
-        if (clickedImg.src.includes("avatar_128") && (clickedImg.name != 'avatar_128')) {
+        if (clickedImg.src.includes("avatar_128") && clickedImg.name != "avatar_128") {
             newImg.src = clickedImg.src.replace("avatar_128", "image_1920");
-        } else if (clickedImg.src.includes("image_128") && (clickedImg.name != 'image_128')) {
+        } else if (
+            clickedImg.src.includes("image_128") &&
+            clickedImg.name != "image_128"
+        ) {
             newImg.src = clickedImg.src.replace("image_128", "image_1920");
         } else {
             newImg.src = clickedImg.src;

@@ -1,22 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_sale_order_payment_tree" model="ir.ui.view">
         <field name="name">sale.order.payment.tree</field>
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
             <tree string="Pagos de Orden de Venta">
-                <field name="order_number"/>
-                <field name="client_id"/>
-                <field name="date_order"/>
-                <field name="hour_register"/>
-                <field name="hour_register_rectified"/>
-                <field name="amount_total"/>
-                <field name="rectified_order_number"/>
-                <field name="rectified_amount"/>
-                <field name="difference"/>
-                <field name="payment_method"/>
-                <field name="journal_id"/>
-                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'paid'" decoration-danger="state == 'cancelled'"/>
+                <field name="client_id" />
+                <field name="order_id" />
+                <field name="date_order" optional="hide" />
+                <field name="hour_register" />
+                <field name="amount_total" />
+                <field name="rectified_order_id" />
+                <field name="rectified_date_order" optional="hide" />
+                <field name="hour_register_rectified" />
+                <field name="rectified_amount" />
+                <field name="difference" />
+                <field name="payment_method" />
+                <field name="journal_id" optional="hide" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-success="state == 'paid'"
+                    decoration-danger="state == 'cancelled'"
+                />
             </tree>
         </field>
     </record>
@@ -24,15 +31,20 @@
     <record id="view_sale_order_payment_tree_inherit_payment_button" model="ir.ui.view">
         <field name="name">sale.order.payment.tree.inherit.payment.button</field>
         <field name="model">sale.order.payment</field>
-        <field name="inherit_id" ref="sale_order_payment.view_sale_order_payment_tree"/>
+        <field
+            name="inherit_id"
+            ref="sale_order_payment.view_sale_order_payment_tree"
+        />
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="inside">
-                <button name="action_open_payment_wizard"
-                        type="object"
-                        icon="fa-money"
-                        string="Pagar"
-                        invisible="state not in ['draft']"
-                        class="btn-primary"/>
+            <xpath expr="//tree/field[@name='state']" position="before">
+                <button
+                    name="action_open_payment_wizard"
+                    type="object"
+                    icon="fa-money"
+                    string="Pagar"
+                    invisible="state not in ['draft']"
+                    class="btn-primary"
+                />
             </xpath>
         </field>
     </record>
@@ -42,14 +54,30 @@
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
             <search string="Buscar Pagos">
-                <field name="client_id" string="Contacto"/>
-                <field name="date_order" string="Fecha"/>
+                <field name="client_id" string="Contacto" />
+                <field name="date_order" string="Fecha" />
                 <filter name="date_order" string="Date" date="date_order" />
                 <group name="groupby" string="Group by">
-                    <filter name="client_groupby" string="Partner" context="{'group_by': 'client_id'}"/>
-                    <filter name="journal_groupby" string="Journal" context="{'group_by': 'journal_id'}"/>
-                    <filter name="date_groupby" string="Date" context="{'group_by': 'date_order'}"/>
-                    <filter name="state_groupby" string="State" context="{'group_by': 'state'}"/>
+                    <filter
+                        name="client_groupby"
+                        string="Partner"
+                        context="{'group_by': 'client_id'}"
+                    />
+                    <filter
+                        name="journal_groupby"
+                        string="Journal"
+                        context="{'group_by': 'journal_id'}"
+                    />
+                    <filter
+                        name="date_groupby"
+                        string="Date"
+                        context="{'group_by': 'date_order'}"
+                    />
+                    <filter
+                        name="state_groupby"
+                        string="State"
+                        context="{'group_by': 'state'}"
+                    />
                 </group>
             </search>
         </field>
@@ -59,13 +87,15 @@
         <field name="name">Sale Payments</field>
         <field name="res_model">sale.order.payment</field>
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_sale_order_payment_tree"/>
-        <field name="search_view_id" ref="view_sale_order_payment_search"/>
+        <field name="view_id" ref="view_sale_order_payment_tree" />
+        <field name="search_view_id" ref="view_sale_order_payment_search" />
     </record>
 
-    <menuitem id="menu_sale_order_payment_root"
+    <menuitem
+        id="menu_sale_order_payment_root"
         name="Sale Payments"
         parent="sale.sale_order_menu"
         action="sale_order_payment_action"
-        sequence="20"/>
+        sequence="20"
+    />
 </odoo>
