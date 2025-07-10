@@ -98,25 +98,3 @@ class SaleOrder(models.Model):
             "domain": [("order_id", "=", self.id)],
             "context": {"default_order_id": self.id},
         }
-
-    def action_cancel_payment(self):
-        res = super(SaleOrder, self).action_cancel_payment()
-        for payment in self.payment_ids:
-            if payment.state != "processed":
-                payment.state = "cancel"
-        return res
-
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        self.env["sale.order.payment"].create(
-            {
-                "order_id": self.id,
-                "client_id": self.partner_id.id,
-                "date_order": self.date_order,
-                "amount": self.amount,
-                "journal_id": self.warehouse_id.journal_payment_id.id,
-                "payment_method": self.payment_method.id,
-                "state": "draft",
-            }
-        )
-        return res
