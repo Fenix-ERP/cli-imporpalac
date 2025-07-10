@@ -9,10 +9,9 @@
                 <field name="order_id" />
                 <field name="date_order" optional="hide" />
                 <field name="hour_register" />
-                <field name="amount_total" />
+                <field name="amount" />
                 <field name="rectified_order_id" />
                 <field name="rectified_date_order" optional="hide" />
-                <field name="hour_register_rectified" />
                 <field name="rectified_amount" />
                 <field name="difference" />
                 <field name="payment_method" />
@@ -21,8 +20,8 @@
                     name="state"
                     widget="badge"
                     decoration-info="state == 'draft'"
-                    decoration-success="state == 'paid'"
-                    decoration-danger="state == 'cancelled'"
+                    decoration-success="state == 'processed'"
+                    decoration-danger="state == 'cancel'"
                 />
             </tree>
         </field>
@@ -38,7 +37,7 @@
         <field name="arch" type="xml">
             <xpath expr="//tree/field[@name='state']" position="before">
                 <button
-                    name="action_open_payment_wizard"
+                    name="process_payment"
                     type="object"
                     icon="fa-money"
                     string="Pagar"
