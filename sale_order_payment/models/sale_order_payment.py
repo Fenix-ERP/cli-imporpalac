@@ -25,7 +25,7 @@ class SaleOrderPayment(models.Model):
     hour_register = fields.Datetime(string="Payment Register Time")
 
     amount = fields.Monetary(
-        string="Total Amount", compute="_compute_amount", currency_field="currency_id"
+        compute="_compute_amount", currency_field="currency_id", store=True
     )
     rectified_amount = fields.Monetary()
 
@@ -56,7 +56,7 @@ class SaleOrderPayment(models.Model):
     @api.depends("order_id")
     def _compute_amount(self):
         for rec in self:
-            rec.amount = rec.order_id.amount
+            rec.amount = rec.order_id.amount_total
 
     @api.depends("amount", "rectified_amount", "state")
     def _compute_difference(self):
@@ -67,6 +67,8 @@ class SaleOrderPayment(models.Model):
         for payment in self:
             payment.state = "processed"
             payment.hour_register = datetime.now()
+            for picking in payment.order_id.picking_ids:
+                picking.paid = True
 
 
 class SaleOrder(models.Model):
