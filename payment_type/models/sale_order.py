@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
         string="Payment method",
         ondelete="cascade",
         readonly=True,
+        required=True,
     )
 
     def action_confirm(self):
