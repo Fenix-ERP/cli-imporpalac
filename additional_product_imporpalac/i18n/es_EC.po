@@ -158,8 +158,9 @@ msgstr "No se han encontrado productos coincidentes en el pedido para actualizar
 #. odoo-python
 #: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
 #, python-format
-msgid "The vendor %s doesn't match the purchase order's vendor %s."
-msgstr "El proveedor %s no coincide con el proveedor del pedido de compra %s."
+msgid "The vendor %(vendor_name)s doesn't match the purchase order's vendor %(po_vendor_name)s."
+msgstr "El proveedor %(vendor_name)s no coincide con el proveedor del pedido de compra %(po_vendor_name)s."
+
 
 #. module: additional_product_imporpalac
 #. odoo-python
