@@ -44,6 +44,14 @@
                     invisible="state not in ['draft']"
                     class="btn-primary"
                 />
+                <button
+                    name="process_payment"
+                    type="object"
+                    icon="fa-money"
+                    string="Devolver"
+                    class="btn-danger"
+                    invisible="state not in ['draft'] or difference >= 0.0"
+                />
             </xpath>
         </field>
     </record>
