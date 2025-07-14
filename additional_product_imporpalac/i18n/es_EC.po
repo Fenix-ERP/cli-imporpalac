@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 19:27+0000\n"
-"PO-Revision-Date: 2025-07-10 19:27+0000\n"
+"POT-Creation-Date: 2025-07-14 19:52+0000\n"
+"PO-Revision-Date: 2025-07-14 19:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: additional_product_imporpalac
-#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_purchases_order_purchase_reception
-msgid "Actualizar costos"
-msgstr ""
-
-#. module: additional_product_imporpalac
 #: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
 msgid "Additional Information"
-msgstr ""
+msgstr "Información adicional"
 
 #. module: additional_product_imporpalac
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__adicional_1
@@ -74,11 +69,6 @@ msgid "Año"
 msgstr ""
 
 #. module: additional_product_imporpalac
-#: model:ir.model.fields,field_description:additional_product_imporpalac.field_purchase_order__evoucher_ids
-msgid "Comprobante Electrónico"
-msgstr ""
-
-#. module: additional_product_imporpalac
 #: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
 msgid "Detalle 1"
 msgstr ""
@@ -87,6 +77,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
 msgid "Detalle 2"
 msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_account_evoucher
+msgid "Electronic Voucher"
+msgstr "Comprobante Electrónico"
 
 #. module: additional_product_imporpalac
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__lado
@@ -118,11 +113,63 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: additional_product_imporpalac
-#: model:ir.model,name:additional_product_imporpalac.model_purchase_order
-msgid "Purchase Order"
-msgstr "Orden de compra"
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.account_evoucher_upodate_form_view
+msgid "Update Cost"
+msgstr "Actualizar costes"
+
 
 #. module: additional_product_imporpalac
-#: model:ir.model.fields,help:additional_product_imporpalac.field_purchase_order__evoucher_ids
-msgid "Seleccione un comprobante electrónico de la lista existente"
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid "This e-voucher is not linked to any purchase order."
+msgstr "Este voucher electrónico no está vinculado a ninguna orden de compra."
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid "You have already validated the receipt of a purchase order."
+msgstr "Ya tiene validado la recepción de una orden de compra."
+
+
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid "Costs updated successfully!"
+msgstr "Costes actualizados correctamente!"
+
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid "No matching products found in the purchase order to update."
+msgstr "No se han encontrado productos coincidentes en el pedido para actualizar."
+
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid "The vendor %s doesn't match the purchase order's vendor %s."
+msgstr "El proveedor %s no coincide con el proveedor del pedido de compra %s."
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
+msgid ""
+"The following products are not approved in the system:\n"
+"- %s\n"
+"Please homologate products before updating costs."
 msgstr ""
+"Los siguientes productos no están aprobados en el sistema:\n"
+"- %s\n"
+"Por favor homologue los productos antes de actualizar los costos."
