@@ -8,7 +8,7 @@
     "depends": ["stock", "l10n_ec_purchase_reception"],
     "data": [
         "views/additional_product_inherit_view.xml",
-        "views/purchase_order_electronic_view.xml",
+        "views/account_evoucher_update_view.xml",
     ],
     "application": False,
     "installable": True,
