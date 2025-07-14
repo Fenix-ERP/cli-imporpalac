@@ -29,25 +29,26 @@ class SaleOrderLine(models.Model):
 
     @api.onchange("pricelist_line2_id", "product_id")
     def _onchange_pricelist_line2_id(self):
-        if not self.product_id or not self.pricelist_line2_id:
-            return
+        for record in self:
+            if not record.product_id or not record.pricelist_line2_id:
+                return
 
-        try:
-            pricelist = self.pricelist_line2_id
-            product = self.product_id
-            partner = self.order_id.partner_id
+            try:
+                pricelist = record.pricelist_line2_id
+                product = record.product_id
+                partner = record.order_id.partner_id
 
-            price = pricelist.with_context(
-                partner_id=partner.id,
-                quantity=self.product_uom_qty,
-                uom=self.product_uom.id,
-                date=self.order_id.date_order or fields.Date.today(),
-            )._get_product_price(product, self.product_uom_qty, partner)
+                price = pricelist.with_context(
+                    partner_id=partner.id,
+                    quantity=record.product_uom_qty,
+                    uom=record.product_uom.id,
+                    date=record.order_id.date_order or fields.Date.today(),
+                )._get_product_price(product, record.product_uom_qty, partner)
 
-            self.price_unit = price
-        except TypeError as e:
-            _logger.error("Error when calculating the price: %s", str(e))
-            self.price_unit = product.lst_price
+                record.price_unit = price
+            except TypeError as e:
+                _logger.error("Error when calculating the price: %s", str(e))
+                record.price_unit = product.lst_price
 
     @api.onchange("product_uom", "product_uom_qty")
     def _compute_price_unit(self):
@@ -66,5 +67,12 @@ class SaleOrder(models.Model):
         for record in self:
             for line in record.order_line:
                 line.pricelist_line2_id = record.pricelist_id
-        values = super().update_prices()
-        return values
+                line._onchange_pricelist_line2_id()
+        return super().update_prices()
+
+    @api.onchange("pricelist_id")
+    def _onchange_pricelist_id(self):
+        """Cuando cambia la lista de precios, actualiza automáticamente las líneas."""
+        for line in self.order_line:
+            line.pricelist_line2_id = self.pricelist_id
+            line._onchange_pricelist_line2_id()  # Calcula el precio unitario
