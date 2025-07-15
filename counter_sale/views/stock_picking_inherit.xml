@@ -5,96 +5,34 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='location_id'][1]" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='location_id'][2]" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='scheduled_date']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='origin']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='user_id']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath
-                expr="//button[@name='button_validate' and @class='oe_highlight']"
-                position="before"
-            >
-                <button
-                    type="object"
-                    string="Claim"
-                    class="btn btn-primary"
-                    name="action_claim_picking"
-                    groups="counter_sale.group_counter_sale_picker"
-                    invisible="state!='waiting'"
-                />
-                <button
-                    type="object"
-                    string="Ready"
-                    class="btn btn-primary"
-                    name="action_confirm_picking"
-                    groups="counter_sale.group_counter_sale_picker"
-                    invisible="state!='confirmed' or not is_owner_picker_user"
-                />
-            </xpath>
             <xpath expr="//field[@name='origin']" position="after">
-                <field name="is_owner_picker_user" invisible="1" />
                 <field name="is_rectified" invisible="1" />
             </xpath>
             <xpath expr="//button[@name='393']" position="attributes">
-                <attribute
-                    name="groups"
-                >counter_sale.group_counter_sale_seller</attribute>
+                <attribute name="groups">
+                    counter_sale.group_counter_sale_seller
+                </attribute>
             </xpath>
             <xpath
                 expr="//button[@name='button_validate' and @class='oe_highlight']"
                 position="attributes"
             >
-                <attribute
-                    name="invisible"
-                >state in ('draft', 'waiting', 'confirmed', 'done', 'cancel')</attribute>
-
-                <attribute
-                    name="groups"
-                >counter_sale.group_counter_sale_dispatcher</attribute>
+                <attribute name="groups">
+                    counter_sale.group_counter_sale_dispatcher
+                </attribute>
             </xpath>
             <xpath
                 expr="//button[@name='button_validate' and @class='o_btn_validate']"
                 position="attributes"
             >
-                <attribute
-                    name="invisible"
-                >state in ('waiting', 'assigned', 'confirmed', 'done', 'cancel')</attribute>
-
-                <attribute
-                    name="groups"
-                >counter_sale.group_counter_sale_dispatcher</attribute>
+                <attribute name="groups">
+                    counter_sale.group_counter_sale_dispatcher
+                </attribute>
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="attributes">
-                <attribute
-                    name="groups"
-                >counter_sale.group_counter_sale_seller</attribute>
-            </xpath>
-            <xpath
-                expr="//page[@name='operations']/field[@name='move_ids_without_package']/tree"
-                position="attributes"
-            >
-                <attribute name="create">false</attribute>
-                <attribute name="delete">false</attribute>
-                <attribute name="readonly">not parent.is_owner_picker_user</attribute>
-            </xpath>
-            <xpath expr="//field[@name='quantity']" position="attributes">
-                <attribute name="readonly">
-                    not is_quantity_done_editable or parent.state in ('assigned','done','cancel')
+                <attribute name="groups">
+                    counter_sale.group_counter_sale_seller
                 </attribute>
-                <attribute name="max">product_uom_qty</attribute>
             </xpath>
             <xpath
                 expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"

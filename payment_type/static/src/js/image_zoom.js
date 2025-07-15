@@ -24,11 +24,11 @@ patch(ImageField.prototype, {
         }
 
         const newImg = document.createElement("img");
-        if (clickedImg.src.includes("avatar_128") && clickedImg.name != "avatar_128") {
+        if (clickedImg.src.includes("avatar_128") && clickedImg.name !== "avatar_128") {
             newImg.src = clickedImg.src.replace("avatar_128", "image_1920");
         } else if (
             clickedImg.src.includes("image_128") &&
-            clickedImg.name != "image_128"
+            clickedImg.name !== "image_128"
         ) {
             newImg.src = clickedImg.src.replace("image_128", "image_1920");
         } else {

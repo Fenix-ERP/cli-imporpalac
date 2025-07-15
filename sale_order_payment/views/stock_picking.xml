@@ -6,7 +6,43 @@
         <field name="inherit_id" ref="stock.vpicktree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="after">
-                <field name="paid" optional="show" />
+                <field
+                    name="payment_state"
+                    widget="badge"
+                    invisible="picking_type_code != 'outgoing'"
+                    decoration-info="payment_state == 'credit'"
+                    decoration-success="payment_state == 'paid'"
+                    decoration-danger="payment_state == 'not_paid'"
+                    optional="hide"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_stock_picking_form_inherit_payment">
+        <field name="name">stock.picking.form.inherit.payment</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//div" position="before">
+                <field name="payment_state" invisible="1" />
+                <widget
+                    name="web_ribbon"
+                    title="Not Paid"
+                    bg_color="text-bg-danger"
+                    invisible="payment_state != 'not_paid' or picking_type_code!='outgoing'"
+                />
+                <widget
+                    name="web_ribbon"
+                    title="Paid"
+                    bg_color="text-bg-success"
+                    invisible="payment_state != 'paid' or picking_type_code!='outgoing'"
+                />
+                <widget
+                    name="web_ribbon"
+                    title="Credit"
+                    bg_color="text-bg-info"
+                    invisible="payment_state != 'credit' or picking_type_code!='outgoing'"
+                />
             </xpath>
         </field>
     </record>

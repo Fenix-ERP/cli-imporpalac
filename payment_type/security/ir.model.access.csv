@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 manager_access_payment_type,manager access payment type,model_payment_type,sales_team.group_sale_manager,1,1,1,1
+manager_stock_warehouse_payment_method,manager stock warehouse payment method,model_stock_warehouse_payment_method,sales_team.group_sale_manager,1,1,1,1

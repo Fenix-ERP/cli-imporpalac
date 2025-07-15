@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class SaleOrderPayment(models.Model):
@@ -32,6 +32,18 @@ class SaleOrderPayment(models.Model):
     difference = fields.Monetary(compute="_compute_difference")
 
     journal_id = fields.Many2one("account.journal", string="Payment Journal")
+    payment_method_line_id = fields.Many2one(
+        "account.payment.method.line",
+        string="Payment Method",
+        readonly=False,
+        store=True,
+        copy=False,
+        compute="_compute_payment_method_line_id",
+        domain="[('id', 'in', available_payment_method_line_ids)]",
+    )
+    available_payment_method_line_ids = fields.Many2many(
+        "account.payment.method.line", compute="_compute_payment_method_line_fields"
+    )
 
     currency_id = fields.Many2one(
         "res.currency", default=lambda self: self.env.company.currency_id
@@ -51,7 +63,26 @@ class SaleOrderPayment(models.Model):
         string="Payment method",
         ondelete="cascade",
         readonly=True,
+        default=False,
     )
+
+    @api.depends("journal_id")
+    def _compute_payment_method_line_fields(self):
+        for rec in self:
+            rec.available_payment_method_line_ids = (
+                rec.journal_id._get_available_payment_method_lines("inbound")
+            )
+
+    @api.depends("available_payment_method_line_ids")
+    def _compute_payment_method_line_id(self):
+        for rec in self:
+            available_payment_method_lines = rec.available_payment_method_line_ids
+            if rec.payment_method_line_id in available_payment_method_lines:
+                rec.payment_method_line_id = rec.payment_method_line_id
+            elif available_payment_method_lines:
+                rec.payment_method_line_id = available_payment_method_lines[0]._origin
+            else:
+                rec.payment_method_line_id = False
 
     @api.depends("order_id")
     def _compute_amount(self):
@@ -65,10 +96,33 @@ class SaleOrderPayment(models.Model):
 
     def process_payment(self):
         for payment in self:
+            skip_open = self.env.context.get("skip_open_payment_method_wizzard", False)
+            if not skip_open:
+                method_lines = payment.journal_id.inbound_payment_method_line_ids
+                if method_lines:
+                    if len(method_lines) > 1:
+                        domain = self.available_payment_method_line_ids.ids
+                        return {
+                            "name": _("Confirm Payment Method"),
+                            "type": "ir.actions.act_window",
+                            "view_type": "form",
+                            "view_mode": "form",
+                            "res_model": "sale.order.payment.method.wizard",
+                            "view_id": self.env.ref(
+                                "sale_order_payment.sale_order_payment_method_view_form"
+                            ).id,
+                            "target": "new",
+                            "context": {
+                                "default_sale_order_payment_id": self.id,
+                                "default_balance": self.difference,
+                                "default_payment_method_domain": f"[('id', 'in', {domain})]"
+                                "",
+                            },
+                        }
             payment.state = "processed"
             payment.hour_register = datetime.now()
             for picking in payment.order_id.picking_ids:
-                picking.paid = True
+                picking.payment_state = "paid"
 
 
 class SaleOrder(models.Model):

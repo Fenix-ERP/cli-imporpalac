@@ -7,7 +7,28 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='code']" position="after">
                 <field name="journal_id" />
-                <field name="journal_payment_id" />
+            </xpath>
+            <xpath expr="//page[@name='warehouse_config']" position="after">
+                <page string="Payment Methods">
+                    <field name="payment_method_ids">
+                        <tree editable="bottom">
+                            <field
+                                name="current_payment_type_ids_domain"
+                                column_invisible="True"
+                            />
+                            <field
+                                name="payment_type_id"
+                                domain="current_payment_type_ids_domain"
+                                options="{'no_create': True}"
+                            />
+                            <field
+                                name="journal_payment_id"
+                                widget="many2one_barcode"
+                                options="{'no_create': True}"
+                            />
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

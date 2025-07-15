@@ -8,6 +8,7 @@
         "views/sale_order_payment_views.xml",
         "views/sale_order_inherit.xml",
         "views/stock_picking.xml",
+        "wizards/sale_order_payment_method_wizard.xml",
     ],
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "installable": True,
