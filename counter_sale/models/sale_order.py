@@ -37,6 +37,16 @@ class SaleOrder(models.Model):
                     self.warehouse_id.display_name,
                 )
             )
+
+        rectified_amount = 0
+        if self.rectified_order_id:
+            sale_order_payment = self.env["sale.order.payment"].search(
+                [("order_id", "=", self.rectified_order_id.id)]
+            )
+            if sale_order_payment.state == "cancel":
+                rectified_amount = 0
+            else:
+                rectified_amount = self.rectified_order_id.amount_total
         self.env["sale.order.payment"].create(
             {
                 "client_id": self.partner_id.id,
@@ -45,7 +55,7 @@ class SaleOrder(models.Model):
                 "amount": self.amount_total,
                 "rectified_order_id": self.rectified_order_id.id,
                 "rectified_date_order": self.rectified_order_id.date_order,
-                "rectified_amount": self.rectified_order_id.amount_total,
+                "rectified_amount": rectified_amount,
                 "journal_id": self.warehouse_id.journal_payment_id.id,
                 "payment_method": self.payment_method.id,
                 "state": "draft",

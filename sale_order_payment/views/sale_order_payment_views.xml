@@ -41,7 +41,7 @@
                     type="object"
                     icon="fa-money"
                     string="Pagar"
-                    invisible="state not in ['draft']"
+                    invisible="state not in ['draft'] or not difference >= 0.0"
                     class="btn-primary"
                 />
                 <button
