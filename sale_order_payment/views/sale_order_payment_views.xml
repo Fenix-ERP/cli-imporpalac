@@ -42,7 +42,7 @@
                     name="process_payment"
                     type="object"
                     icon="fa-money"
-                    string="Pagar"
+                    string="Cobrar"
                     invisible="state not in ['draft'] or not difference >= 0.0"
                     class="btn-primary"
                 />
