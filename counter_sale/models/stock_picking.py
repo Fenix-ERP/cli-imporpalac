@@ -16,7 +16,7 @@ class StockPicking(models.Model):
                 "partner_type": "customer",
                 "partner_id": partner_id.id,
                 "amount": amount,
-                "payment_method_id": payment_method_id.id,
+                "payment_method_line_id": payment_method_id.id,
                 "journal_id": journal_id.id,
                 "date": fields.Date.today(),
                 # "currency_id": journal_id.currency_id,
