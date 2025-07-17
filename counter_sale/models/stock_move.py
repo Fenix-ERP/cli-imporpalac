@@ -15,3 +15,9 @@ class StockMove(models.Model):
         default=0,
         readonly=True,
     )
+    internal_location_id = fields.Many2one(
+        "stock.location",
+        string="Internal Location",
+        related="sale_line_id.internal_location_id",
+        readonly=True,
+    )
