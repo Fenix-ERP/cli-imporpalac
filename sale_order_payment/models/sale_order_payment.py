@@ -44,11 +44,11 @@ class SaleOrderPayment(models.Model):
     available_payment_method_line_ids = fields.Many2many(
         "account.payment.method.line", compute="_compute_payment_method_line_fields"
     )
-
     currency_id = fields.Many2one(
         "res.currency", default=lambda self: self.env.company.currency_id
     )
-
+    card_id = fields.Many2one("account.card", string="Card Used")
+    reference = fields.Char()
     state = fields.Selection(
         [
             ("draft", "Pending"),
@@ -102,7 +102,13 @@ class SaleOrderPayment(models.Model):
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
                 if method_lines:
-                    if len(method_lines) > 1:
+                    payment_type_credit_card = self.env.ref(
+                        "payment_type.payment_type_credit_card"
+                    )
+                    if (
+                        len(method_lines) > 1
+                        or self.payment_method == payment_type_credit_card
+                    ):
                         domain = self.available_payment_method_line_ids.ids
                         return {
                             "name": _("Confirm Payment Method"),

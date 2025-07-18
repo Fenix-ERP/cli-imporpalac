@@ -6,4 +6,7 @@ class PaymentType(models.Model):
     _description = "Payments types in sales"
 
     name = fields.Char(required=True)
-    is_credit = fields.Boolean(string="Use as credit", default=False)
+    code = fields.Char(
+        required=True,
+        readonly=True,
+    )

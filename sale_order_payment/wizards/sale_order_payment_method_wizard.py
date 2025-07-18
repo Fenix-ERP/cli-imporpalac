@@ -8,6 +8,13 @@ class SaleOrderPaymentMethod(models.TransientModel):
     sale_order_payment_id = fields.Many2one(
         "sale.order.payment", string="Sale Order Payment"
     )
+    sale_order_payment_method_code = fields.Char(
+        string="Payment method",
+        related="sale_order_payment_id.payment_method.code",
+        readonly=True,
+    )
+    reference = fields.Char()
+    card_id = fields.Many2one("account.card", string="Card Used")
     payment_method_line_id = fields.Many2one(
         "account.payment.method.line",
         string="Payment Method",
@@ -22,6 +29,8 @@ class SaleOrderPaymentMethod(models.TransientModel):
     def action_confirm(self):
         self.ensure_one()
         self.sale_order_payment_id.payment_method_line_id = self.payment_method_line_id
+        self.sale_order_payment_id.card_id = self.card_id
+        self.sale_order_payment_id.reference = self.reference
         return self.with_context(
             skip_open_payment_method_wizzard=True
         ).sale_order_payment_id.process_payment()

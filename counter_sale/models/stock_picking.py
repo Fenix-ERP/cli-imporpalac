@@ -20,7 +20,6 @@ class StockPicking(models.Model):
                 "journal_id": journal_id.id,
                 "date": fields.Date.today(),
                 # "currency_id": journal_id.currency_id,
-                "ref": _("Pago xd"),
             }
         )
         payment.action_post()
