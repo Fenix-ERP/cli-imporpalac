@@ -61,6 +61,7 @@ class SaleOrder(models.Model):
                     "journal_id": journal_payment_id.id,
                     "payment_method": self.payment_method.id,
                     "state": "draft",
+                    "company_id": self.company_id.id,
                 }
             )
         else:

@@ -66,6 +66,8 @@ class SaleOrderPayment(models.Model):
         default=False,
     )
 
+    company_id = fields.Many2one("res.company", string="Company")
+
     @api.depends("journal_id")
     def _compute_payment_method_line_fields(self):
         for rec in self:
