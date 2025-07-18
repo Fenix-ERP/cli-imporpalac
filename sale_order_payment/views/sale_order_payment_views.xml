@@ -25,6 +25,7 @@
                     decoration-success="state == 'processed'"
                     decoration-danger="state == 'cancel'"
                 />
+                <field name="company_id" optional="hide" />
             </tree>
         </field>
     </record>
