@@ -32,14 +32,14 @@ class SaleOrder(models.Model):
         journal_payment_id = self.warehouse_id.payment_method_ids.filtered(
             lambda line: line.payment_type_id.id == self.payment_method.id
         ).journal_payment_id
-        if not journal_payment_id and not self.payment_method.is_credit:
+        if not journal_payment_id and self.payment_method.code != "credit":
             raise ValidationError(
                 _(
                     "There is no payment journal in warehouse %s, please assign it.",
                     self.warehouse_id.display_name,
                 )
             )
-        if not self.payment_method.is_credit:
+        if self.payment_method.code != "credit":
             rectified_amount = 0
             if self.rectified_order_id:
                 sale_order_payment = self.env["sale.order.payment"].search(

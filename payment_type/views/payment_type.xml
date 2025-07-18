@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <form string="Type Payment Form">
                 <sheet>
+                    <field name="code" />
                     <field name="name" />
-                    <field name="is_credit" />
                 </sheet>
             </form>
         </field>
@@ -17,9 +17,9 @@
         <field name="name">payment.type.view.list</field>
         <field name="model">payment.type</field>
         <field name="arch" type="xml">
-            <tree string="Type Payment List" editable="bottom">
+            <tree string="Type Payment List" create="false" edit="false">
+                <field name="code" />
                 <field name="name" />
-                <field name="is_credit" />
             </tree>
         </field>
     </record>
@@ -29,8 +29,8 @@
         <field name="model">payment.type</field>
         <field name="arch" type="xml">
             <search>
+                <field name="code" />
                 <field name="name" />
-                <field name="is_credit" />
             </search>
         </field>
     </record>

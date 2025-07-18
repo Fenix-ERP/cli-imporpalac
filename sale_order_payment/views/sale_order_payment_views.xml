@@ -16,7 +16,9 @@
                 <field name="difference" />
                 <field name="payment_method" />
                 <field name="payment_method_line_id" readonly="1" optional="show" />
-                <field name="available_payment_method_line_ids" invisible="1" />
+                <field name="card_id" readonly="1" optional="hide" />
+                <field name="reference" readonly="1" optional="hide" />
+                <field name="available_payment_method_line_ids" column_invisible="1" />
                 <field name="journal_id" optional="hide" />
                 <field
                     name="state"

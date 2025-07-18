@@ -11,14 +11,24 @@
                     <group col="2">
                         <group>
                             <field name="balance" readonly="1" />
+                            <field name="reference" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
-
                         </group>
                         <group>
                             <field
                                 name="payment_method_line_id"
                                 options="{'no_create': True}"
+                            />
+                            <field
+                                name="sale_order_payment_method_code"
+                                options="{'no_create': True}"
+                                invisible="1"
+                            />
+                            <field
+                                name="card_id"
+                                options="{'no_create': True}"
+                                invisible="sale_order_payment_method_code!='credit_card'"
                             />
                         </group>
                     </group>
