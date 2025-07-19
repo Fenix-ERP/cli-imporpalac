@@ -81,7 +81,7 @@ class StockPicking(models.Model):
                     if first_payment:
                         payment = self._create_payment(
                             invoice.partner_id,
-                            first_payment.difference,
+                            first_payment.amount,
                             first_payment.journal_id,
                             first_payment.payment_method_line_id,
                         )
