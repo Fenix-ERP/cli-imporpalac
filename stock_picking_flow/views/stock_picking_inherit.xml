@@ -74,9 +74,11 @@
                 expr="//page[@name='operations']/field[@name='move_ids_without_package']/tree"
                 position="attributes"
             >
-                <attribute name="create">false</attribute>
-                <attribute name="delete">false</attribute>
-                <attribute name="readonly">not parent.is_owner_picker_user</attribute>
+                <attribute name="create">parent.state!='draft'</attribute>
+                <attribute name="delete">parent.state!='draft'</attribute>
+                <attribute
+                    name="readonly"
+                >not parent.is_owner_picker_user and parent.state!='draft'</attribute>
             </xpath>
             <xpath expr="//field[@name='quantity']" position="attributes">
                 <attribute name="readonly">

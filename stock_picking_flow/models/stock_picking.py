@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -19,3 +19,9 @@ class StockPicking(models.Model):
         for picking in self:
             picking.user_id = self.env.user.id
             picking.state = "assigned"
+
+    @api.model
+    def create(self, vals):
+        vals["picker_user_id"] = self.env.user.id
+        record = super(StockPicking, self).create(vals)
+        return record
