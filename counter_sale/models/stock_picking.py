@@ -29,6 +29,8 @@ class StockPicking(models.Model):
         res = super(StockPicking, self).button_validate()
         if res:
             for picking in self:
+                if picking.state != "done":
+                    raise ValidationError(_("The delivery has not been completed."))
                 sale_order = picking.sale_id
                 if sale_order and not picking.return_id:
                     if self.payment_state == "not_paid":

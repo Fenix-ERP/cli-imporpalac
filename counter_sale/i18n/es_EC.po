@@ -129,6 +129,15 @@ msgid ""
 msgstr "Este picking aún no ha sido pagado, por favor solicite el pago en la caja."
 
 #. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The delivery has not been completed."
+msgstr "La entrega aún no ha sido completada."
+
+#. module: counter_sale
 #: model:ir.model,name:counter_sale.model_stock_picking
 msgid "Transfer"
 msgstr "Transferencia"
