@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_ticket_document">
-        <t t-name="sale_order_ticket.report_ticket_document">
+    <template id="report_ticket_cash_document">
+        <t t-name="sale_order_ticket.report_ticket_cash_document">
             <style>
                 .pos-ticket {
                     width: 240px; /* ~80mm */
@@ -26,6 +26,11 @@
                 }
                 .pos-header {
                     font-weight: bold;
+                    margin: 10px 0;
+                }
+                .pos-sale-order {
+                    font-weight: bold;
+                    font-size: 24px;
                     margin: 10px 0;
                 }
                 .pos-order-lines-header,
@@ -78,15 +83,41 @@
             </style>
 
             <div class="pos-ticket">
+                <t t-if="o.company_id.logo">
+                    <img
+                        class="pos-o-logo"
+                        t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
+                        alt="Logo"
+                    />
+                </t>
 
                 <div class="pos-center pos-header">
                     <t t-esc="o.company_id.name" />
                 </div>
 
+                <div class="pos-center">
+                    <t t-if="o.company_id.phone">
+                        Tel:
+                        <t t-esc="o.company_id.phone" />
+                    </t>
+                    <br />
+                    <t t-if="o.company_id.vat">
+                        RUC:
+                        <t t-esc="o.company_id.vat" />
+                    </t>
+                    <br />
+                    <t class="pos-info-line" t-if="o.company_id.email">
+                        <t t-esc="o.company_id.email" />
+                    </t>
+                    <br />
+                    <t t-if="o.company_id.website">
+                        <t t-esc="o.company_id.website" />
+                    </t>
+                </div>
 
                 <div class="pos-line" />
 
-                <div class="pos-center pos-header">
+                <div class="pos-center pos-header pos-sale-order">
                     Orden N:
                     <t t-esc="o.name" />
                 </div>
@@ -99,10 +130,6 @@
                 <div>
                     Método de pago:
                     <t t-esc="o.payment_method.name" />
-                </div>
-                <div>
-                    Vendedor:
-                    <t t-esc="o.user_id.name" />
                 </div>
 
                 <div class="pos-line" />
@@ -159,22 +186,7 @@
                 </div>
 
                 <div class="pos-line" />
-                <div class="pos-order-lines-header">
-                    <div class="flex-qty">Nota</div>
-                    <div class="flex-product">Descripción</div>
-                </div>
-                <t t-foreach="o.lines_info_additional" t-as="line" t-key="line.id">
 
-                    <div class="pos-order-line">
-                        <div class="flex-qty">
-                            <t t-esc="line.name" />
-                        </div>
-                        <div class="flex-product">
-                            <t t-esc="line.description" />
-                        </div>
-                    </div>
-                </t>
-                <div class="pos-line" />
                 <div class="pos-center">
                     <t t-esc="o.date_order" />
                 </div>
@@ -182,10 +194,10 @@
         </t>
     </template>
 
-    <template id="report_ticket">
+    <template id="report_ticket_cash">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="sale_order_ticket.report_ticket_document" />
+                <t t-call="sale_order_ticket.report_ticket_cash_document" />
             </t>
         </t>
     </template>

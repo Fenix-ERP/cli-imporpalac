@@ -9,6 +9,7 @@
     "data": [
         "report/ir_actions_report.xml",
         "views/ticket_report.xml",
+        "views/ticket_report_cash.xml",
     ],
     "images": ["static/description/banner.jpg"],
     "license": "AGPL-3",

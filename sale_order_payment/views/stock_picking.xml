@@ -29,19 +29,19 @@
                     name="web_ribbon"
                     title="Not Paid"
                     bg_color="text-bg-danger"
-                    invisible="payment_state != 'not_paid' or picking_type_code!='outgoing'"
+                    invisible="payment_state != 'not_paid' or picking_type_code!='outgoing' or not return_id"
                 />
                 <widget
                     name="web_ribbon"
                     title="Paid"
                     bg_color="text-bg-success"
-                    invisible="payment_state != 'paid' or picking_type_code!='outgoing'"
+                    invisible="payment_state != 'paid' or picking_type_code!='outgoing' or not return_id"
                 />
                 <widget
                     name="web_ribbon"
                     title="Credit"
                     bg_color="text-bg-info"
-                    invisible="payment_state != 'credit' or picking_type_code!='outgoing'"
+                    invisible="payment_state != 'credit' or picking_type_code!='outgoing' or not return_id"
                 />
             </xpath>
         </field>

@@ -12,8 +12,6 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         self.ensure_one()
         res = super(SaleOrder, self).action_confirm()
-        # Enviar a imprimir a caja
-        # Enviar a imprimir a bodega
         rectified_related_pickings = self.rectified_order_id.picking_ids
         related_pickings = self.picking_ids
         for old_picking, new_picking in zip(
@@ -67,6 +65,8 @@ class SaleOrder(models.Model):
         else:
             for picking in related_pickings:
                 picking.payment_state = "credit"
+        # Enviar a imprimir a caja
+        # Enviar a imprimir a bodega
         return res
 
     def action_cancel(self):

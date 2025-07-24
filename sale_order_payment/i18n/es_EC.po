@@ -1,0 +1,391 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_payment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-24 22:33+0000\n"
+"PO-Revision-Date: 2025-07-24 22:33+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__amount
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__amount
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__amount
+msgid "Amount"
+msgstr "Monto"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__available_payment_method_line_ids
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__available_payment_method_line_ids
+msgid "Available Payment Method Line"
+msgstr "Métodos de pagos disponibles"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__balance
+msgid "Balance"
+msgstr "Monto"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Buscar Pagos"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__cancel
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__card_required
+msgid "Card Required"
+msgstr "Requiere tarjeta"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__card_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__card_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__card_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__card_id
+msgid "Card Used"
+msgstr "Tarjeta usada"
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/wizards/sale_order_payment_method_wizard.py:0
+#, python-format
+msgid "Card Used is required for this type of journal"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__client_id
+msgid "Client"
+msgstr "Cliente"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree_inherit_payment_button
+msgid "Cobrar"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__company_id
+msgid "Company"
+msgstr "Compañia"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/models/sale_order_payment.py:0
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+#, python-format
+msgid "Confirm Payment Method"
+msgstr "Confirmar el método de pago"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Contacto"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__create_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__create_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__create_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__create_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__create_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__stock_picking__payment_state__credit
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_stock_picking_form_inherit_payment
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__currency_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__currency_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__currency_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Date"
+msgstr "Fecha"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree_inherit_payment_button
+msgid "Devolver"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__difference
+msgid "Difference"
+msgstr "Diferencia"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__display_name
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__display_name
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__display_name
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Fecha"
+msgstr ""
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Group by"
+msgstr "Agrupado por"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__journal_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__journal_id
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Journal"
+msgstr "Diario"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__write_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__write_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__write_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__write_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__write_date
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__method_line_ids
+msgid "Method lines"
+msgstr "Lineas"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__is_mixed_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__is_mixed_payment
+msgid "Mix payment"
+msgstr "Pago mixto"
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__stock_picking__payment_state__not_paid
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_stock_picking_form_inherit_payment
+msgid "Not Paid"
+msgstr "No Pagado"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order__payment_count
+msgid "Number of Payments"
+msgstr "Número de pagos"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__date_order
+msgid "Order Date"
+msgstr "Fecha de la orden"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree
+msgid "Pagos de Orden de Venta"
+msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__stock_picking__payment_state__paid
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_stock_picking_form_inherit_payment
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Partner"
+msgstr "Contacto"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__payment_id
+msgid "Payment"
+msgstr "Pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__journal_id
+msgid "Payment Journal"
+msgstr "Diario de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__payment_method_line_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__payment_method_line_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__payment_method_line_id
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__payment_method_line_id
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__payment_method_domain
+msgid "Payment Method Domain"
+msgstr "Dominio del método de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__hour_register
+msgid "Payment Register Time"
+msgstr "Registro de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_stock_picking__payment_state
+msgid "Payment Status"
+msgstr "Estado del pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__payment_line_ids
+msgid "Payment lines"
+msgstr "Lineas de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__payment_method
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__sale_order_payment_method_code
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__sale_order_payment_method_code
+msgid "Payment method"
+msgstr "Método de pago"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_order_form_inherit_payment_button
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order__payment_ids
+msgid "Payments Related"
+msgstr "Pagos relacionados"
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__draft
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+msgid "Please select the payment method"
+msgstr "Por favor seleccione el método de pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__processed
+msgid "Processed"
+msgstr "Procesado"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__rectified_amount
+msgid "Rectified Amount"
+msgstr "Monto rectificado"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__rectified_date_order
+msgid "Rectified Order Date"
+msgstr "Fecha rectificación"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__rectified_order_id
+msgid "Rectified Sale Order"
+msgstr "Orden rectificada"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__name
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__reference
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__reference
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__order_id
+msgid "Sale Order"
+msgstr "Orden de venta"
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__sale_order_payment_id
+msgid "Sale Order Payment"
+msgstr "Pago de orden de venta"
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_sale_order_payment_line
+msgid "Sale Order Payment Line"
+msgstr "Linea de pago de orden de venta"
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_sale_order_payment_method_line_wizard
+msgid "Sale Order Payment Method Line Wizard"
+msgstr "Linea de método de pago"
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_sale_order_payment_method_wizard
+msgid "Sale Order Payment Method Wizard"
+msgstr "Métodos de pago"
+
+#. module: sale_order_payment
+#: model:ir.actions.act_window,name:sale_order_payment.sale_order_payment_action
+#: model:ir.ui.menu,name:sale_order_payment.menu_sale_order_payment_root
+msgid "Sale Payments"
+msgstr "Pagos de venta"
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__state
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "State"
+msgstr "Estado"
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/wizards/sale_order_payment_method_wizard.py:0
+#, python-format
+msgid ""
+"The total amount of payment lines (%(total).2f) must be exactly equal to the"
+" total balance (%(amount).2f)."
+msgstr ""
+"El importe total de las líneas de pago (%(total).2f) debe ser exactamente "
+"igual al saldo total (%(amount).2f)."
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir "
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizzard_id
+msgid "Wizzard"
+msgstr ""

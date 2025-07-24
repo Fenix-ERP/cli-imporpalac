@@ -29,7 +29,7 @@ class SaleOrderPayment(models.Model):
     )
     rectified_amount = fields.Monetary()
 
-    difference = fields.Monetary(compute="_compute_difference")
+    difference = fields.Monetary(compute="_compute_difference", store=True)
 
     journal_id = fields.Many2one("account.journal", string="Payment Journal")
     payment_method_line_id = fields.Many2one(
@@ -42,10 +42,15 @@ class SaleOrderPayment(models.Model):
         domain="[('id', 'in', available_payment_method_line_ids)]",
     )
     available_payment_method_line_ids = fields.Many2many(
-        "account.payment.method.line", compute="_compute_payment_method_line_fields"
+        "account.payment.method.line",
+        compute="_compute_payment_method_line_fields",
+        store=True,
     )
     currency_id = fields.Many2one(
         "res.currency", default=lambda self: self.env.company.currency_id
+    )
+    is_mixed_payment = fields.Boolean(
+        string="Mix payment", default=False, readonly=False
     )
     card_id = fields.Many2one("account.card", string="Card Used")
     reference = fields.Char()
@@ -64,6 +69,12 @@ class SaleOrderPayment(models.Model):
         ondelete="cascade",
         readonly=True,
         default=False,
+    )
+    payment_line_ids = fields.One2many(
+        "sale.order.payment.line",
+        "payment_id",
+        string="Payment lines",
+        copy=True,
     )
 
     company_id = fields.Many2one("res.company", string="Company")
@@ -102,14 +113,20 @@ class SaleOrderPayment(models.Model):
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
                 if method_lines:
-                    payment_type_credit_card = self.env.ref(
-                        "payment_type.payment_type_credit_card"
-                    )
+                    domain = self.available_payment_method_line_ids.ids
+                    ctx = {
+                        "default_sale_order_payment_id": self.id,
+                        "default_balance": self.amount,
+                        "default_payment_method_domain": f"[('id', 'in', {domain})]" "",
+                    }
+                    if self.payment_method.code == "credit_card":
+                        ctx.update({"credit_card": True})
                     if (
                         len(method_lines) > 1
-                        or self.payment_method == payment_type_credit_card
+                        or self.payment_method.code == "credit_card"
+                        or self.is_mixed_payment
                     ):
-                        domain = self.available_payment_method_line_ids.ids
+
                         return {
                             "name": _("Confirm Payment Method"),
                             "type": "ir.actions.act_window",
@@ -120,17 +137,51 @@ class SaleOrderPayment(models.Model):
                                 "sale_order_payment.sale_order_payment_method_view_form"
                             ).id,
                             "target": "new",
-                            "context": {
-                                "default_sale_order_payment_id": self.id,
-                                "default_balance": self.difference,
-                                "default_payment_method_domain": f"[('id', 'in', {domain})]"
-                                "",
-                            },
+                            "context": ctx,
                         }
+            if not self.is_mixed_payment:
+                self.env["sale.order.payment.line"].create(
+                    {
+                        "payment_id": self.id,
+                        "journal_id": self.journal_id.id,
+                        "payment_method_line_id": self.payment_method_line_id.id,
+                        "amount": self.amount,
+                        "card_id": self.card_id.id,
+                    }
+                )
             payment.state = "processed"
             payment.hour_register = datetime.now()
             for picking in payment.order_id.picking_ids:
                 picking.payment_state = "paid"
+
+
+class SaleOrderPaymentLine(models.Model):
+    _name = "sale.order.payment.line"
+    _description = "Sale Order Payment Line"
+    payment_id = fields.Many2one(
+        comodel_name="sale.order.payment",
+        required=True,
+        index=True,
+        auto_join=True,
+        ondelete="cascade",
+        copy=True,
+    )
+    journal_id = fields.Many2one(
+        "account.journal",
+        string="Journal",
+        required=True,
+    )
+    payment_method_line_id = fields.Many2one(
+        "account.payment.method.line",
+        string="Payment Method",
+        readonly=False,
+        required=True,
+        copy=False,
+        domain="payment_method_domain",
+    )
+    card_id = fields.Many2one("account.card", string="Card Used")
+    amount = fields.Monetary(required=True, default=0)
+    currency_id = fields.Many2one("res.currency", string="Currency")
 
 
 class SaleOrder(models.Model):
