@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_ticket_cash_document">
         <t t-name="sale_order_ticket.report_ticket_cash_document">
@@ -84,7 +84,8 @@
 
             <div class="pos-ticket">
                 <t t-if="o.company_id.logo">
-                    <img class="pos-o-logo"
+                    <img
+                        class="pos-o-logo"
                         t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
                         alt="Logo"
                     />
@@ -114,7 +115,7 @@
                     </t>
                 </div>
 
-                <div class="pos-line"></div>
+                <div class="pos-line" />
 
                 <div class="pos-center pos-header pos-sale-order">
                     Orden N:
@@ -131,7 +132,7 @@
                     <t t-esc="o.payment_method.name" />
                 </div>
 
-                <div class="pos-line"></div>
+                <div class="pos-line" />
 
                 <div class="pos-order-lines-header">
                     <div class="flex-qty">Cant.</div>
@@ -158,27 +159,33 @@
                         </div>
 
                         <div class="flex-price">
-                            <t t-esc="'{:.2f}'.format(line.price_unit * line.product_uom_qty)" />
+                            <t
+                                t-esc="'{:.2f}'.format(line.price_unit * line.product_uom_qty)"
+                            />
                         </div>
                     </div>
                 </t>
 
-                <div class="pos-line"></div>
-                <div style="display:flex; justify-content: space-between; font-weight: bold;">
+                <div class="pos-line" />
+                <div
+                    style="display:flex; justify-content: space-between; font-weight: bold;"
+                >
                     <div>Subtotal:</div>
                     <div class="pos-right">
                         <t t-esc="o.amount_untaxed" />
                     </div>
                 </div>
 
-                <div style="display:flex; justify-content: space-between; font-weight: bold;">
+                <div
+                    style="display:flex; justify-content: space-between; font-weight: bold;"
+                >
                     <div>Total:</div>
                     <div class="pos-right">
                         <t t-esc="o.amount_total" />
                     </div>
                 </div>
 
-                <div class="pos-line"></div>
+                <div class="pos-line" />
 
                 <div class="pos-center">
                     <t t-esc="o.date_order" />

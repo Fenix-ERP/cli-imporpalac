@@ -4,7 +4,6 @@ from odoo.http import request
 
 
 class TicketController(http.Controller):
-
     @http.route(
         "/print/ticket_html/<int:order_id>/dispatch",
         type="http",
