@@ -11,6 +11,7 @@
         "payment_type",
         "sale_order_payment",
         "stock_picking_flow",
+        "sale_order_ticket",
     ],
     "data": [
         "security/counter_sale_security.xml",
@@ -18,6 +19,12 @@
         "views/stock_picking_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "counter_sale/static/src/js/confirm_btn_controller.js",
+            "counter_sale/static/src/js/print_ticket.js",
+        ],
+    },
     "demo": [],
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "license": "LGPL-3",

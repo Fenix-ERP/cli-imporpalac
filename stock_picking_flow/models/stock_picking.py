@@ -20,8 +20,9 @@ class StockPicking(models.Model):
             picking.user_id = self.env.user.id
             picking.state = "assigned"
 
-    @api.model
-    def create(self, vals):
-        vals["picker_user_id"] = self.env.user.id
-        record = super(StockPicking, self).create(vals)
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("acc_number"):
+                vals["picker_user_id"] = self.env.user.id
+        return super(StockPicking, self).create(vals_list)

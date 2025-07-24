@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 20:10+0000\n"
-"PO-Revision-Date: 2025-07-10 20:10+0000\n"
+"POT-Creation-Date: 2025-07-24 22:21+0000\n"
+"PO-Revision-Date: 2025-07-24 22:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,17 +18,12 @@ msgstr ""
 #. module: counter_sale
 #: model:ir.module.category,description:counter_sale.module_category_counter_sale
 msgid "Access groups for counter sale"
-msgstr ""
+msgstr "Grupos de acceso para ventas en mostrador"
 
 #. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_admin
 msgid "Admin"
 msgstr "Administrador"
-
-#. module: counter_sale
-#: model_terms:ir.ui.view,arch_db:counter_sale.view_stock_picking_form_inherit_counter_sale
-msgid "Claim"
-msgstr "Reclamar"
 
 #. module: counter_sale
 #: model:ir.module.category,name:counter_sale.module_category_counter_sale
@@ -41,14 +36,14 @@ msgid "Dispatcher"
 msgstr "Despachador"
 
 #. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_owner_picker_user
-msgid "Is Owner Picker User"
-msgstr ""
+#: model:ir.model.fields,field_description:counter_sale.field_stock_move__internal_location_id
+msgid "Internal Location"
+msgstr "Ubicación interna"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
 msgid "Is Rectified"
-msgstr ""
+msgstr "Recificada"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__rectified_product_uom_qty
@@ -61,26 +56,9 @@ msgid "Old Quantity"
 msgstr "Cantidad antigua"
 
 #. module: counter_sale
-#. odoo-python
-#: code:addons/counter_sale/models/stock_picking.py:0
-#, python-format
-msgid "Pago xd"
-msgstr ""
-
-#. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_picker
 msgid "Picker"
 msgstr "Recolector"
-
-#. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__picker_user_id
-msgid "Picker User"
-msgstr "Recolector"
-
-#. module: counter_sale
-#: model_terms:ir.ui.view,arch_db:counter_sale.view_stock_picking_form_inherit_counter_sale
-msgid "Ready"
-msgstr "Listo"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__rectified_order_id
@@ -114,6 +92,13 @@ msgstr "Movimiento de stock"
 
 #. module: counter_sale
 #. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid "The delivery has not been completed."
+msgstr "La entrega aún no ha sido completada."
+
+#. module: counter_sale
+#. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
 msgid "There is no payment journal in warehouse %s, please assign it."
@@ -121,23 +106,26 @@ msgstr "No hay diario de pagos en el almacén %s, por favor, asígnelo."
 
 #. module: counter_sale
 #. odoo-python
-#: code:addons/counter_sale/models/stock_picking.py:0
-#: code:addons/counter_sale/models/stock_picking.py:0
+#: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
-msgid ""
-"This picking has not yet been paid, please request payment at the checkout."
-msgstr "Este picking aún no ha sido pagado, por favor solicite el pago en la caja."
+msgid "This order already has an invoice assigned and cannot be cancelled."
+msgstr "Esta orden ya tiene una factura asignada y no puede ser cancelada"
 
 #. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/stock_picking.py:0
-#: code:addons/counter_sale/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The delivery has not been completed."
-msgstr "La entrega aún no ha sido completada."
+"This picking has not yet been paid, please request payment at the checkout."
+msgstr ""
+"Este picking aún no ha sido pagado, por favor solicite el pago en la caja."
 
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_stock_picking
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Transferir "
+
+#. module: counter_sale
+#: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
+msgid "Ubicación interna asociada al producto"
+msgstr ""

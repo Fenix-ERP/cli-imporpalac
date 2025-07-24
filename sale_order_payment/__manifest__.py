@@ -1,7 +1,7 @@
 {
     "name": "Sale Order Payment",
     "version": "17.0.1.0.0",
-    "depends": ["sale_management", "payment_type"],
+    "depends": ["sale_management", "payment_type", "account_card_settlement"],
     "category": "Sales",
     "data": [
         "security/ir.model.access.csv",

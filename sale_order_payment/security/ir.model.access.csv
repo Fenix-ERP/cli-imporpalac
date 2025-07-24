@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sale_order_payment_user,sale.order.payment,model_sale_order_payment,,1,1,1,1
+access_sale_order_payment_line_user,sale.order.payment.line,model_sale_order_payment_line,,1,1,1,1
 access_sale_order_payment_method_wizard_user,sale.order.payment.method.wizard,model_sale_order_payment_method_wizard,,1,1,1,1
+access_sale_order_payment_method_line_wizard_user,sale.order.payment.method.line.wizard,model_sale_order_payment_method_line_wizard,,1,1,1,1

@@ -14,11 +14,13 @@
                             <field name="reference" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
+                            <field name="is_mixed_payment" />
                         </group>
                         <group>
                             <field
                                 name="payment_method_line_id"
                                 options="{'no_create': True}"
+                                invisible='is_mixed_payment'
                             />
                             <field
                                 name="sale_order_payment_method_code"
@@ -28,10 +30,40 @@
                             <field
                                 name="card_id"
                                 options="{'no_create': True}"
-                                invisible="sale_order_payment_method_code!='credit_card'"
+                                invisible="sale_order_payment_method_code!='credit_card' or is_mixed_payment"
                             />
                         </group>
                     </group>
+                    <field
+                        name="method_line_ids"
+                        nolabel="1"
+                        invisible='not is_mixed_payment'
+                    >
+                        <tree editable="bottom">
+                            <field name="journal_id" options="{'no_create': True}" />
+                            <field
+                                name="available_payment_method_line_ids"
+                                column_invisible="1"
+                            />
+                            <field
+                                name="payment_method_line_id"
+                                options="{'no_create': True}"
+                            />
+                            <field name="card_required" column_invisible="1" />
+                            <field
+                                name="card_id"
+                                invisible="card_required"
+                                column_invisible=" not context.get('credit_card')"
+                                options="{'no_create': True}"
+                            />
+                            <field name="amount" />
+                            <field
+                                name="currency_id"
+                                optional="hide"
+                                options="{'no_create': True}"
+                            />
+                        </tree>
+                    </field>
                 </sheet>
                 <footer>
                     <button
