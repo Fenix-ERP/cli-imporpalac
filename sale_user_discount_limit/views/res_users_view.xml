@@ -2,12 +2,15 @@
     <record id="view_users_form_discount_limit" model="ir.ui.view">
         <field name="name">res.users.form.discount.limit</field>
         <field name="model">res.users</field>
-        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="inherit_id" ref="base.view_users_form" />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='preferences']" position="inside">
                 <group string="Restricción de descuento en ventas">
-                    <field name="limit_discount_enabled"/>
-                    <field name="max_discount_percent" invisible="limit_discount_enabled == False"/>
+                    <field name="limit_discount_enabled" />
+                    <field
+                        name="max_discount_percent"
+                        invisible="limit_discount_enabled == False"
+                    />
                 </group>
             </xpath>
         </field>
