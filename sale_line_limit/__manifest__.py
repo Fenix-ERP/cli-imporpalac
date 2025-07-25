@@ -9,5 +9,6 @@
     ],
     "installable": True,
     "application": False,
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "license": "LGPL-3",
 }
