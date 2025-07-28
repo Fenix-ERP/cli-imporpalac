@@ -30,17 +30,30 @@ class SaleOrderPaymentMethod(models.TransientModel):
     )
     payment_method_domain = fields.Char()
     balance = fields.Monetary(readonly=True)
+    residual = fields.Monetary(readonly=True, compute="_compute_residual_amount")
     method_line_ids = fields.One2many(
         "sale.order.payment.method.line.wizard",
         "wizzard_id",
         string="Method lines",
         copy=True,
     )
-    currency_id = fields.Many2one("res.currency", string="Currency")
+    currency_id = fields.Many2one(
+        "res.currency",
+        string="Currency",
+        default=lambda self: self.env.company.currency_id.id,
+    )
+
+    @api.depends("method_line_ids", "balance")
+    def _compute_residual_amount(self):
+        for wizard in self:
+            total_payed = sum(line.amount for line in wizard.method_line_ids)
+            self.residual = self.balance - total_payed
 
     @api.constrains("method_line_ids", "balance")
     def _check_total_amount(self):
         for wizard in self:
+            if not wizard.is_mixed_payment:
+                continue
             total = sum(line.amount for line in wizard.method_line_ids)
             if not float_compare(total, wizard.balance, precision_digits=2) == 0:
                 raise ValidationError(
