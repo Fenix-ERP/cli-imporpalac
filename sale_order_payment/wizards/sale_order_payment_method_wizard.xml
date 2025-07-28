@@ -10,13 +10,26 @@
                     </div>
                     <group col="2">
                         <group>
-                            <field name="balance" readonly="1" />
+                            <field
+                                name="balance"
+                                readonly="1"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                             <field name="reference" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
-                            <field name="is_mixed_payment" />
+                            <field name="is_mixed_payment" invisible="1" />
+                            <field name="currency_id" invisible="1" />
                         </group>
                         <group>
+                            <field
+                                name="residual"
+                                invisible="not is_mixed_payment"
+                                readonly="1"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                             <field
                                 name="payment_method_line_id"
                                 options="{'no_create': True}"
