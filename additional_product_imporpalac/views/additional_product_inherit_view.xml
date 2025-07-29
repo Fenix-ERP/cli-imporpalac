@@ -30,6 +30,12 @@
                     </group>
                 </page>
             </xpath>
+            <xpath expr="//field[@name='categ_id']" position="attributes">
+                <attribute name="modifiers">{
+                    "required": [["type", "=", "product"]]
+                }</attribute>
+                <attribute name="required">type == 'product'</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
