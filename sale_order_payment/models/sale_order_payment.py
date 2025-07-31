@@ -6,6 +6,7 @@ from odoo import _, api, fields, models
 class SaleOrderPayment(models.Model):
     _name = "sale.order.payment"
     _description = "Sale Order Payment"
+    _check_company_auto = True
 
     name = fields.Char(
         string="Reference",
@@ -77,7 +78,15 @@ class SaleOrderPayment(models.Model):
         copy=True,
     )
 
-    company_id = fields.Many2one("res.company", string="Company")
+    company_id = fields.Many2one(
+        "res.company",
+        string="Compañía",
+        default=lambda self: self.env.company,
+        required=True,
+        index=True,
+        ondelete="restrict",
+        check_company=True,
+    )
 
     @api.depends("journal_id")
     def _compute_payment_method_line_fields(self):

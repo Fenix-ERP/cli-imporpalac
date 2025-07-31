@@ -9,6 +9,8 @@ class SaleOrder(models.Model):
         "sale.order", string="Rectified Sale Order", readonly=True
     )
 
+    note = fields.Text(required=True)
+
     def action_confirm(self):
         self.ensure_one()
         res = super(SaleOrder, self).action_confirm()
