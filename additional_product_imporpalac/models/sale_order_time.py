@@ -18,19 +18,14 @@ class SaleOrder(models.Model):
         help="Usuario que realizó el despacho",
     )
 
-    @api.depends("picking_ids.user_id")
+    @api.depends("picking_ids.user_id", "picking_ids.state", "picking_ids.date_done")
     def _compute_dispatcher(self):
         for order in self:
-            # Tomamos el último picking completado
-            done_pickings = order.picking_ids.filtered(lambda p: p.date_done)
-            if done_pickings:
-                # Ordenamos por fecha de done y tomamos el más reciente
-                last_picking = done_pickings.sorted(
-                    key=lambda p: p.date_done, reverse=True
-                )[0]
-                order.dispatcher_id = last_picking.user_id
-            else:
-                order.dispatcher_id = False
+            done_pickings = order.picking_ids.filtered(
+                lambda p: p.state == "done" and p.date_done
+            ).sorted("date_done", reverse=True)
+
+            order.dispatcher_id = done_pickings[0].user_id if done_pickings else False
 
     @api.depends("create_date", "date_order", "picking_ids.date_done")
     def _compute_elapsed_time(self):
@@ -73,3 +68,13 @@ class SaleOrder(models.Model):
                 time_parts.append(f"{minutes} minutos")
 
             order.elapsed_time = ", ".join(time_parts)
+
+
+class StockPicking(models.Model):
+    _inherit = "stock.picking"
+
+    def action_done(self):
+        res = super(StockPicking, self).action_done()
+        sale_orders = self.mapped("sale_id")
+        sale_orders._compute_dispatcher()
+        return res
