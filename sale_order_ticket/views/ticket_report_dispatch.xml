@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_ticket_document">
-        <t t-name="sale_order_ticket.report_ticket_document">
+    <template id="report_ticket_dispatch_document">
+        <t t-name="sale_order_ticket.report_ticket_dispatch_document">
             <style>
                 .pos-ticket {
                     width: 240px; /* ~80mm */
@@ -26,10 +26,17 @@
                 }
                 .pos-header {
                     font-weight: bold;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
+                .pos-sale-order {
+                    font-weight: bold;
+                    font-size: 24px;
                     margin: 10px 0;
                 }
                 .pos-order-lines-header,
                 .pos-order-line {
+                    font-size: 14px;
                     display: flex;
                     align-items: center;
                 }
@@ -86,22 +93,19 @@
 
                 <div class="pos-line" />
 
-                <div class="pos-center pos-header">
+                <div class="pos-center pos-header pos-sale-order">
                     Orden N:
                     <t t-esc="o.name" />
                 </div>
 
                 <div>
-                    Cliente:
                     <t t-esc="o.partner_id.name" />
                 </div>
 
                 <div>
-                    Método de pago:
                     <t t-esc="o.payment_method.name" />
                 </div>
                 <div>
-                    Vendedor:
                     <t t-esc="o.user_id.name" />
                 </div>
 
@@ -182,10 +186,10 @@
         </t>
     </template>
 
-    <template id="report_ticket">
+    <template id="report_ticket_dispatch">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="sale_order_ticket.report_ticket_document" />
+                <t t-call="sale_order_ticket.report_ticket_dispatch_document" />
             </t>
         </t>
     </template>

@@ -42,6 +42,17 @@ class SaleOrderPaymentMethod(models.TransientModel):
         string="Currency",
         default=lambda self: self.env.company.currency_id.id,
     )
+    available_journal_ids = fields.Many2many(
+        "account.journal", compute="_compute_available_journals"
+    )
+
+    @api.depends("sale_order_payment_method_code")
+    def _compute_available_journals(self):
+        if self.sale_order_payment_method_code == "credit_card":
+            domain = [("type", "in", ["bank", "cash"])]
+        else:
+            domain = [("type", "in", ["bank", "cash"]), ("is_card_journal", "=", False)]
+        self.available_journal_ids = self.env["account.journal"].search(domain)
 
     @api.depends("method_line_ids", "balance")
     def _compute_residual_amount(self):
@@ -68,6 +79,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
     def action_confirm(self):
         self.ensure_one()
         self.sale_order_payment_id.reference = self.reference
+        self.sale_order_payment_id.card_id = self.card_id
         for line in self.method_line_ids:
             self.env["sale.order.payment.line"].create(
                 {
@@ -99,16 +111,13 @@ class SaleOrderPaymentMethodLine(models.TransientModel):
         related="wizzard_id.sale_order_payment_method_code",
         readonly=True,
     )
-
-    def _get_journal_domain(self):
-        if self.sale_order_payment_method_code == "credit_card":
-            return [("type", "in", ["bank", "cash"]), ("is_card_journal", "=", True)]
-        else:
-            return [("type", "in", ["bank", "cash"]), ("is_card_journal", "=", False)]
-
-    journal_id = fields.Many2one(
-        "account.journal", string="Journal", required=True, domain=_get_journal_domain
+    available_journal_ids = fields.Many2many(
+        "account.journal",
+        related="wizzard_id.available_journal_ids",
+        readonly=True,
     )
+
+    journal_id = fields.Many2one("account.journal", string="Journal", required=True)
     available_payment_method_line_ids = fields.Many2many(
         "account.payment.method.line", compute="_compute_payment_method_line_fields"
     )

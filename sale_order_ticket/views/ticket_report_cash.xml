@@ -74,7 +74,12 @@
                     word-break: break-word;
                     white-space: normal;
                 }
-
+                .total-line {
+                    border-top: 1px solid #000;
+                    padding-top: 4px;
+                    margin-top: 0; /* ya no es necesario separar arriba si usamos align-items */
+                    display: inline-block;
+                }
                 .product-code {
                     margin-left: 4px;
                     color: #444;
@@ -91,18 +96,12 @@
                     />
                 </t>
 
-                <div class="pos-center pos-header">
-                    <t t-esc="o.company_id.name" />
-                </div>
-
                 <div class="pos-center">
                     <t t-if="o.company_id.phone">
-                        Tel:
                         <t t-esc="o.company_id.phone" />
                     </t>
                     <br />
                     <t t-if="o.company_id.vat">
-                        RUC:
                         <t t-esc="o.company_id.vat" />
                     </t>
                     <br />
@@ -123,15 +122,15 @@
                 </div>
 
                 <div>
-                    Cliente:
                     <t t-esc="o.partner_id.name" />
                 </div>
 
                 <div>
-                    Método de pago:
                     <t t-esc="o.payment_method.name" />
                 </div>
-
+                <div>
+                    <t t-esc="o.user_id.name" />
+                </div>
                 <div class="pos-line" />
 
                 <div class="pos-order-lines-header">
@@ -170,18 +169,92 @@
                 <div
                     style="display:flex; justify-content: space-between; font-weight: bold;"
                 >
-                    <div>Subtotal:</div>
+                    <div>Subtotal sin Desc:</div>
                     <div class="pos-right">
-                        <t t-esc="o.amount_untaxed" />
+                        <t t-esc="'%.2f' %  o.amount_undiscounted" />
                     </div>
                 </div>
-
+                <!-- <div
+                    style="display:flex; justify-content: space-between; font-weight: bold;"
+                >
+                    <div>Subtotal 0%:</div>
+                    <div class="pos-right">
+                        <t t-esc="'%.2f' %  o.amount_undiscounted" />
+                    </div>
+                </div> -->
                 <div
                     style="display:flex; justify-content: space-between; font-weight: bold;"
                 >
-                    <div>Total:</div>
+                    <div>Descuento:</div>
                     <div class="pos-right">
-                        <t t-esc="o.amount_total" />
+                        <t
+                            t-esc="'%.2f' % (o.amount_untaxed - o.amount_undiscounted)"
+                        />
+                    </div>
+                </div>
+                <t t-set="tax_summary" t-value="{}" />
+                <t t-set="tax_summary_vals" t-value="{}" />
+                <t t-foreach="o.order_line" t-as="line">
+                    <t t-set="taxes" t-value="line.tax_id" />
+                    <t t-foreach="taxes" t-as="tax">
+                        <t t-set="name" t-value="tax['name']+':'" />
+                        <t t-set="amount" t-value="tax['amount']" />
+                        <t t-set="type" t-value="tax['amount_type']" />
+                        <t t-if="type == 'percent'">
+                            <t t-set="value" t-value="line.price_subtotal*amount/100" />
+                        </t>
+                        <t t-else="">
+                            <t t-set="value" t-value="line.price_subtotal+amount" />
+                        </t>
+                        <t t-set="sub" t-value="line.price_subtotal" />
+                        <t t-set="acc" t-value="tax_summary.get(name, 0.0) + sub" />
+                        <t
+                            t-set="acc_val"
+                            t-value="tax_summary_vals.get(name, 0.0) + value"
+                        />
+                        <t
+                            t-set="tax_summary"
+                            t-value="dict(tax_summary, **{name: acc})"
+                        />
+                        <t
+                            t-set="tax_summary_vals"
+                            t-value="dict(tax_summary_vals, **{name: acc_val})"
+                        />
+                    </t>
+                </t>
+
+                <!-- Subtotales por impuesto -->
+                <t t-foreach="tax_summary.items()" t-as="tax_line">
+                    <div
+                        style="display:flex; justify-content: space-between; font-weight: bold;"
+                    >
+                        <div>
+                            Subtotal
+                            <t t-esc="tax_line[0]" />
+                        </div>
+                        <div class="pos-right">
+                            <t t-esc="'%.2f' % tax_line[1]" />
+                        </div>
+                    </div>
+                </t>
+                <t t-foreach="tax_summary_vals.items()" t-as="taxv_line">
+                    <div
+                        style="display:flex; justify-content: space-between; font-weight: bold;"
+                    >
+                        <div>
+                            <t t-esc="taxv_line[0]" />
+                        </div>
+                        <div class="pos-right">
+                            <t t-esc="'%.2f' % taxv_line[1]" />
+                        </div>
+                    </div>
+                </t>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-end; font-weight: bold;"
+                >
+                    <div>Total:</div>
+                    <div class="pos-right total-line">
+                        <t t-esc="'%.2f' % o.amount_total" />
                     </div>
                 </div>
 

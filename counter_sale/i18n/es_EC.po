@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 22:21+0000\n"
-"PO-Revision-Date: 2025-07-24 22:21+0000\n"
+"POT-Creation-Date: 2025-08-02 18:15+0000\n"
+"PO-Revision-Date: 2025-08-02 18:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,11 @@ msgid "Admin"
 msgstr "Administrador"
 
 #. module: counter_sale
+#: model:ir.actions.server,name:counter_sale.ir_cron_expire_quotations_ir_actions_server
+msgid "Automatic expiration of quotes"
+msgstr "Expiración automática de cotizaciones"
+
+#. module: counter_sale
 #: model:ir.module.category,name:counter_sale.module_category_counter_sale
 msgid "Counter Sale"
 msgstr "Venta en mostrador"
@@ -36,6 +41,12 @@ msgid "Dispatcher"
 msgstr "Despachador"
 
 #. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_sale_order__expired
+#: model_terms:ir.ui.view,arch_db:counter_sale.view_sale_order_counter_sale
+msgid "Expired"
+msgstr "Expirada"
+
+#. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__internal_location_id
 msgid "Internal Location"
 msgstr "Ubicación interna"
@@ -44,6 +55,11 @@ msgstr "Ubicación interna"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
 msgid "Is Rectified"
 msgstr "Recificada"
+
+#. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_sale_order__note
+msgid "Note"
+msgstr "Términos y condiciones"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__rectified_product_uom_qty
@@ -61,6 +77,11 @@ msgid "Picker"
 msgstr "Recolector"
 
 #. module: counter_sale
+#: model:ir.actions.server,name:counter_sale.action_print_ticket_server
+msgid "Print Ticket"
+msgstr "Imprimir Ticket"
+
+#. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__rectified_order_id
 msgid "Rectified Sale Order"
 msgstr "Orden de Venta Rectificada"
@@ -72,7 +93,7 @@ msgstr "Reprocesar"
 
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_sale_order
-msgid "Sales Order"
+msgid "Sale order"
 msgstr "Orden de venta"
 
 #. module: counter_sale

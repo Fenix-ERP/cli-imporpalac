@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from odoo import _, fields, models
 from odoo.exceptions import UserError, ValidationError
 
@@ -8,7 +10,7 @@ class SaleOrder(models.Model):
     rectified_order_id = fields.Many2one(
         "sale.order", string="Rectified Sale Order", readonly=True
     )
-
+    expired = fields.Boolean(readonly=False)
     note = fields.Text(required=True)
 
     def action_confirm(self):
@@ -67,8 +69,6 @@ class SaleOrder(models.Model):
         else:
             for picking in related_pickings:
                 picking.payment_state = "credit"
-        # Enviar a imprimir a caja
-        # Enviar a imprimir a bodega
         return res
 
     def action_cancel(self):
@@ -82,3 +82,13 @@ class SaleOrder(models.Model):
             if payment.state != "processed":
                 payment.state = "cancel"
         return res
+
+    def action_expire_quotations(self, hours=48):
+        expiration_time = datetime.now() - timedelta(hours=hours)
+        expired_orders = self.sudo().search(
+            [
+                ("state", "=", "draft"),
+                ("create_date", "<=", expiration_time),
+            ]
+        )
+        expired_orders.sudo().write({"state": "cancel", "expired": True})
