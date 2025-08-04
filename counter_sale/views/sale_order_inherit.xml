@@ -11,6 +11,18 @@
             <xpath expr="//button[@id='create_invoice']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='product_template_id']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//sheet//div" position="before">
+                <field name="expired" invisible="1" />
+                <widget
+                    name="web_ribbon"
+                    title="Expired"
+                    bg_color="text-bg-danger"
+                    invisible="not expired"
+                />
+            </xpath>
             <xpath
                 expr="//button[@id='create_invoice_percentage']"
                 position="attributes"
@@ -62,4 +74,21 @@
             </xpath>
         </field>
     </record>
+    <record id="action_print_ticket_server" model="ir.actions.server">
+        <field name="name">Print Ticket</field>
+        <field name="model_id" ref="model_sale_order" />
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'print_sale_order',
+            'params': {
+                'order_id': record.id,
+            }
+        }
+    </field>
+    </record>
+
 </odoo>

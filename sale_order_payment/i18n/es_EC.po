@@ -45,6 +45,11 @@ msgid "Cancel"
 msgstr "Cancelado"
 
 #. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+msgid "Cancel "
+msgstr "Cancelar"
+
+#. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__card_required
 msgid "Card Required"
 msgstr "Requiere tarjeta"

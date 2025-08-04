@@ -15,6 +15,7 @@
     ],
     "data": [
         "security/counter_sale_security.xml",
+        "data/expire_quotation_cron.xml",
         "views/sale_order_inherit.xml",
         "views/stock_picking_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",

@@ -1,6 +1,6 @@
 <odoo>
     <record id="sale_order_payment_method_view_form" model="ir.ui.view">
-        <field name="name">sale.order.payment.method.wizard.form.</field>
+        <field name="name">sale.order.payment.method.wizard.form</field>
         <field name="model">sale.order.payment.method.wizard</field>
         <field name="arch" type="xml">
             <form string="Confirm Payment Method">
@@ -17,6 +17,7 @@
                                 options="{'currency_field': 'currency_id'}"
                             />
                             <field name="reference" />
+                            <field name="available_journal_ids" invisible="1" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
                             <field name="is_mixed_payment" invisible="1" />
@@ -53,7 +54,12 @@
                         invisible='not is_mixed_payment'
                     >
                         <tree editable="bottom">
-                            <field name="journal_id" options="{'no_create': True}" />
+                            <field
+                                name="journal_id"
+                                options="{'no_create': True}"
+                                domain="[('id','in',available_journal_ids)]"
+                            />
+                            <field name="available_journal_ids" column_invisible="1" />
                             <field
                                 name="available_payment_method_line_ids"
                                 column_invisible="1"
@@ -65,7 +71,7 @@
                             <field name="card_required" column_invisible="1" />
                             <field
                                 name="card_id"
-                                invisible="card_required"
+                                invisible="not card_required"
                                 column_invisible=" not context.get('credit_card')"
                                 options="{'no_create': True}"
                             />
@@ -86,7 +92,7 @@
                         name="action_confirm"
                     />
                     <button
-                        string="Cancel"
+                        string="Cancel "
                         class="btn-secondary"
                         special="cancel"
                         data-hotkey="x"
