@@ -12,6 +12,7 @@
         "sale_order_payment",
         "stock_picking_flow",
         "sale_order_ticket",
+        "bi_so_po_catalog_view",
         "qz_tray_printer",
     ],
     "data": [

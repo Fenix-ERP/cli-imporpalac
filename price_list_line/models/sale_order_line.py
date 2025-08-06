@@ -76,3 +76,10 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             line.pricelist_line2_id = self.pricelist_id
             line._onchange_pricelist_line2_id()  # Calcula el precio unitario
+        self._recompute_prices()
+
+    @api.onchange("pricelist_id")
+    def _onchange_pricelist_id_show_update_prices(self):
+        res = super()._onchange_pricelist_id_show_update_prices()
+        self.show_update_pricelist = False
+        return res
