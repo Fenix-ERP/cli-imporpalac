@@ -1,6 +1,5 @@
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import html2plaintext
 
 
 class StockPicking(models.Model):
@@ -47,22 +46,6 @@ class StockPicking(models.Model):
                     invoice.write({"payment_method": picking.payment_method.id})
                     if sale_order.note:
                         sale_order.invoice_ids.write({"narration": sale_order.note})
-                        plain_text = html2plaintext(sale_order.note)
-
-                        sale_order.invoice_ids.write(
-                            {
-                                "lines_info_additional": [
-                                    (
-                                        0,
-                                        0,
-                                        {
-                                            "name": "Observaciones",
-                                            "description": plain_text,
-                                        },
-                                    )
-                                ]
-                            }
-                        )
                     if sale_order.lines_info_additional:
                         sale_order.invoice_ids.write(
                             {
