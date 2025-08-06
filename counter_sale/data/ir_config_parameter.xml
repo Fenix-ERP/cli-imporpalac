@@ -1,0 +1,11 @@
+<odoo noupdate="1">
+    <record id="qz_printer_cash_name" model="ir.config_parameter">
+        <field name="key">qz.printer.cash.name</field>
+        <field name="value">POS-80C</field>
+    </record>
+
+    <record id="qz_printer_dispatch_name" model="ir.config_parameter">
+        <field name="key">qz.printer.dispatch.name</field>
+        <field name="value">POS-80C</field>
+    </record>
+</odoo>

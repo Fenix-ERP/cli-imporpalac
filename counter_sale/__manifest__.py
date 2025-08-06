@@ -12,10 +12,12 @@
         "sale_order_payment",
         "stock_picking_flow",
         "sale_order_ticket",
+        "qz_tray_printer",
     ],
     "data": [
         "security/counter_sale_security.xml",
         "data/expire_quotation_cron.xml",
+        "data/ir_config_parameter.xml",
         "views/sale_order_inherit.xml",
         "views/stock_picking_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
@@ -23,7 +25,6 @@
     "assets": {
         "web.assets_backend": [
             "counter_sale/static/src/js/confirm_btn_controller.js",
-            "counter_sale/static/src/js/print_ticket.js",
         ],
     },
     "demo": [],

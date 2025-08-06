@@ -36,9 +36,6 @@
                 <attribute name="groups">
                     counter_sale.group_counter_sale_seller
                 </attribute>
-                <attribute name="js_class">
-                    confirm_sale_order_print_btn
-                </attribute>
             </xpath>
             <xpath
                 expr="//button[@name='action_confirm' and not(@id)]"
@@ -46,9 +43,6 @@
             >
                 <attribute name="groups">
                     counter_sale.group_counter_sale_seller
-                </attribute>
-                <attribute name="js_class">
-                    confirm_sale_order_print_btn
                 </attribute>
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="attributes">
