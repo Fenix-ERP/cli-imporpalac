@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -11,7 +11,28 @@ class SaleOrder(models.Model):
         "sale.order", string="Rectified Sale Order", readonly=True
     )
     expired = fields.Boolean(readonly=False)
-    note = fields.Text(required=True)
+
+    @api.model
+    def action_print_ticket(self, order_id):
+        order = self.browse(order_id)
+        if order.state != "sale":
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": _("Invalid status"),
+                    "message": _("The order must be in Confirmed state to print."),
+                    "sticky": False,
+                    "type": "danger",
+                },
+            }
+        return {
+            "type": "ir.actions.client",
+            "tag": "print_sale_order",
+            "params": {
+                "order_id": order.id,
+            },
+        }
 
     def action_confirm(self):
         self.ensure_one()
