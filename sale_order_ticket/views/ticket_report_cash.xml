@@ -139,7 +139,7 @@
                     <div class="flex-price">Total</div>
                 </div>
 
-                <t t-foreach="o.order_line" t-as="line" t-key="line.id">
+                <t t-foreach="o.order_line" t-as="line">
                     <div class="pos-order-line">
                         <div class="flex-qty">
                             <t t-esc="int(line.product_uom_qty)" />

@@ -6,41 +6,47 @@ import {patch} from "@web/core/utils/patch";
 async function print_sale_tickets(env, action) {
     const orderId = action.params.order_id || env.model.root.resId;
 
-    const [dispatchRes, cashRes] = await Promise.all([
+    const [dispatchRes, cashRes, printers] = await Promise.all([
         fetch(`/print/ticket_html/${orderId}/dispatch`),
         fetch(`/print/ticket_html/${orderId}/cash_register`),
+        fetch("/print/imporpalac_printers"),
     ]);
 
-    const [htmlDispatch, htmlCash] = await Promise.all([
+    const [htmlDispatch, htmlCash, printerNames] = await Promise.all([
         dispatchRes.text(),
         cashRes.text(),
+        printers.json(),
     ]);
 
-    const buildPrintData = (html) => [
-        {
-            type: "pixel",
-            format: "html",
-            flavor: "plain",
-            data: html,
+    const {cash_printer, dispatch_printer} = printerNames;
+    const cashPrinterName = cash_printer || "default-printer";
+    const DispatchPrinterName = dispatch_printer || "default-printer";
+    const cashPrint = {
+        name: cashPrinterName,
+        options: {
+            jobName: `Ticket Caja Orden ${orderId}`,
+            copies: 2,
         },
-    ];
+    };
+    const dispatchPrint = {
+        name: DispatchPrinterName,
+        options: {
+            jobName: `Ticket Despacho Orden ${orderId}`,
+        },
+    };
 
-    const doPrint = async (printData, printerName) => {
+    const qz_print = async (printer, printData) => {
         return env.services.action.doAction({
             type: "ir.actions.client",
-            tag: "print_ticket_js",
+            tag: "qz_print_action",
             params: {
-                printerName,
+                printer,
                 printData,
             },
         });
     };
-    const cashPrinter = "POS-80C";
-    const dispatchPrinter = "POS-80C";
-
-    await doPrint(buildPrintData(htmlCash), cashPrinter);
-    await doPrint(buildPrintData(htmlCash), cashPrinter);
-    await doPrint(buildPrintData(htmlDispatch), dispatchPrinter);
+    await qz_print(cashPrint, htmlCash);
+    await qz_print(dispatchPrint, htmlDispatch);
 }
 
 patch(FormController.prototype, {
