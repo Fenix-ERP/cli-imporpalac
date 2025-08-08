@@ -10,9 +10,11 @@
         "views/additional_product_inherit_view.xml",
         "views/account_evoucher_update_view.xml",
         "views/sale_order_time_view.xml",
+        "views/account_homologate_inherit_view.xml",
     ],
     "application": False,
     "installable": True,
     "auto_install": False,
     "license": "OPL-1",
+    "external_dependencies": {"python": ["openpyxl"]},
 }
