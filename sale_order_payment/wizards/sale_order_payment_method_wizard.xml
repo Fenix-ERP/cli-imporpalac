@@ -16,7 +16,7 @@
                                 widget='monetary'
                                 options="{'currency_field': 'currency_id'}"
                             />
-                            <field name="reference" />
+                            <field name="reference" invisible="is_mixed_payment" />
                             <field name="available_journal_ids" invisible="1" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
@@ -75,6 +75,7 @@
                                 column_invisible=" not context.get('credit_card')"
                                 options="{'no_create': True}"
                             />
+                            <field name="reference" options="{'no_create': True}" />
                             <field name="amount" />
                             <field
                                 name="currency_id"
