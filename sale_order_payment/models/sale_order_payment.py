@@ -188,6 +188,7 @@ class SaleOrderPaymentLine(models.Model):
         copy=False,
         domain="payment_method_domain",
     )
+    reference = fields.Char()
     card_id = fields.Many2one("account.card", string="Card Used")
     amount = fields.Monetary(required=True, default=0)
     currency_id = fields.Many2one("res.currency", string="Currency")

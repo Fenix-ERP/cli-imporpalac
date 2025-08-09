@@ -88,6 +88,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
                     "payment_method_line_id": line.payment_method_line_id.id,
                     "amount": line.amount,
                     "card_id": line.card_id.id,
+                    "reference": line.reference,
                 }
             )
         return self.with_context(
@@ -116,7 +117,7 @@ class SaleOrderPaymentMethodLine(models.TransientModel):
         related="wizzard_id.available_journal_ids",
         readonly=True,
     )
-
+    reference = fields.Char()
     journal_id = fields.Many2one("account.journal", string="Journal", required=True)
     available_payment_method_line_ids = fields.Many2many(
         "account.payment.method.line", compute="_compute_payment_method_line_fields"

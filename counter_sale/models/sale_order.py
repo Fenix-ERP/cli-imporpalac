@@ -12,6 +12,13 @@ class SaleOrder(models.Model):
     )
     expired = fields.Boolean(readonly=False)
 
+    @api.onchange("pricelist_id")
+    def _onchange_pricelist_id_show_update_prices(self):
+        self._recompute_prices()
+        res = super()._onchange_pricelist_id_show_update_prices()
+        self.show_update_pricelist = False
+        return res
+
     @api.model
     def action_print_ticket(self, order_id):
         order = self.browse(order_id)
