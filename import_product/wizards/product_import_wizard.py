@@ -49,7 +49,7 @@ class ImportProductWizard(models.TransientModel):
                 if not row or len(row) < 16:
                     continue
 
-                codigo = row[0].strip()
+                codigo = str(row[0]).strip()
                 categoria_nombre = row[16].strip()
                 unidad_venta = row[14]
                 unidad_compra = row[15]
