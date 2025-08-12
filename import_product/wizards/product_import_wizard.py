@@ -38,6 +38,8 @@ class ImportProductWizard(models.TransientModel):
         # Primera pasada para recolectar datos
         data_iter = self._parse_file(file_data, file_format)
         rows_cache = []  # Guarda temporalmente filas ya recorridas
+        UOM = self.env["uom.uom"]
+        uoms_dict = {u.name.lower(): u.id for u in UOM.search([])}
 
         for i, row in enumerate(data_iter, start=2):
             rows_cache.append(row)
@@ -49,6 +51,23 @@ class ImportProductWizard(models.TransientModel):
 
                 codigo = row[0].strip()
                 categoria_nombre = row[16].strip()
+                unidad_venta = row[14]
+                unidad_compra = row[15]
+
+                uom_id = uoms_dict.get(unidad_venta.lower())
+                uom_po_id = uoms_dict.get(unidad_compra.lower())
+
+                if not uom_id:
+                    errores.append(
+                        f"Fila {i+1}: Unidad de venta '{unidad_venta}' no encontrada"
+                    )
+                    continue
+
+                if not uom_po_id:
+                    errores.append(
+                        f"Fila {i+1}: Unidad de compra '{unidad_compra}' no encontrada"
+                    )
+                    continue
 
                 if not codigo:
                     errores.append(f"Fila {i+1}: Código vacío")
@@ -255,15 +274,17 @@ class ImportProductWizard(models.TransientModel):
             try:
                 Product.create(vals_list)
                 creados += len(vals_list)
-            except Exception:
-                # fallback por cada producto
+            except Exception as e:
+                errores.append(f"Error en lote: {repr(e)}")
+                # Fallback: uno por uno con savepoint
                 for vals in vals_list:
                     try:
-                        Product.create(vals)
-                        creados += 1
-                    except Exception as e:
+                        with self.env.cr.savepoint():
+                            Product.create(vals)
+                            creados += 1
+                    except Exception as e2:
                         errores.append(
-                            f"Producto con código {vals.get('default_code')}: Error al crear - {str(e)}"
+                            f"Producto con código {vals.get('default_code')}: Error al crear - {str(e2)}"
                         )
 
         for i, row in enumerate(data, start=2):
