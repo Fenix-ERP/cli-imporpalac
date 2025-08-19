@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_stock_warehouse_date_state" model="ir.ui.view">
+        <field name="name">stock.warehouse.form.date.state.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_deadline']" position="after">
+                <field name="confirmed_date"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

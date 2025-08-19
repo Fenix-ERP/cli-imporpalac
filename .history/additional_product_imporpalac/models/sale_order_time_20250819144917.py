@@ -32,6 +32,7 @@ class SaleOrder(models.Model):
         ],
         compute="_compute_delivery_status",
         store=True,
+        string="Delivery Status",
     )
 
     # -------------------- Dispatcher --------------------
