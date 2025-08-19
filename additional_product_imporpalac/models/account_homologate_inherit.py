@@ -18,7 +18,7 @@ class AccountHomologate(models.Model):
 
     def action_import(self):
         if not self.file:
-            raise UserError(_("Debe cargar un archivo para importar."))
+            raise UserError(_("You must load an archive to be imported."))
 
         try:
             # Decodificar el archivo base64
@@ -27,11 +27,9 @@ class AccountHomologate(models.Model):
             workbook = load_workbook(xlsx_file, data_only=True)
             sheet = workbook.active
 
-            for row in enumerate(
-                sheet.iter_rows(min_row=2), start=2
-            ):  # desde la segunda fila
-                supplier_code = row[0].value
-                product_ref = row[1].value
+            # Recorremos desde la segunda fila (saltamos cabecera)
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                supplier_code, product_ref = row[0], row[1]
 
                 if not supplier_code or not product_ref:
                     continue
@@ -51,6 +49,7 @@ class AccountHomologate(models.Model):
 
             self.file = False
             self.file_name = False
+
         except Exception as e:
             raise UserError(_("Error procesando el archivo: %s") % str(e)) from None
 
