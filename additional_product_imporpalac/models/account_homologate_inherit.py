@@ -51,7 +51,7 @@ class AccountHomologate(models.Model):
             self.file_name = False
 
         except Exception as e:
-            raise UserError(_("Error procesando el archivo: %s") % str(e)) from None
+            raise UserError(_("Error processing the file: %s") % str(e)) from None
 
         return {
             "type": "ir.actions.act_window",

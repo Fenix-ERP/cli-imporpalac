@@ -69,6 +69,16 @@ msgid "Año"
 msgstr ""
 
 #. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_stock_picking__confirmed_date
+msgid "Date confirmed"
+msgstr "Fecha confirmada"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_sale_order__delivery_status
+msgid "Delivery Status"
+msgstr "Estado de la entrega"
+
+#. module: additional_product_imporpalac
 #: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_product_template_imporpalac_form_inherit
 msgid "Detalle 1"
 msgstr ""
@@ -79,9 +89,45 @@ msgid "Detalle 2"
 msgstr ""
 
 #. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_sale_order__dispatcher_id
+msgid "Dispatcher"
+msgstr "Despachador"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_sale_order__elapsed_time
+msgid "Elapsed Time"
+msgstr "Tiempo transcurrido"
+
+#. module: additional_product_imporpalac
 #: model:ir.model,name:additional_product_imporpalac.model_account_evoucher
 msgid "Electronic Voucher"
 msgstr "Comprobante Electrónico"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields.selection,name:additional_product_imporpalac.selection__sale_order__delivery_status__waiting
+msgid "En Espera"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields.selection,name:additional_product_imporpalac.selection__sale_order__delivery_status__delivered
+msgid "Entregado"
+msgstr ""
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_account_homologate__file
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_account_homologate_form_inherit
+msgid "File"
+msgstr "Archivo"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_account_homologate__file_name
+msgid "File Name"
+msgstr "Nombre Archivo"
+
+#. module: additional_product_imporpalac
+#: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.view_account_homologate_form_inherit
+msgid "Hologate Products"
+msgstr "Homologar Productos"
 
 #. module: additional_product_imporpalac
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__lado
@@ -102,6 +148,26 @@ msgid "Modelo"
 msgstr ""
 
 #. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_account_homologate
+msgid "Module for product homologation"
+msgstr "Módulo de homologación de productos"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields.selection,name:additional_product_imporpalac.selection__sale_order__delivery_status__picking
+msgid "Picking"
+msgstr "Recolección"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_sale_order__picking_elapsed_time
+msgid "Picking Elapsed Time"
+msgstr "Tiempo transcurrido en la recolección"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields.selection,name:additional_product_imporpalac.selection__sale_order__delivery_status__to_deliver
+msgid "Por Entregar"
+msgstr ""
+
+#. module: additional_product_imporpalac
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__procedencia
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__procedencia
 msgid "Procedencia"
@@ -111,6 +177,37 @@ msgstr ""
 #: model:ir.model,name:additional_product_imporpalac.model_product_template
 msgid "Product"
 msgstr "Producto"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_product__categ_id
+#: model:ir.model.fields,field_description:additional_product_imporpalac.field_product_template__categ_id
+msgid "Product Category"
+msgstr "Categoría del producto"
+
+#. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,help:additional_product_imporpalac.field_sale_order__elapsed_time
+msgid "Time from order confirmation to delivery"
+msgstr "Tiempo desde la confirmación del pedido hasta la entrega"
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,help:additional_product_imporpalac.field_sale_order__picking_elapsed_time
+msgid "Time from picking reservation to delivery"
+msgstr "Tiempo desde la reserva de recogida hasta la entrega"
+
+#. module: additional_product_imporpalac
+#: model:ir.model,name:additional_product_imporpalac.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir "
+
+#. module: additional_product_imporpalac
+#: model:ir.model.fields,help:additional_product_imporpalac.field_sale_order__dispatcher_id
+msgid "User who performed the dispatch"
+msgstr "Usuario que realizó el envío"
 
 #. module: additional_product_imporpalac
 #: model_terms:ir.ui.view,arch_db:additional_product_imporpalac.account_evoucher_upodate_form_view
@@ -174,3 +271,43 @@ msgstr ""
 "Los siguientes productos no están aprobados en el sistema:\n"
 "- %s\n"
 "Por favor homologue los productos antes de actualizar los costos."
+
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_homologate_inherit.py:0
+#: code:addons/additional_product_imporpalac/models/account_homologate_inherit.py:0
+#, python-format
+msgid "You must load an archive to be imported."
+msgstr "Debe cargar un archivo para importarlo."
+
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_homologate_inherit.py:0
+#, python-format
+msgid "Error processing the file: %s"
+msgstr "Error al procesar el archivo: %s"
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/additional_product_inherit.py:0
+#, python-format
+msgid "You cannot create a storable product with category 'All'."
+msgstr "No se puede crear un producto almacenable con la categoría «Todos»."
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#, python-format
+msgid "Without picking"
+msgstr "Sin seleccionar"
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#, python-format
+msgid "Without order date"
+msgstr "Sin fecha de pedido"

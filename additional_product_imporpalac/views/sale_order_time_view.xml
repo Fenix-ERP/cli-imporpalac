@@ -10,12 +10,15 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="before">
                 <field
-                    name="elapsed_time"
-                    optional="show"
+                    name="delivery_status"
                     widget="badge"
-                    decoration-info="elapsed_time != 'Sin despacho' and elapsed_time != 'Sin despacho completado'"
-                    decoration-muted="elapsed_time in ['Sin despacho', 'Sin despacho completado']"
+                    decoration-danger="delivery_status == 'waiting'"
+                    decoration-warning="delivery_status == 'picking'"
+                    decoration-muted="delivery_status == 'to_deliver'"
+                    decoration-success="delivery_status == 'delivered'"
                 />
+                <field name="elapsed_time" optional="show" widget="badge" />
+                <field name="picking_elapsed_time" optional="hide" widget="badge" />
                 <field
                     name="dispatcher_id"
                     optional="show"
@@ -33,14 +36,17 @@
         <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="before">
-              <field
-                    name="elapsed_time"
-                    optional="show"
+                <field
+                    name="delivery_status"
                     widget="badge"
-                    decoration-info="elapsed_time != 'Sin despacho' and elapsed_time != 'Sin despacho completado'"
-                    decoration-muted="elapsed_time in ['Sin despacho', 'Sin despacho completado']"
+                    decoration-danger="delivery_status == 'waiting'"
+                    decoration-warning="delivery_status == 'picking'"
+                    decoration-muted="delivery_status == 'to_deliver'"
+                    decoration-success="delivery_status == 'delivered'"
                 />
-              <field
+                <field name="elapsed_time" optional="show" widget="badge" />
+                 <field name="picking_elapsed_time" optional="hide" widget="badge" />
+                <field
                     name="dispatcher_id"
                     optional="show"
                     widget="many2one_avatar_user"

@@ -11,6 +11,7 @@
         "views/account_evoucher_update_view.xml",
         "views/sale_order_time_view.xml",
         "views/account_homologate_inherit_view.xml",
+        "views/stock_picking_inherit_view.xml",
     ],
     "application": False,
     "installable": True,
