@@ -295,3 +295,19 @@ msgstr "Error al procesar el archivo: %s"
 #, python-format
 msgid "You cannot create a storable product with category 'All'."
 msgstr "No se puede crear un producto almacenable con la categoría «Todos»."
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#, python-format
+msgid "Without picking"
+msgstr "Sin seleccionar"
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
+#, python-format
+msgid "Without order date"
+msgstr "Sin fecha de pedido"

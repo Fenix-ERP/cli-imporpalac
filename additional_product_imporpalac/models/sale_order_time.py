@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -51,12 +51,12 @@ class SaleOrder(models.Model):
                 "date_done"
             )
             if not done_dates:
-                order.elapsed_time = "Without picking"
+                order.elapsed_time = _("Without picking")
                 continue
 
             last_done_date = max(done_dates)
             if not order.date_order:
-                order.elapsed_time = "Without order date"
+                order.elapsed_time = _("Without order date")
                 continue
 
             delta = last_done_date - order.date_order
@@ -72,7 +72,7 @@ class SaleOrder(models.Model):
                 lambda p: p.confirmed_date and p.date_done and p.state == "done"
             )
             if not pickings:
-                order.picking_elapsed_time = "Without picking"
+                order.picking_elapsed_time = _("Without picking")
                 continue
 
             first_confirmed = min(pickings.mapped("confirmed_date"))

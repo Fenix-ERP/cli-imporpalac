@@ -1,5 +1,5 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
