@@ -39,6 +39,7 @@
                         type="object"
                         string="Export Template"
                         class="btn btn-sm btn-primary"
+                        invisible="1"
                     />
                     </div>
             </xpath>
