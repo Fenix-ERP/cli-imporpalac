@@ -2,9 +2,9 @@
     :target: https://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 
-Balance Documents
-=================
-* Balance Documents
+Imporpalac Documents
+======================
+* Imporpalac Documents
 
 Installation
 ============
