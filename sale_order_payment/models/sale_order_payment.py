@@ -88,6 +88,10 @@ class SaleOrderPayment(models.Model):
         check_company=True,
     )
 
+    delivery_status = fields.Selection(
+        related="order_id.delivery_status",
+    )
+
     @api.depends("journal_id")
     def _compute_payment_method_line_fields(self):
         for rec in self:

@@ -15,6 +15,9 @@ class SaleOrderCancel(models.TransientModel):
                 move.rectified_product_uom_qty = move.product_uom_qty
                 move.rectified_quantity = move.quantity
         self.order_id.with_context(disable_cancel_warning=True).action_cancel()
+        for payment in self.order_id.payment_ids:
+            if payment.state != "processed":
+                payment.state = "cancel"
         return {
             "type": "ir.actions.act_window",
             "view_mode": "form",
@@ -22,3 +25,10 @@ class SaleOrderCancel(models.TransientModel):
             "res_id": new_order.id,
             "target": "current",
         }
+
+    def action_send_mail_and_cancel(self):
+        res = super(SaleOrderCancel, self).action_send_mail_and_cancel()
+        for payment in self.order_id.payment_ids:
+            if payment.state != "processed":
+                payment.state = "cancel"
+        return res

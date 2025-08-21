@@ -394,3 +394,8 @@ msgstr "Transferir "
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizzard_id
 msgid "Wizzard"
 msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__delivery_status
+msgid "Delivery Status"
+msgstr "Estado de la entrega"

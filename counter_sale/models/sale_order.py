@@ -106,9 +106,6 @@ class SaleOrder(models.Model):
                 _("This order already has an invoice assigned and cannot be cancelled.")
             )
         res = super(SaleOrder, self).action_cancel()
-        for payment in self.payment_ids:
-            if payment.state != "processed":
-                payment.state = "cancel"
         return res
 
     def action_expire_quotations(self, hours=48):

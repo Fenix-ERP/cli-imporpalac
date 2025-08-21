@@ -10,8 +10,14 @@
                     class="oe_stat_button"
                     name="action_open_payments"
                     icon="fa-credit-card"
+                    invisible="payment_method == False"
                 >
-                    <field name="payment_count" widget="statinfo" string="Payments" />
+                    <field
+                        name="payment_count"
+                        widget="statinfo"
+                        string="Payments"
+                        invisible="payment_method == False"
+                    />
                 </button>
             </xpath>
         </field>
