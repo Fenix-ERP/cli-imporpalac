@@ -38,7 +38,7 @@
                 expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
                 position="before"
             >
-                <field name="internal_location_id" optional="show" />
+                <field name="internal_location_id" optional="hide" />
                 <field
                     name="rectified_product_uom_qty"
                     column_invisible="not parent.is_rectified"
