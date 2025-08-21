@@ -11,6 +11,10 @@ class SaleOrder(models.Model):
         readonly=True,
     )
 
+    credit = fields.Monetary(
+        related="partner_id.credit",
+    )
+
     def action_confirm(self):
         res = super().action_confirm()
         for order in self:

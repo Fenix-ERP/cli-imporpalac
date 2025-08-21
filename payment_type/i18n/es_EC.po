@@ -156,3 +156,8 @@ msgstr "Form Metodo de Pago"
 #: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_list
 msgid "Type Payment List"
 msgstr "Lista Metodo de Pago"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_sale_order__credit
+msgid "Total Receivable"
+msgstr "Total por cobrar"

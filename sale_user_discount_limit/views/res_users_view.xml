@@ -11,6 +11,10 @@
                         name="max_discount_percent"
                         invisible="limit_discount_enabled == False"
                     />
+                    <field
+                        name="max_discount_fixed"
+                        invisible="limit_discount_enabled == False"
+                    />
                 </group>
             </xpath>
         </field>

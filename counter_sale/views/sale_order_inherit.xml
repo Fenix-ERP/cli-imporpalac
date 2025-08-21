@@ -11,9 +11,6 @@
             <xpath expr="//button[@id='create_invoice']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='note']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
             <xpath expr="//field[@name='product_template_id']" position="attributes">
                 <attribute name="options">{'no_create': True}</attribute>
             </xpath>

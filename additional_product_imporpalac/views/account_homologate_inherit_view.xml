@@ -34,6 +34,13 @@
                         string="Hologate Products"
                         class="btn btn-sm btn-primary"
                     />
+                    <button
+                        name="action_export_template"
+                        type="object"
+                        string="Export Template"
+                        class="btn btn-sm btn-primary"
+                        invisible="1"
+                    />
                     </div>
             </xpath>
 

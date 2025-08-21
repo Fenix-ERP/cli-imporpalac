@@ -1,7 +1,9 @@
 import base64
+import io
 import logging
 from io import BytesIO
 
+import xlsxwriter
 from openpyxl import load_workbook
 
 from odoo import _, fields, models
@@ -61,4 +63,63 @@ class AccountHomologate(models.Model):
             "res_id": self.id,
             "target": "new",
             "context": self.env.context,
+        }
+
+    def action_export_template(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {"in_memory": True})
+
+        header_format = workbook.add_format(
+            {
+                "bold": True,
+                "text_wrap": True,
+                "valign": "vcenter",
+                "align": "center",
+                "border": 1,
+                "bg_color": "#D9E1F2",
+            }
+        )
+        example_format = workbook.add_format(
+            {"font_color": "#0070C0", "valign": "vcenter", "align": "left", "border": 1}
+        )
+        headers = [
+            "Codigo Proveedor",
+            "Descripcion Proveedor",
+            "Producto ID",
+            "Descripcion",
+        ]
+
+        sheet = workbook.add_worksheet("Plantilla Contacto")
+        sheet.set_column(0, len(headers) - 1, 25)
+        for col, header in enumerate(headers):
+            sheet.write(0, col, header, header_format)
+        column = 0
+        row = 1
+        for line in self.lines_prod:
+            sheet.write(row, column, line.cod_supplier, example_format)
+            sheet.write(row, column + 1, line.description_supplier, example_format)
+            sheet.write(row, column + 2, line.product_id.display_name, example_format)
+            sheet.write(row, column + 3, line._description, example_format)
+            column += 1
+            row += 1
+
+        workbook.close()
+        file_data = base64.b64encode(output.getvalue())
+        output.close()
+
+        attachment = self.env["ir.attachment"].create(
+            {
+                "name": "contact_template.xlsx",
+                "type": "binary",
+                "datas": file_data,
+                "res_model": "account.homologate",
+                "res_id": self.id,
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            }
+        )
+
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{attachment.id}?download=true",
+            "target": "self",
         }

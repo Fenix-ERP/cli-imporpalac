@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="sale_order_document_inherited"
+        inherit_id="sale.report_saleorder_document"
+        priority="100"
+    >
+        <xpath expr="//t[@t-set='information_block']" position="replace">
+            <t t-set="information_block">
+                <div class="text-start">
+                    <strong>
+                        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                            Invoicing and Shipping Address:
+                        </t>
+                        <t t-else="">
+                            Invoicing Address:
+                        </t>
+                    </strong>
+                    <div
+                        t-field="doc.partner_invoice_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                        <strong>Shipping Address:</strong>
+                        <div
+                            t-field="doc.partner_shipping_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                        />
+                    </t>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+            <div class="col-auto col-3 mw-100 mb-2" name="new_info">
+                <strong>Num Vendedor:</strong><br />
+                <span class="m-0">Valor personalizado</span>
+            </div>
+        </xpath>
+        <xpath
+            expr="//span[@t-elif=&quot;doc.state in ['draft','sent']&quot;]"
+            position="replace"
+        >
+            <span t-elif="doc.state in ['draft','sent']">Cotizacion</span>
+        </xpath>
+
+        <xpath
+            expr="//table[@class='table table-sm o_main_table table-borderless mt-4']"
+            position="replace"
+        >
+            <table class="table table-sm o_main_table table-borderless mt-4">
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_description" class="text-start">DESCRIPCION</th>
+                        <th name="th_quantity" class="text-end">CANTIDAD</th>
+                        <th name="th_priceunit" class="text-end">PRECIO UNITARIO</th>
+                        <th name="th_discount" t-if="display_discount" class="text-end">
+                            <span>DESC.%</span>
+                        </th>
+                        <th name="th_taxes" class="text-end">IMPUESTOS</th>
+                        <th name="th_subtotal" class="text-end">
+                            <span>TOTAL</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody" style="font-size: 11px">
+
+                    <t t-set="current_subtotal" t-value="0" />
+
+                    <t t-foreach="lines_to_report" t-as="line">
+
+                        <t
+                            t-set="current_subtotal"
+                            t-value="current_subtotal + line.price_subtotal"
+                        />
+
+                        <tr
+                            t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''"
+                        >
+                            <t t-if="not line.display_type">
+                                <td name="td_name"><span
+                                        t-field="line.name"
+                                    >Bacon Burger</span></td>
+                                <td name="td_quantity" class="text-end">
+                                    <span t-field="line.product_uom_qty">3</span>
+                                    <span t-if="line.product_packaging_id">
+                                        (<span
+                                            t-field="line.product_packaging_qty"
+                                            t-options='{"widget": "integer"}'
+                                        /> <span t-field="line.product_packaging_id" />)
+                                    </span>
+                                </td>
+                                <td name="td_priceunit" class="text-end">
+                                    <span t-field="line.price_unit">3</span>
+                                </td>
+                                <td t-if="display_discount" class="text-end">
+                                    <span t-field="line.discount">-</span>
+                                </td>
+                                <t
+                                    t-set="taxes"
+                                    t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.tax_id])"
+                                />
+                                <td
+                                    name="td_taxes"
+                                    t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}"
+                                >
+                                    <span t-out="taxes">Tax 15%</span>
+                                </td>
+                                <td
+                                    t-if="not line.is_downpayment"
+                                    name="td_subtotal"
+                                    class="text-end o_price_total"
+                                >
+                                    <span t-field="line.price_subtotal">27.00</span>
+                                </td>
+                            </t>
+                            <t t-elif="line.display_type == 'line_section'">
+                                <td name="td_section_line" colspan="99">
+                                    <span t-field="line.name">A section title</span>
+                                </td>
+                                <t t-set="current_section" t-value="line" />
+                                <t t-set="current_subtotal" t-value="0" />
+                            </t>
+                            <t t-elif="line.display_type == 'line_note'">
+                                <td name="td_note_line" colspan="99">
+                                    <span
+                                        t-field="line.name"
+                                    >A note, whose content usually applies to the section or product above.</span>
+                                </td>
+                            </t>
+                        </tr>
+
+                        <t
+                            t-if="current_section and (line_last or lines_to_report[line_index+1].display_type == 'line_section') and not line.is_downpayment"
+                        >
+                            <tr class="is-subtotal text-end">
+                                <td name="td_section_subtotal" colspan="99">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span
+                                        t-out="current_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                    >31.05</span>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+
+    <template
+        id="web_boxed_document_inherited"
+        inherit_id="web.external_layout_bold"
+        priority="100"
+    >
+        <xpath expr="//div[@class='col-6']" position="replace">
+            <div class="col-6 mx-auto text-center">
+                <img
+                    t-if="company.logo"
+                    t-att-src="image_data_uri(company.logo)"
+                    alt="Logo"
+                />
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='col-5 offset-1']" position="replace">
+            <div class="col-12 d-flex justify-content-center" name="company_address">
+                <ul class="list-unstyled" name='company_address_list'>
+                    <li t-if="company.is_company_details_empty"><span
+                            t-field="company.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        >
+                        <div
+                                class="bg-light border-1 rounded h-100 d-flex flex-column align-items-center justify-content-center p-4 w-100 opacity-75 text-muted text-center"
+                            >
+                            <strong>Company address block</strong>
+                            <div>Contains the company address.</div>
+                        </div>
+                    </span></li>
+                    <li t-else="">
+                        <span t-field="company.company_details">
+                            <div
+                                class="bg-light border-1 rounded h-100 d-flex flex-column align-items-center justify-content-center p-4 w-100 opacity-75 text-muted text-center"
+                            >
+                                <strong>Company details block</strong>
+                                <div>Contains the company details.</div>
+                            </div>
+                        </span>
+                    </li>
+                    <li t-if="not forced_vat" />
+                    <li t-else="">
+                        <t t-esc="company.country_id.vat_label or 'Tax ID'">Tax ID</t>:
+                        <span t-esc="forced_vat">US12345671</span>
+                    </li>
+                </ul>
+            </div>
+        </xpath>
+    </template>
+</odoo>
