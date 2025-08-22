@@ -1,8 +1,11 @@
+import base64
+import io
+
+import xlsxwriter
+
 from odoo import _, models
 from odoo.exceptions import UserError
-import xlsxwriter
-import io
-import base64
+
 
 class ElectronicVoucherUpdate(models.Model):
     _inherit = "account.evoucher"
