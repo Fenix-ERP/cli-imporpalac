@@ -51,17 +51,17 @@ class ElectronicVoucherUpdate(models.Model):
             )
 
         updated_lines = 0
-        for line in self.lines_ride:
-            if line.product_id:
+        for ride_line in self.lines_ride:
+            if ride_line.product_id:
                 po_line = self.purchase_order_id.order_line.filtered(
-                    lambda line: line.product_id == line.product_id
+                    lambda line: line.product_id == ride_line.product_id
                 )
                 if po_line:
                     po_line.write(
                         {
-                            "price_unit": line.price_unit,
-                            "discount": line.discount,
-                            "product_qty": line.quantity,
+                            "price_unit": ride_line.price_unit,
+                            "discount": ride_line.discount,
+                            "product_qty": ride_line.quantity,
                         }
                     )
                     updated_lines += 1
