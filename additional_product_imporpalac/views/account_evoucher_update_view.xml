@@ -17,6 +17,17 @@
                     class="oe_inline oe_stat_button btn-success"
                 />
             </xpath>
+            <xpath expr="//notebook/page[@name='invoice']/field[@name='lines_ride']" position="before">
+                <div class="d-flex align-items-center" style="gap: 15px;">
+                    <button
+                        name="action_export_template"
+                        type="object"
+                        string="Download Template"
+                        state="draft"
+                        class="btn-primary btn-info"
+                    />
+                </div>
+            </xpath>
         </field>
     </record>
 

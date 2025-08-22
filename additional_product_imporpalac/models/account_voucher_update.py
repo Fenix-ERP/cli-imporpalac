@@ -1,6 +1,8 @@
 from odoo import _, models
 from odoo.exceptions import UserError
-
+import xlsxwriter
+import io
+import base64
 
 class ElectronicVoucherUpdate(models.Model):
     _inherit = "account.evoucher"
@@ -72,4 +74,71 @@ class ElectronicVoucherUpdate(models.Model):
                 "message": _("Costs updated successfully!"),
                 "type": "rainbow_man",
             }
+        }
+
+    def action_export_template(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {"in_memory": True})
+
+        header_format = workbook.add_format(
+            {
+                "bold": True,
+                "text_wrap": True,
+                "valign": "vcenter",
+                "align": "center",
+                "border": 1,
+                "bg_color": "#D9E1F2",
+            }
+        )
+        example_format = workbook.add_format(
+            {"font_color": "#0070C0", "valign": "vcenter", "align": "left", "border": 1}
+        )
+
+        headers = [
+            "Codigo",
+            "Descripcion",
+            "Cantidad",
+            "Precio Unitario",
+            "Categoria",
+            "Descuento",
+            "Impuestos",
+            "Total",
+        ]
+
+        sheet = workbook.add_worksheet("Plantilla Contacto")
+        sheet.set_column(0, len(headers) - 1, 25)
+        for col, header in enumerate(headers):
+            sheet.write(0, col, header, header_format)
+        column = 0
+        row = 1
+        for line in self.lines_ride:
+            sheet.write(row, column, line.code, example_format)
+            sheet.write(row, column + 1, line.description, example_format)
+            sheet.write(row, column + 2, line.quantity, example_format)
+            sheet.write(row, column + 3, line.price_unit, example_format)
+            sheet.write(row, column + 4, line.categ_id.name, example_format)
+            sheet.write(row, column + 5, line.discount, example_format)
+            sheet.write(row, column + 6, line.vat.display_name, example_format)
+            sheet.write(row, column + 7, line.price_total, example_format)
+            row += 1
+
+        workbook.close()
+        file_data = base64.b64encode(output.getvalue())
+        output.close()
+
+        attachment = self.env["ir.attachment"].create(
+            {
+                "name": "contact_template.xlsx",
+                "type": "binary",
+                "datas": file_data,
+                "res_model": "account.evoucher",
+                "res_id": self.id,
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            }
+        )
+
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{attachment.id}?download=true",
+            "target": "self",
         }
