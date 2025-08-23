@@ -1,0 +1,19 @@
+{
+    "name": "Internal Transfer Upload Imporpalac",
+    "version": "17.0.0.0.1",
+    "category": "stock",
+    "summary": "Add new button import internal transfer from excel file",
+    "author": "Anthony Simbaña / FenixERP",
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
+    "depends": ["stock"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/internal_transfer_upload_view.xml",
+        "wizards/product_transfer_upload_wizard_view.xml",
+    ],
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+    "license": "OPL-1",
+    "external_dependencies": {"python": ["openpyxl"]},
+}

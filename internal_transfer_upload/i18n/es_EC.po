@@ -1,0 +1,123 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* internal_transfer_upload
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-23 20:59+0000\n"
+"PO-Revision-Date: 2025-08-23 20:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__file
+msgid "Archivo"
+msgstr "Archivo"
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_import_transfer_product_wizard_form
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_import_transfer_product_wizard_form
+msgid "File"
+msgstr "Archivo"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_stock_warehouse_internal_transfer
+msgid "Import Internal Transfer"
+msgstr "Importar Transferencia Interna"
+
+#. module: internal_transfer_upload
+#: model:ir.model,name:internal_transfer_upload.model_import_transfer_product_wizard
+msgid "Import Transfer Product Wizard"
+msgstr "Importar Producto Wizard"
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_import_transfer_product_wizard_form
+msgid "Importar"
+msgstr "Importar"
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_import_transfer_product_wizard_form
+msgid "Internal Transfer Products Import"
+msgstr "Importar Productos Transferencia Interna"
+
+#. module: internal_transfer_upload
+#: model:ir.model,name:internal_transfer_upload.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Cargar Transferencia Interna Imporpalac"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: internal_transfer_upload
+#. odoo-python
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#, python-format
+msgid "You must upload a file."
+msgstr "Debe cargar un archivo."
+
+#. module: internal_transfer_upload
+#. odoo-python
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#, python-format
+msgid "File format not supported. Only .xlsx is supported."
+msgstr "Formato de archivo no compatible. Solo se admite .xlsx."
+
+#. module: internal_transfer_upload
+#. odoo-python
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#, python-format
+msgid "No picking found to import lines."
+msgstr "No se ha encontrado ninguna selección para importar líneas."
+
+
+#. module: internal_transfer_upload
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#, python-format
+msgid "Row %(row)s: Unexpected error: %(error)s"
+msgstr "Fila %(row)s: Error inesperado: %(error)s"
+
+#. module: internal_transfer_upload
+#: code:addons/internal_transfer_upload/wizards/product_transfer_upload_wizard.py:0
+#, python-format
+msgid "Import completed.\n\nMovements created: %(count)s"
+msgstr "Importación completada.\n\nMovimientos creados: %(count)s"
