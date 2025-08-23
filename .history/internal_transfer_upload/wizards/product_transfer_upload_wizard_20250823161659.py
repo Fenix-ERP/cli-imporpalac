@@ -83,7 +83,7 @@ class ImportTransferProductWizard(models.TransientModel):
 
         mensaje = _("Import completed.\n\nMovements created: %(count)s", count=creados)
         if errores:
-            mensaje += _("\n\nErrors detected:\n- ") + "\n- ".join(errores[:10])
+            mensaje += f"\n\nErrors detected:\n- " + "\n- ".join(errores[:10])
 
         return {
             "effect": {
