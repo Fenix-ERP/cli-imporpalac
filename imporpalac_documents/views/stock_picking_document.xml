@@ -50,7 +50,7 @@
         <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
             <div class="col-auto col-3 mw-100 mb-2" name="new_info">
                 <strong>Num Vendedor:</strong><br />
-                <span class="m-0"><t t-esc="doc.user_id.name" /></span>
+                <span class="m-0"><t t-esc="doc.user_id.partner_id.phone" /></span>
             </div>
         </xpath>
         <xpath
