@@ -19,10 +19,10 @@
                 <t t-set="information_block">
                     <strong>
                         <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
-                            Dirección de facturación y envío:
+                            Invoicing and Shipping Address:
                         </t>
                         <t t-else="">
-                            Dirección de facturación:
+                            Invoicing Address:
                         </t>
                     </strong>
                     <div
