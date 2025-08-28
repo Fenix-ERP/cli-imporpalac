@@ -122,7 +122,7 @@ class SaleOrderPayment(models.Model):
 
     def process_payment(self):
         for payment in self:
-            skip_open = self.env.context.get("skip_open_payment_method_wizzard", False)
+            skip_open = self.env.context.get("skip_open_payment_method_wizard", False)
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
                 if method_lines:
@@ -132,11 +132,11 @@ class SaleOrderPayment(models.Model):
                         "default_balance": self.amount,
                         "default_payment_method_domain": f"[('id', 'in', {domain})]" "",
                     }
-                    if self.payment_method.code == "credit_card":
-                        ctx.update({"credit_card": True})
+                    ctx.update({"payment_method": self.payment_method.code})
                     if (
                         len(method_lines) > 1
-                        or self.payment_method.code == "credit_card"
+                        or self.payment_method.code
+                        in ["credit_card", "postdated_check"]
                         or self.is_mixed_payment
                     ):
 
@@ -188,11 +188,20 @@ class SaleOrderPaymentLine(models.Model):
         "account.payment.method.line",
         string="Payment Method",
         readonly=False,
-        required=True,
         copy=False,
         domain="payment_method_domain",
     )
+    client_id = fields.Many2one(
+        related="payment_id.client_id", string="Customer", readonly=True
+    )
+    payment_state = fields.Selection(
+        related="payment_id.state", string="Payment State", readonly=True
+    )
     reference = fields.Char()
+    chq_refr = fields.Char(string="PDC N° Check")
+    chq_bank_details = fields.Many2one("res.bank", string="PDC Bank Info")
+    chq_payment_date = fields.Date(string="PDC Payment Date")
+    chq_due_date = fields.Date(string="PDC Due Date")
     card_id = fields.Many2one("account.card", string="Card Used")
     amount = fields.Monetary(required=True, default=0)
     currency_id = fields.Many2one("res.currency", string="Currency")

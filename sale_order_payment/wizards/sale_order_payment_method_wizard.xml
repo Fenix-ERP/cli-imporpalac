@@ -6,17 +6,15 @@
             <form string="Confirm Payment Method">
                 <sheet>
                     <div>
-                        <p>Please select the payment method</p>
+                        <p invisible="is_pdc">Please select the payment method</p>
                     </div>
                     <group col="2">
                         <group>
+                            <field name="partner_id" readonly="1" />
                             <field
-                                name="balance"
-                                readonly="1"
-                                widget='monetary'
-                                options="{'currency_field': 'currency_id'}"
+                                name="reference"
+                                invisible="is_mixed_payment or is_pdc"
                             />
-                            <field name="reference" invisible="is_mixed_payment" />
                             <field name="available_journal_ids" invisible="1" />
                             <field name="sale_order_payment_id" invisible="1" />
                             <field name="payment_method_domain" invisible="1" />
@@ -24,6 +22,12 @@
                             <field name="currency_id" invisible="1" />
                         </group>
                         <group>
+                            <field
+                                name="balance"
+                                readonly="1"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                             <field
                                 name="residual"
                                 invisible="not is_mixed_payment"
@@ -34,7 +38,8 @@
                             <field
                                 name="payment_method_line_id"
                                 options="{'no_create': True}"
-                                invisible='is_mixed_payment'
+                                invisible='is_mixed_payment or is_pdc'
+                                required='not is_pdc'
                             />
                             <field
                                 name="sale_order_payment_method_code"
@@ -47,6 +52,40 @@
                                 invisible="sale_order_payment_method_code!='credit_card' or is_mixed_payment"
                             />
                         </group>
+                    </group>
+                    <separator string="Postdated Check Info" invisible="not is_pdc" />
+                    <group col="2">
+                        <field name="is_pdc" invisible="1" />
+                        <group>
+                            <field
+                                name="chq_payment_date"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                            <field
+                                name="chq_due_date"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                            <field
+                                name="chq_amount"
+                                invisible="not is_pdc or not is_mixed_payment"
+                                required="is_pdc and is_mixed_payment"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="chq_refr"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                            <field
+                                name="chq_bank_details"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                        </group>
+                        <separator string="" invisible="not is_pdc" />
                     </group>
                     <field
                         name="method_line_ids"
@@ -67,12 +106,13 @@
                             <field
                                 name="payment_method_line_id"
                                 options="{'no_create': True}"
+                                required="1"
                             />
                             <field name="card_required" column_invisible="1" />
                             <field
                                 name="card_id"
                                 invisible="not card_required"
-                                column_invisible=" not context.get('credit_card')"
+                                column_invisible="context.get('payment_method') != 'credit_card'"
                                 options="{'no_create': True}"
                             />
                             <field name="reference" options="{'no_create': True}" />

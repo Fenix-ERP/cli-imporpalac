@@ -65,9 +65,13 @@ class SaleOrder(models.Model):
         if not journal_payment_id and self.payment_method.code != "credit":
             raise ValidationError(
                 _(
-                    "There is no payment journal in warehouse %s, please assign it.",
-                    self.warehouse_id.display_name,
+                    "There is no payment journal for %(payment_method)s "
+                    "in warehouse %(warehouse)s, please assign it."
                 )
+                % {
+                    "payment_method": self.payment_method.display_name,
+                    "warehouse": self.warehouse_id.display_name,
+                }
             )
         if self.payment_method.code != "credit":
             rectified_amount = 0

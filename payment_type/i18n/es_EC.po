@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-26 16:54+0000\n"
-"PO-Revision-Date: 2025-06-26 16:54+0000\n"
+"POT-Creation-Date: 2025-08-28 05:59+0000\n"
+"PO-Revision-Date: 2025-08-28 05:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,11 +41,6 @@ msgstr ""
 " * Cancelado: se canceló el traslado."
 
 #. module: payment_type
-#: model_terms:ir.ui.view,arch_db:payment_type.view_pay_stock_picking_inherit_imporpalac
-msgid "Approve"
-msgstr ""
-
-#. module: payment_type
 #: model:ir.model.fields.selection,name:payment_type.selection__stock_picking__state__approved
 msgid "Approved"
 msgstr "Aprobado"
@@ -56,44 +51,76 @@ msgid "Can you create the first payment type"
 msgstr ""
 
 #. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__code
+msgid "Code"
+msgstr "Código"
+
+#. module: payment_type
 #: model:ir.model,name:payment_type.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__create_uid
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__create_date
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: payment_type
-#: model:ir.model.fields,field_description:payment_type.field_payment_type__display_name
-msgid "Display Name"
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse__current_payment_type_ids_domain
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__current_payment_type_ids_domain
+msgid "Current Payment Type Ids Domain"
 msgstr ""
 
 #. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse__journal_id
+msgid "Diario Contable"
+msgstr ""
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_payment_type__display_name
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__id
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__id
 msgid "ID"
 msgstr ""
 
 #. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_sale_order_line__image_1920
+msgid "Image"
+msgstr "Imagen"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_picking__invoice_number
+msgid "Invoice Number"
+msgstr "Factura"
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__write_uid
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__write_date
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: payment_type
 #: model:ir.model,name:payment_type.model_account_move
@@ -101,9 +128,20 @@ msgid "New account move model with electronic documents"
 msgstr "Asiento contable"
 
 #. module: payment_type
-#: model:ir.model.fields,field_description:payment_type.field_stock_picking__paid
-msgid "Paid"
-msgstr "Pagado"
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__journal_payment_id
+msgid "Payment Journal"
+msgstr "Diario de Pago"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse__payment_method_ids
+#: model_terms:ir.ui.view,arch_db:payment_type.view_stock_warehouse_form_journal
+msgid "Payment Methods"
+msgstr "Método de Pago"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__payment_type_id
+msgid "Payment Type"
+msgstr "Tipo de Pago"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_account_bank_statement_line__payment_method
@@ -123,14 +161,15 @@ msgid "Payment type"
 msgstr "Método Pago"
 
 #. module: payment_type
-#: model:ir.model,name:payment_type.model_account_payment
-msgid "Payments"
-msgstr "Pagos"
-
-#. module: payment_type
 #: model:ir.model,name:payment_type.model_payment_type
 msgid "Payments types in sales"
 msgstr "Typos de pago en Ventas"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_res_partner__phone
+#: model:ir.model.fields,field_description:payment_type.field_res_users__phone
+msgid "Phone"
+msgstr "Teléfono"
 
 #. module: payment_type
 #: model:ir.model,name:payment_type.model_sale_order
@@ -138,19 +177,49 @@ msgid "Sales Order"
 msgstr "Orden de venta"
 
 #. module: payment_type
+#: model:ir.model,name:payment_type.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de la orden de venta"
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_stock_picking__state
 msgid "Status"
 msgstr "Estado"
 
 #. module: payment_type
+#: model:ir.model,name:payment_type.model_stock_warehouse_payment_method
+msgid "Stock Warehouse Payment Method"
+msgstr "Método de pago de almacén"
+
+#. module: payment_type
+#: model:ir.model.fields,help:payment_type.field_res_partner__property_payment_term_id
+#: model:ir.model.fields,help:payment_type.field_res_users__property_payment_term_id
+msgid ""
+"This payment term will be used instead of the default one for sales orders "
+"and customer invoices"
+msgstr ""
+"Se utilizará este término de pago en lugar del predeterminado para órdenes "
+"de venta y facturas de clientes"
+
+#. module: payment_type
+#: model:ir.model.fields,field_description:payment_type.field_sale_order__credit
+msgid "Total Receivable"
+msgstr "Total por cobrar"
+
+#. module: payment_type
+#: model:ir.model.fields,help:payment_type.field_sale_order__credit
+msgid "Total amount this customer owes you."
+msgstr "Cantidad total que este cliente debe."
+
+#. module: payment_type
 #: model:ir.model,name:payment_type.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir "
+msgstr "Transferencia"
 
 #. module: payment_type
 #: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_form
 msgid "Type Payment Form"
-msgstr "Form Metodo de Pago"
+msgstr "Metodo de Pago"
 
 #. module: payment_type
 #: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_list
@@ -158,6 +227,13 @@ msgid "Type Payment List"
 msgstr "Lista Metodo de Pago"
 
 #. module: payment_type
-#: model:ir.model.fields,field_description:payment_type.field_sale_order__credit
-msgid "Total Receivable"
-msgstr "Total por cobrar"
+#: model:ir.model.fields,field_description:payment_type.field_res_partner__property_payment_term_id
+#: model:ir.model.fields,field_description:payment_type.field_res_users__property_payment_term_id
+msgid "Términos de pago"
+msgstr "Términos de pago del cliente"
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_stock_warehouse
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
