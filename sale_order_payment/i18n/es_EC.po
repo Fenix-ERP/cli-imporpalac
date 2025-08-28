@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 22:33+0000\n"
-"PO-Revision-Date: 2025-07-24 22:33+0000\n"
+"POT-Creation-Date: 2025-08-28 06:02+0000\n"
+"PO-Revision-Date: 2025-08-28 06:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,12 @@ msgid "Amount"
 msgstr "Monto"
 
 #. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__available_journal_ids
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__available_journal_ids
+msgid "Available Journal"
+msgstr "Diario Disponible"
+
+#. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__available_payment_method_line_ids
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__available_payment_method_line_ids
 msgid "Available Payment Method Line"
@@ -34,6 +40,11 @@ msgid "Balance"
 msgstr "Monto"
 
 #. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_bank_details
+msgid "Bank Info"
+msgstr "Información Bancaria"
+
+#. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Buscar Pagos"
 msgstr ""
@@ -43,11 +54,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
 msgid "Cancel"
 msgstr "Cancelado"
-
-#. module: sale_order_payment
-#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
-msgid "Cancel "
-msgstr "Cancelar"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__card_required
@@ -67,7 +73,7 @@ msgstr "Tarjeta usada"
 #: code:addons/sale_order_payment/wizards/sale_order_payment_method_wizard.py:0
 #, python-format
 msgid "Card Used is required for this type of journal"
-msgstr ""
+msgstr "Es requerida una tarjeta para este tipo de diario"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__client_id
@@ -81,7 +87,7 @@ msgstr ""
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__company_id
-msgid "Company"
+msgid "Compañía"
 msgstr "Compañia"
 
 #. module: sale_order_payment
@@ -133,9 +139,19 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Date"
 msgstr "Fecha"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__delivery_status
+msgid "Delivery Status"
+msgstr "Estado de la entrega"
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree_inherit_payment_button
@@ -156,6 +172,11 @@ msgid "Display Name"
 msgstr "Nombre"
 
 #. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_due_date
+msgid "Due Date"
+msgstr "Fecha de vencimiento"
+
+#. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Fecha"
 msgstr ""
@@ -172,6 +193,11 @@ msgstr "Agrupado por"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__id
 msgid "ID"
 msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__is_pdc
+msgid "Is Pdc"
+msgstr "Es Pdc"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__journal_id
@@ -219,9 +245,39 @@ msgid "Number of Payments"
 msgstr "Número de pagos"
 
 #. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_refr
+msgid "N° Check"
+msgstr "N° Cheque"
+
+#. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__date_order
 msgid "Order Date"
 msgstr "Fecha de la orden"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_amount
+msgid "PDC Amount"
+msgstr "Monto PDC"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__chq_bank_details
+msgid "PDC Bank Info"
+msgstr "Info. Banco PDC"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__chq_due_date
+msgid "PDC Due Date"
+msgstr "Fecha Vencimiento PDC"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__chq_refr
+msgid "PDC N° Check"
+msgstr "N° Cheque PDC"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__chq_payment_date
+msgid "PDC Payment Date"
+msgstr "Fecha de Pago PDC"
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree
@@ -243,6 +299,11 @@ msgstr "Contacto"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__payment_id
 msgid "Payment"
 msgstr "Pago"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_payment_date
+msgid "Payment Date"
+msgstr "Fecha de Pago"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__journal_id
@@ -305,6 +366,11 @@ msgid "Please select the payment method"
 msgstr "Por favor seleccione el método de pago"
 
 #. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
+msgid "Postdated Check Info"
+msgstr "Info. Cheque Postfechado"
+
+#. module: sale_order_payment
 #: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__processed
 msgid "Processed"
 msgstr "Procesado"
@@ -327,9 +393,16 @@ msgstr "Orden rectificada"
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__name
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__reference
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__reference
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__reference
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__reference
 msgid "Reference"
 msgstr "Referencia"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__residual
+msgid "Residual"
+msgstr ""
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__order_id
@@ -379,11 +452,18 @@ msgstr "Estado"
 #: code:addons/sale_order_payment/wizards/sale_order_payment_method_wizard.py:0
 #, python-format
 msgid ""
-"The total amount of payment lines (%(total).2f) must be exactly equal to the"
-" total balance (%(amount).2f)."
+"The total amount of payment lines (%(total).2f) must be equal to or greater "
+"than the total balance (%(amount).2f)."
 msgstr ""
-"El importe total de las líneas de pago (%(total).2f) debe ser exactamente "
-"igual al saldo total (%(amount).2f)."
+"El importe total de las líneas de pago (%(total).2f) debe ser igual o "
+"superior al saldo total (%(amount).2f)."
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/wizards/sale_order_payment_method_wizard.py:0
+#, python-format
+msgid "This check number already exists for this customer."
+msgstr "Este número de cheque ya existe para este cliente."
 
 #. module: sale_order_payment
 #: model:ir.model,name:sale_order_payment.model_stock_picking
@@ -391,11 +471,6 @@ msgid "Transfer"
 msgstr "Transferir "
 
 #. module: sale_order_payment
-#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizzard_id
-msgid "Wizzard"
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizard_id
+msgid "Wizard"
 msgstr ""
-
-#. module: sale_order_payment
-#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__delivery_status
-msgid "Delivery Status"
-msgstr "Estado de la entrega"

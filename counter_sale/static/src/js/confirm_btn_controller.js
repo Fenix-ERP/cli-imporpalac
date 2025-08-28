@@ -60,7 +60,7 @@ patch(FormController.prototype, {
             clickParams.name === "action_confirm" &&
             this.model.root.data.state === "sale"
         ) {
-            await print_sale_tickets(this.env, {
+            print_sale_tickets(this.env, {
                 params: {order_id: this.model.root.resId},
             });
         }

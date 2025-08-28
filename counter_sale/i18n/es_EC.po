@@ -127,8 +127,8 @@ msgstr "La entrega aún no ha sido completada."
 #. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
-msgid "There is no payment journal in warehouse %s, please assign it."
-msgstr "No hay diario de pagos en el almacén %s, por favor, asígnelo."
+msgid "There is no payment journal for %s in warehouse %s, please assign it."
+msgstr "No hay diario de pago para %s en el almacén %s, por favor, asígnelo."
 
 #. module: counter_sale
 #. odoo-python
