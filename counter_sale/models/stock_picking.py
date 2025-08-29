@@ -14,6 +14,7 @@ class StockPicking(models.Model):
         wizard_vals = {
             "partner_name": ctx.get("default_partner_name", invoice.partner_id.id),
             "payment_amount": payment_line.amount,
+            "invoice_ids": [(6, 0, ctx.get("default_invoice_ids", [invoice.id]))],
             "agent": payment_line.chq_agent,
             "payment_date": payment_line.chq_payment_date,
             "bank_details": payment_line.chq_bank_details.id,
