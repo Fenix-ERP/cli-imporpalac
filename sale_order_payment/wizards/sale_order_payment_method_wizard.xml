@@ -58,6 +58,23 @@
                         <field name="is_pdc" invisible="1" />
                         <group>
                             <field
+                                name="chq_agent"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                            <field
+                                name="chq_refr"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                            <field
+                                name="chq_bank_details"
+                                invisible="not is_pdc"
+                                required="is_pdc"
+                            />
+                        </group>
+                        <group>
+                            <field
                                 name="chq_payment_date"
                                 invisible="not is_pdc"
                                 required="is_pdc"
@@ -71,18 +88,6 @@
                                 name="chq_amount"
                                 invisible="not is_pdc or not is_mixed_payment"
                                 required="is_pdc and is_mixed_payment"
-                            />
-                        </group>
-                        <group>
-                            <field
-                                name="chq_refr"
-                                invisible="not is_pdc"
-                                required="is_pdc"
-                            />
-                            <field
-                                name="chq_bank_details"
-                                invisible="not is_pdc"
-                                required="is_pdc"
                             />
                         </group>
                         <separator string="" invisible="not is_pdc" />

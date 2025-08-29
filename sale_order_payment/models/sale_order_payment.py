@@ -131,6 +131,7 @@ class SaleOrderPayment(models.Model):
                         "default_sale_order_payment_id": self.id,
                         "default_balance": self.amount,
                         "default_payment_method_domain": f"[('id', 'in', {domain})]" "",
+                        "default_chq_agent": self.client_id.name,
                     }
                     ctx.update({"payment_method": self.payment_method.code})
                     if (
@@ -198,6 +199,7 @@ class SaleOrderPaymentLine(models.Model):
         related="payment_id.state", string="Payment State", readonly=True
     )
     reference = fields.Char()
+    chq_agent = fields.Char(string="Agent")
     chq_refr = fields.Char(string="PDC N° Check")
     chq_bank_details = fields.Many2one("res.bank", string="PDC Bank Info")
     chq_payment_date = fields.Date(string="PDC Payment Date")

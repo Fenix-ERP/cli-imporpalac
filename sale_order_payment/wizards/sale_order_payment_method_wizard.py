@@ -31,12 +31,13 @@ class SaleOrderPaymentMethod(models.TransientModel):
         domain="payment_method_domain",
     )
     payment_method_domain = fields.Char()
+    chq_agent = fields.Char(string="Agent")
     chq_refr = fields.Char(string="N° Check")
     chq_bank_details = fields.Many2one("res.bank", string="Bank Info")
     chq_payment_date = fields.Date(
         string="Payment Date", default=fields.Date.context_today
     )
-    chq_due_date = fields.Date(string="Due Date")
+    chq_due_date = fields.Date(string="Due Date", default=fields.Date.context_today)
     chq_amount = fields.Monetary(string="PDC Amount")
     is_pdc = fields.Boolean(store=False, compute="_compute_is_pdc")
     balance = fields.Monetary(readonly=True)
@@ -148,6 +149,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
                     "amount": (
                         self.chq_amount if self.is_mixed_payment else self.balance
                     ),
+                    "chq_agent": self.chq_agent,
                     "chq_refr": self.chq_refr,
                     "chq_bank_details": self.chq_bank_details.id,
                     "chq_payment_date": self.chq_payment_date,
