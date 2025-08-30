@@ -22,3 +22,5 @@ class ResPartner(models.Model):
             "account.account_payment_term_immediate", raise_if_not_found=False
         ),
     )
+
+    street = fields.Char(required=True)

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class SaleOrderPayment(models.Model):
@@ -122,6 +123,12 @@ class SaleOrderPayment(models.Model):
 
     def process_payment(self):
         for payment in self:
+            if (
+                payment.delivery_status != "to_deliver"
+                and payment.payment_method.code != "credit_card"
+            ):
+                raise UserError(_("You cant processed this payment"))
+                
             skip_open = self.env.context.get("skip_open_payment_method_wizard", False)
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
@@ -167,6 +174,14 @@ class SaleOrderPayment(models.Model):
             payment.hour_register = datetime.now()
             for picking in payment.order_id.picking_ids:
                 picking.payment_state = "paid"
+
+    def unlink(self):
+        for payment in self:
+            if payment.state == "processed":
+                raise UserError(
+                    _("Is not possible to delete a processed payment")
+                )
+        return super(SaleOrderPayment, self).unlink()
 
 
 class SaleOrderPaymentLine(models.Model):
