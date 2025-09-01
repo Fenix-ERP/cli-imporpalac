@@ -127,7 +127,7 @@ class SaleOrderPayment(models.Model):
                 payment.delivery_status != "to_deliver"
                 and payment.payment_method.code != "credit_card"
             ):
-                raise UserError(_("You cant processed this payment"))
+                raise UserError(_("You cannot process this payment"))
 
             skip_open = self.env.context.get("skip_open_payment_method_wizard", False)
             if not skip_open:
