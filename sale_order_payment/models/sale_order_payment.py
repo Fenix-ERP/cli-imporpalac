@@ -180,10 +180,8 @@ class SaleOrderPayment(models.Model):
                 picking.payment_state = "paid"
 
     def unlink(self):
-        for payment in self:
-            if payment.state == "processed":
-                raise UserError(_("Is not possible to delete a processed payment"))
-        return super(SaleOrderPayment, self).unlink()
+        # pylint: disable=method-required-super
+        raise UserError(_("Is not possible to delete a processed payment"))
 
 
 class SaleOrderPaymentLine(models.Model):
