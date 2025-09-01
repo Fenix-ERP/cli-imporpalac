@@ -129,7 +129,7 @@ class SaleOrderPayment(models.Model):
             ):
                 raise UserError(
                     _(
-                        "You cannot process this payment because it is not deliver the order"
+                        "This payment cannot be processed because the order has not been delivered."
                     )
                 )
 
