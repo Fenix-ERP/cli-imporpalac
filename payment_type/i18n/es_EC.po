@@ -237,3 +237,11 @@ msgstr "Términos de pago del cliente"
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Exceeds the maximum value for end consumers"
+msgstr "Excede el valor máximo para consumidor final"
