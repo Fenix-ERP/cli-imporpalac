@@ -15,7 +15,10 @@
                     required="1"
                 />
             </xpath>
-            <xpath expr="//field[@name='name']" position="attributes">
+            <xpath expr="//field[@id='company']" position="attributes">
+                <attribute name="readonly">is_end_consumer</attribute>
+            </xpath>
+            <xpath expr="//field[@id='individual']" position="attributes">
                 <attribute name="readonly">is_end_consumer</attribute>
             </xpath>
             <xpath expr="//field[@name='identifier']" position="attributes">

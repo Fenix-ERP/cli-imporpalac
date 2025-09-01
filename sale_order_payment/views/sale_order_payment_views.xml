@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <tree string="Pagos de Orden de Venta" create="false">
                 <field name="client_id" />
-                <field name="order_id" />
+                <field name="order_id" widget="many2one" />
                 <field name="date_order" optional="hide" />
                 <field name="hour_register" />
                 <field name="amount" />
