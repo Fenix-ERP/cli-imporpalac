@@ -128,7 +128,7 @@ class SaleOrderPayment(models.Model):
                 and payment.payment_method.code != "credit_card"
             ):
                 raise UserError(_("You cant processed this payment"))
-                
+
             skip_open = self.env.context.get("skip_open_payment_method_wizard", False)
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
@@ -178,9 +178,7 @@ class SaleOrderPayment(models.Model):
     def unlink(self):
         for payment in self:
             if payment.state == "processed":
-                raise UserError(
-                    _("Is not possible to delete a processed payment")
-                )
+                raise UserError(_("Is not possible to delete a processed payment"))
         return super(SaleOrderPayment, self).unlink()
 
 
