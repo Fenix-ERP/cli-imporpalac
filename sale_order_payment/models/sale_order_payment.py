@@ -129,7 +129,8 @@ class SaleOrderPayment(models.Model):
             ):
                 raise UserError(
                     _(
-                        "This payment cannot be processed because the order has not been delivered."
+                        "This payment cannot be processed because "
+                        "the order has not been delivered."
                     )
                 )
 
@@ -181,7 +182,7 @@ class SaleOrderPayment(models.Model):
 
     def unlink(self):
         if not self._context.get("force_delete"):
-            raise UserError(_("Is not possible to delete a processed payment"))
+            raise UserError(_("Payments cannot be deleted."))
         return super().unlink()
 
 

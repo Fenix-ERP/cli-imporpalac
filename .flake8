@@ -16,4 +16,3 @@ exclude =
     payment_type/models/stock_picking.py,
     additional_product_imporpalac/models/purchase_order_electronic.py,
     additional_product_imporpalac/models/account_voucher_update.py,
-    sale_order_payment/models/sale_order_payment.py,
