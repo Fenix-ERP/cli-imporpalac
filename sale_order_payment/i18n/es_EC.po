@@ -157,6 +157,7 @@ msgstr "Fecha"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__delivery_status
+#: model:ir.model.fields,field_description:sale_order_payment.field_stock_picking__delivery_status
 msgid "Delivery Status"
 msgstr "Estado de la entrega"
 
