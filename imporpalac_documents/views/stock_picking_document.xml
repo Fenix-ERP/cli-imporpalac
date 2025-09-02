@@ -173,14 +173,19 @@
                                 <t t-set="discount" t-value="line.discount" />
                             </tr>
                         </t>
-                        <tr t-if="discount">
-                            <td><strong>Descuento</strong></td>
-                            <td class="text-end">
+                        <tr>
+                            <td><strong>Descuent</strong></td>
+                            <t t-if="discount">
+                                <td class="text-end">
                                 <span
-                                    t-esc="discount"
-                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
-                                />
+                                        t-esc="discount"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                    />
                             </td>
+                            </t>
+                            <t t-else="">
+                                <td class="text-end">0</td>
+                            </t>
                         </tr>
                         <t t-call="sale.document_tax_totals" />
                     </table>

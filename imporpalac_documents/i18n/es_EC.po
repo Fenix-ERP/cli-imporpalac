@@ -42,8 +42,8 @@ msgstr ""
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Descuento</strong>"
-msgstr ""
+msgid "<strong>Descuent</strong>"
+msgstr "<strong>Descuento</strong>"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
