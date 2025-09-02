@@ -16,6 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: internal_transfer_upload
+#: model:ir.actions.act_window,name:internal_transfer_upload.action_product_available_quantity_wizard_imporpa
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_product_available_quantity_wizard_form_imporpa
+msgid "Available Quantity of Product"
+msgstr "Cantidad disponible del producto"
+
+
+#. module: internal_transfer_upload
 #: model:ir.model.fields,field_description:internal_transfer_upload.field_import_transfer_product_wizard__file
 msgid "Archivo"
 msgstr "Archivo"
@@ -121,3 +128,24 @@ msgstr "Fila %(row)s: Error inesperado: %(error)s"
 #, python-format
 msgid "Import completed.\n\nMovements created: %(count)s"
 msgstr "Importación completada.\n\nMovimientos creados: %(count)s"
+
+
+#. module: internal_transfer_upload
+#: model:ir.model,name:internal_transfer_upload.model_product_available_quantity_wizard_imporpa
+msgid "Product Available Quantity Wizard"
+msgstr "Cantidad disponible del producto wizard"
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_product_available_quantity_wizard_imporpa__product_product_id
+msgid "Product Name"
+msgstr "Nombre del producto"
+
+#. module: internal_transfer_upload
+#: model_terms:ir.ui.view,arch_db:internal_transfer_upload.view_stock_warehouse_internal_transfer
+msgid "Stock"
+msgstr ""
+
+#. module: internal_transfer_upload
+#: model:ir.model.fields,field_description:internal_transfer_upload.field_product_available_quantity_wizard_imporpa__stock_quant_ids
+msgid "Stock Quant"
+msgstr "Cantidad en stock"
