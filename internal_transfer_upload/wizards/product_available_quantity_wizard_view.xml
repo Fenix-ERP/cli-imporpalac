@@ -27,12 +27,18 @@
         </field>
     </record>
 
-    <record id="action_product_available_quantity_wizard_imporpa" model="ir.actions.act_window">
+    <record
+        id="action_product_available_quantity_wizard_imporpa"
+        model="ir.actions.act_window"
+    >
         <field name="name">Available Quantity of Product</field>
         <field name="res_model">product.available.quantity.wizard.imporpa</field>
         <field name="view_mode">form</field>
         <field name="type">ir.actions.act_window</field>
         <field name="target">new</field>
-        <field name="view_id" ref="view_product_available_quantity_wizard_form_imporpa" />
+        <field
+            name="view_id"
+            ref="view_product_available_quantity_wizard_form_imporpa"
+        />
     </record>
 </odoo>
