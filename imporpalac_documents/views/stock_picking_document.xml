@@ -5,59 +5,67 @@
         inherit_id="sale.report_saleorder_document"
         priority="100"
     >
-
         <xpath expr="//div[@class='page']" position="inside">
             <t t-set="address">
             </t>
+        </xpath>
+        <xpath expr="//div[span[@t-field='doc.note']]" position="replace">
+            <div>
+                <p>
+                    <strong>Payment Method:</strong>
+                    <span t-field="doc.payment_method" />
+                </p>
+            </div>
+        </xpath>
+
+        <xpath expr="//h2[@class='mt-4']" position="replace">
+            <h2 class="mt-4 text-end">
+                <span
+                    t-if="env.context.get('proforma', False) or is_pro_forma"
+                >Pro-Forma Invoice # </span>
+                <span t-elif="doc.state in ['draft','sent']">Quotation # </span>
+                <span t-else="">Order # </span>
+                <span t-field="doc.name">SO0000</span>
+            </h2>
         </xpath>
 
         <xpath
             expr="//t[contains(@t-if, 'doc.partner_shipping_id == doc.partner_invoice_id')]"
             position="replace"
         >
-            <div class="text-start">
-                <t t-set="information_block">
-                    <strong>
-                        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
-                            Invoicing and Shipping Address:
-                        </t>
-                        <t t-else="">
-                            Invoicing Address:
-                        </t>
-                    </strong>
-                    <div
-                        t-field="doc.partner_invoice_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
-                    />
-                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
-                        <strong>Shipping Address:</strong>
+            <div class="d-flex justify-content-between align-items-start">
+                <!-- Bloque izquierdo: información del cliente -->
+                <div class="text-start">
+                    <t t-set="information_block">
                         <div
-                            t-field="doc.partner_shipping_id"
+                            t-field="doc.partner_invoice_id"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                         />
+                        <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                            <strong>Shipping Address:</strong>
+                            <div
+                                t-field="doc.partner_shipping_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                            />
+                        </t>
+                        <p t-if="doc.partner_id.vat">
+                            <t
+                                t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                                t-out="doc.company_id.account_fiscal_country_id.vat_label"
+                            />
+                            <t t-else="">Tax ID</t>: <span
+                                t-field="doc.partner_id.vat"
+                            />
+                        </p>
                     </t>
-                    <p t-if="doc.partner_id.vat">
-                        <t
-                            t-if="doc.company_id.account_fiscal_country_id.vat_label"
-                            t-out="doc.company_id.account_fiscal_country_id.vat_label"
-                        />
-                        <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat" />
-                    </p>
-                </t>
+                </div>
             </div>
         </xpath>
-
         <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
             <div class="col-auto col-3 mw-100 mb-2" name="new_info">
-                <strong>Num Vendedor:</strong><br />
+                <strong>Num Vendor:</strong><br />
                 <span class="m-0"><t t-esc="doc.user_id.partner_id.phone" /></span>
             </div>
-        </xpath>
-        <xpath
-            expr="//span[@t-elif=&quot;doc.state in ['draft','sent']&quot;]"
-            position="replace"
-        >
-            <span t-elif="doc.state in ['draft','sent']">Cotizacion</span>
         </xpath>
 
         <xpath
@@ -67,13 +75,12 @@
             <table class="table table-sm o_main_table table-borderless mt-4">
                 <thead style="display: table-row-group">
                     <tr>
-                        <th name="th_description" class="text-start">DESCRIPCION</th>
-                        <th name="th_quantity" class="text-end">CANTIDAD</th>
-                        <th name="th_priceunit" class="text-end">PRECIO UNITARIO</th>
+                        <th name="th_description" class="text-start">DESCRIPTION</th>
+                        <th name="th_quantity" class="text-end">QUANTITY</th>
+                        <th name="th_priceunit" class="text-end">PRICE UNIT</th>
                         <th name="th_discount" t-if="display_discount" class="text-end">
                             <span>DESC.%</span>
                         </th>
-                        <th name="th_taxes" class="text-end">IMPUESTOS</th>
                         <th name="th_subtotal" class="text-end">
                             <span>TOTAL</span>
                         </th>
@@ -111,16 +118,6 @@
                                 </td>
                                 <td t-if="display_discount" class="text-end">
                                     <span t-field="line.discount">-</span>
-                                </td>
-                                <t
-                                    t-set="taxes"
-                                    t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.tax_id])"
-                                />
-                                <td
-                                    name="td_taxes"
-                                    t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}"
-                                >
-                                    <span t-out="taxes">Tax 15%</span>
                                 </td>
                                 <td
                                     t-if="not line.is_downpayment"
@@ -163,53 +160,80 @@
                 </tbody>
             </table>
         </xpath>
+        <xpath expr="//div[@id='total']" position="replace">
+            <div id="total" class="row" name="total">
+                <div
+                    t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto"
+                >
+                    <table class="table table-sm table-borderless">
+                        <!-- Tax totals -->
+                        <t t-set="tax_totals" t-value="doc.tax_totals" />
+                        <t t-foreach="lines_to_report" t-as="line">
+                            <tr>
+                                <t t-set="discount" t-value="line.discount" />
+                            </tr>
+                        </t>
+                        <tr t-if="discount">
+                            <td><strong>Descuento</strong></td>
+                            <td class="text-end">
+                                <span
+                                    t-esc="discount"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                />
+                            </td>
+                        </tr>
+                        <t t-call="sale.document_tax_totals" />
+                    </table>
+                </div>
+            </div>
+        </xpath>
     </template>
-
 
     <template
         id="web_boxed_document_inherited"
         inherit_id="web.external_layout_bold"
         priority="100"
     >
-        <xpath expr="//div[@class='col-6']" position="replace">
-            <div class="col-6 mx-auto text-center">
-                <img
-                    t-if="company.logo"
-                    t-att-src="image_data_uri(company.logo)"
-                    alt="Logo"
-                />
+        <xpath expr="//div[@class='o_clean_header']" position="replace">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <img
+                        t-if="company.logo"
+                        t-att-src="image_data_uri(company.logo)"
+                        style="max-width: 300px; height:auto; margin-bottom: 20px;"
+                        alt="Logo"
+                    />
+                    <ul class="list-unstyled" name="company_address_list">
+                        <li t-if="company.is_company_details_empty">
+                            <span
+                                t-field="company.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                            />
+                        </li>
+                        <li t-else="">
+                            <span t-field="company.company_details" />
+                        </li>
+                        <li t-if="not forced_vat" />
+                        <li t-else="">
+                            <t
+                                t-esc="company.country_id.vat_label or 'Tax ID'"
+                            >Tax ID</t>:
+                            <span t-esc="forced_vat" />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </xpath>
-        <xpath expr="//div[@class='col-5 offset-1']" position="replace">
-            <div class="col-12 d-flex justify-content-center" name="company_address">
-                <ul class="list-unstyled" name='company_address_list'>
-                    <li t-if="company.is_company_details_empty"><span
-                            t-field="company.partner_id"
-                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                        >
-                        <div
-                                class="bg-light border-1 rounded h-100 d-flex flex-column align-items-center justify-content-center p-4 w-100 opacity-75 text-muted text-center"
-                            >
-                            <strong>Company address block</strong>
-                            <div>Contains the company address.</div>
-                        </div>
-                    </span></li>
-                    <li t-else="">
-                        <span t-field="company.company_details">
-                            <div
-                                class="bg-light border-1 rounded h-100 d-flex flex-column align-items-center justify-content-center p-4 w-100 opacity-75 text-muted text-center"
-                            >
-                                <strong>Company details block</strong>
-                                <div>Contains the company details.</div>
-                            </div>
-                        </span>
-                    </li>
-                    <li t-if="not forced_vat" />
-                    <li t-else="">
-                        <t t-esc="company.country_id.vat_label or 'Tax ID'">Tax ID</t>:
-                        <span t-esc="forced_vat">US12345671</span>
-                    </li>
-                </ul>
+        <xpath
+            expr="//div[@t-attf-class='footer o_clean_footer o_company_#{company.id}_layout']"
+            position="replace"
+        >
+            <div t-attf-class="footer o_clean_footer o_company_#{company.id}_layout">
+                <div class="row">
+                    <div class="text-center">
+                        <span t-field="company.report_footer" />
+                    </div>
+                </div>
             </div>
         </xpath>
     </template>
