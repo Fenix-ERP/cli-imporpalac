@@ -27,7 +27,6 @@
                     string="Stock"
                     type="action"
                     class="oe_highlight"
-                    invisible="picking_type_code != 'internal'"
                 />
             </xpath>
         </field>
