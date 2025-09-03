@@ -18,6 +18,17 @@
                     invisible="picking_type_code != 'internal'"
                 />
             </xpath>
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='date']"
+                position="before"
+            >
+               <button
+                    name="%(action_product_available_quantity_wizard_imporpa)d"
+                    string="Stock"
+                    type="action"
+                    class="oe_highlight"
+                />
+            </xpath>
         </field>
     </record>
 </odoo>
