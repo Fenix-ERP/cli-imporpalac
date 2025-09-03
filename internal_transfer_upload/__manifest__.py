@@ -8,9 +8,9 @@
     "depends": ["stock"],
     "data": [
         "security/ir.model.access.csv",
+        "wizards/product_available_quantity_wizard_view.xml",
         "views/internal_transfer_upload_view.xml",
         "wizards/product_transfer_upload_wizard_view.xml",
-        "wizards/product_available_quantity_wizard_view.xml",
     ],
     "application": False,
     "installable": True,
