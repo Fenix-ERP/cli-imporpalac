@@ -125,7 +125,7 @@ class SaleOrderPayment(models.Model):
         for payment in self:
             if (
                 payment.delivery_status != "to_deliver"
-                and payment.payment_method.code != "credit_card"
+                and payment.payment_method.code == "credit_card"
             ):
                 raise UserError(
                     _(
