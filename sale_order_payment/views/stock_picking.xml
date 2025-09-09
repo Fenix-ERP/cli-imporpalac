@@ -52,6 +52,9 @@
                     invisible="payment_state != 'credit' or picking_type_code!='outgoing' or return_id"
                 />
             </xpath>
+            <xpath expr="//button[@name='action_assign']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

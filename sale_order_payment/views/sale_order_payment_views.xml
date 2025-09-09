@@ -4,7 +4,11 @@
         <field name="name">sale.order.payment.tree</field>
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
-            <tree string="Pagos de Orden de Venta" create="false">
+            <tree
+                string="Pagos de Orden de Venta"
+                create="false"
+                default_order="date_order desc"
+            >
                 <field name="client_id" />
                 <field name="order_id" widget="many2one" />
                 <field name="date_order" optional="hide" />
@@ -68,7 +72,7 @@
                     icon="fa-money"
                     string="Devolver"
                     class="btn-danger"
-                    invisible="state not in ['draft'] or difference >= 0.0"
+                    invisible="state not in ['draft','cancel'] or difference >= 0.0"
                 />
             </xpath>
         </field>

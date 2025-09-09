@@ -31,4 +31,17 @@ class SaleOrderCancel(models.TransientModel):
         for payment in self.order_id.payment_ids:
             if payment.state != "processed":
                 payment.state = "cancel"
+            if payment.state == "processed":
+                payment.state = "cancel"
+                payment.difference = -payment.amount
+        return res
+
+    def action_cancel(self):
+        res = super(SaleOrderCancel, self).action_cancel()
+        for payment in self.order_id.payment_ids:
+            if payment.state != "processed":
+                payment.state = "cancel"
+            if payment.state == "processed":
+                payment.state = "cancel"
+                payment.difference = -payment.amount
         return res
