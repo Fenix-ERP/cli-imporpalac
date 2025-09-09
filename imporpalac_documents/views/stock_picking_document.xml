@@ -34,7 +34,6 @@
             position="replace"
         >
             <div class="d-flex justify-content-between align-items-start">
-                <!-- Bloque izquierdo: información del cliente -->
                 <div class="text-start">
                     <t t-set="information_block">
                         <div
@@ -114,7 +113,10 @@
                                     </span>
                                 </td>
                                 <td name="td_priceunit" class="text-end">
-                                    <span t-field="line.price_unit">3</span>
+                                    <span
+                                        t-esc="line.price_unit"
+                                        t-options='{"widget": "monetary", "display_currency": line.currency_id, "precision": 2}'
+                                    />
                                 </td>
                                 <td t-if="display_discount" class="text-end">
                                     <span t-field="line.discount">-</span>
@@ -166,32 +168,68 @@
                     t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto"
                 >
                     <table class="table table-sm table-borderless">
-                        <!-- Tax totals -->
-                        <t t-set="tax_totals" t-value="doc.tax_totals" />
+
+                        <t t-set="subtotal" t-value="0" />
+                        <t t-set="discount_total" t-value="0" />
+                        <t t-set="tax_total" t-value="0" />
+
                         <t t-foreach="lines_to_report" t-as="line">
-                            <tr>
-                                <t t-set="discount" t-value="line.discount" />
-                            </tr>
+                            <t
+                                t-set="subtotal"
+                                t-value="subtotal + (line.price_unit * line.product_uom_qty)"
+                            />
+                            <t
+                                t-set="discount_total"
+                                t-value="discount_total + ((line.price_unit * line.product_uom_qty) * (line.discount/100))"
+                            />
+                            <t t-set="tax_total" t-value="tax_total + line.price_tax" />
                         </t>
+
                         <tr>
-                            <td><strong>Descuent</strong></td>
-                            <t t-if="discount">
-                                <td class="text-end">
+                            <td><strong>Subtotal</strong></td>
+                            <td class="text-end">
                                 <span
-                                        t-esc="discount"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
-                                    />
+                                    t-esc="subtotal"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                />
                             </td>
-                            </t>
-                            <t t-else="">
-                                <td class="text-end">0</td>
-                            </t>
                         </tr>
-                        <t t-call="sale.document_tax_totals" />
+
+                        <tr>
+                            <td><strong>Descuento</strong></td>
+                            <td class="text-end">
+                                <span
+                                    t-esc="discount_total"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>IVA</strong></td>
+                            <td class="text-end">
+                                <span
+                                    t-esc="tax_total"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td class="text-end">
+                                <span
+                                    t-esc="subtotal - discount_total + tax_total"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                                />
+                            </td>
+                        </tr>
+
                     </table>
                 </div>
             </div>
         </xpath>
+
     </template>
 
     <template
@@ -201,25 +239,32 @@
     >
         <xpath expr="//div[@class='o_clean_header']" position="replace">
             <div class="row mb-4">
-                <div class="col-12 text-center">
+                <div class="col-12 text-center" style="font-size: 12px;">
                     <img
                         t-if="company.logo"
                         t-att-src="image_data_uri(company.logo)"
-                        style="max-width: 300px; height:auto; margin-bottom: 20px;"
+                        style="max-width: 300px; height:auto; margin-bottom: 5px;"
                         alt="Logo"
                     />
-                    <ul class="list-unstyled" name="company_address_list">
-                        <li t-if="company.is_company_details_empty">
+                    <ul
+                        class="list-unstyled"
+                        name="company_address_list"
+                        style="margin: 0; padding: 0;"
+                    >
+                        <li
+                            t-if="company.is_company_details_empty"
+                            style="margin: 0; padding: 0;"
+                        >
                             <span
                                 t-field="company.partner_id"
                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
                             />
                         </li>
-                        <li t-else="">
+                        <li t-else="" style="margin: 0; padding: 0;">
                             <span t-field="company.company_details" />
                         </li>
-                        <li t-if="not forced_vat" />
-                        <li t-else="">
+                        <li t-if="not forced_vat" style="margin: 0; padding: 0;" />
+                        <li t-else="" style="margin: 0; padding: 0;">
                             <t
                                 t-esc="company.country_id.vat_label or 'Tax ID'"
                             >Tax ID</t>:
@@ -227,6 +272,7 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
         </xpath>
         <xpath
