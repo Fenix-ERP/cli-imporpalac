@@ -52,8 +52,33 @@ msgstr "<strong>Metodo de pago:</strong>"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Num Vendor:</strong><br/>"
-msgstr "<strong>Num Vendedor:</strong><br/>"
+msgid "Num Vendor:"
+msgstr "Num Vendedor:"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Your Reference:"
+msgstr "Referencia:"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Quotation Date:"
+msgstr "Fecha de cotizacion:"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Order Date:"
+msgstr "Fecha de orden:"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Salesperson:"
+msgstr "Vendedor:"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Expiration:"
+msgstr "Vencimiento:"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
