@@ -143,7 +143,7 @@
                     style="display: table-row-group; font-size: 12px; font-family: Arial, sans-serif;"
                 >
                     <tr>
-                        <th name="th_description" class="text-start">DESCRIPTION</th>
+                        <th name="th_description" class="text-center">DESCRIPTION</th>
                         <th name="th_quantity" class="text-end">QUANTITY</th>
                         <th name="th_priceunit" class="text-end">PRICE UNIT</th>
                         <th name="th_discount" t-if="display_discount" class="text-end">
