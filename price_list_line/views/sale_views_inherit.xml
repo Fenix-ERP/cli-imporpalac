@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="view_order_form_inherit_price_list_imporpalac">
-        <field name="name">order.form.inherit.price_list_imporpalac</field>
+    <record id="view_order_form_inherit_pricelist_line" model="ir.ui.view">
+        <field name="name">sale.order.form.pricelist.line</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
@@ -9,16 +9,7 @@
                 expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
                 position="after"
             >
-                <field name="pricelist_line_id" column_invisible="1" />
-            </xpath>
-            <xpath
-                expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
-                position="after"
-            >
-                <field
-                    name="pricelist_line2_id"
-                    options="{'no_open': True, 'no_create': True}"
-                />
+                <field name="line_pricelist_id" />
             </xpath>
         </field>
     </record>

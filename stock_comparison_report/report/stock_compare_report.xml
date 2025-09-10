@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="stock_compare_report_pdf_document">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-size: 11px;">
+                <div class="label" style="text-align: center">
+                    <h2>Reporte de Comparación de Stock</h2>
+                </div>
+                <t t-if="products">
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad Ubicación A</th>
+                                <th>Cantidad Ubicación B</th>
+                                <th>Mínimo requerido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="products" t-as="p">
+                                <tr>
+                                    <td><t t-esc="p['product']" /></td>
+                                    <td><t t-esc="p['a_qty']" /></td>
+                                    <td><t t-esc="p['b_qty']" /></td>
+                                    <td><t t-esc="p['min_qty']" /></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>No hay datos para mostrar</p>
+                </t>
+            </div>
+
+        </t>
+    </template>
+
+    <template id="stock_compare_report_pdf">
+        <t t-call="web.html_container">
+            <t t-call="stock_comparison_report.stock_compare_report_pdf_document" />
+        </t>
+    </template>
+</odoo>
