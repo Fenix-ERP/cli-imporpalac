@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_report_stock_compare" model="ir.actions.report">
+        <field name="name">Reporte Comparación de Stock PDF</field>
+        <field name="model">stock.compare.wizard</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">stock_comparison_report.stock_compare_report_pdf</field>
+        <field name="report_file">stock_comparison_report.stock_compare_report_pdf</field>
+        <field name="binding_model_id" ref="model_stock_compare_wizard" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

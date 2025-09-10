@@ -155,3 +155,13 @@ msgstr "Transferir "
 #: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
 msgid "Ubicación interna asociada al producto"
 msgstr ""
+
+#. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__sale_person_id
+msgid "Sale Person"
+msgstr "Vendedor"
+
+#. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__purchase_person_id
+msgid "Purchase Person"
+msgstr "Comprador"
