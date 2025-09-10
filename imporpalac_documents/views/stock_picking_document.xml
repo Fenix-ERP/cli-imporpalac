@@ -11,7 +11,7 @@
         </xpath>
         <xpath expr="//div[span[@t-field='doc.note']]" position="replace">
             <div>
-                <p>
+                <p style="font-size: 12px; font-family: Arial, sans-serif;">
                     <strong>Payment Method:</strong>
                     <span t-field="doc.payment_method" />
                 </p>
@@ -49,7 +49,10 @@
                                 style="font-size: 12px;"
                             />
                         </t>
-                        <p t-if="doc.partner_id.vat">
+                        <p
+                            t-if="doc.partner_id.vat"
+                            style="font-size: 12px; font-family: Arial, sans-serif;"
+                        >
                             <t
                                 t-if="doc.company_id.account_fiscal_country_id.vat_label"
                                 t-out="doc.company_id.account_fiscal_country_id.vat_label"
@@ -62,11 +65,73 @@
                 </div>
             </div>
         </xpath>
-        <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div class="row mt-4 mb-2" id="informations">
+                <div
+                    t-if="doc.client_order_ref"
+                    class="col-auto col-3 mw-100 mb-2"
+                    name="informations_reference"
+                >
+                    <strong
+                        style="font-size: 11px; font-family: Arial, sans-serif"
+                    >Your Reference:</strong><br />
+                    <span
+                        style="font-size: 11px; font-family: Arial, sans-serif;"
+                        class="m-0"
+                        t-field="doc.client_order_ref"
+                    >SO0000</span>
+                </div>
+                <div
+                    t-if="doc.date_order"
+                    class="col-auto col-3 mw-100 mb-2"
+                    style="font-size: 11px; font-family: Arial, sans-serif"
+                    name="informations_date"
+                >
+                    <strong
+                        t-if="doc.state in ['draft', 'sent']"
+                    >Quotation Date:</strong>
+                    <strong t-else="">Order Date:</strong><br />
+                    <span
+                        style="font-size: 11px; font-family: Arial, sans-serif;"
+                        class="m-0"
+                        t-field="doc.date_order"
+                        t-options='{"widget": "date"}'
+                    >2023-12-31</span>
+                </div>
+                <div
+                    t-if="doc.validity_date and doc.state in ['draft', 'sent']"
+                    class="col-auto col-3 mw-100 mb-2"
+                    name="expiration_date"
+                >
+                    <strong
+                        style="font-size: 11px; font-family: Arial, sans-serif"
+                    >Vencimiento:</strong><br />
+                    <span
+                        style="font-size: 11px; font-family: Arial, sans-serif;"
+                        class="m-0"
+                        t-field="doc.validity_date"
+                    >2023-12-31</span>
+                </div>
+                <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
+                    <strong
+                        style="font-size: 11px; font-family: Arial, sans-serif"
+                    >Vendedor:</strong><br />
+                    <span
+                        style="font-size: 11px; font-family: Arial, sans-serif;"
+                        class="m-0"
+                        t-field="doc.user_id"
+                    >Mitchell Admin</span>
+                </div>
             <div class="col-auto col-3 mw-100 mb-2" name="new_info">
-                <strong>Num Vendor:</strong><br />
-                <span class="m-0"><t t-esc="doc.user_id.partner_id.phone" /></span>
+                <strong
+                        style="font-size: 11px; font-family: Arial, sans-serif"
+                    >Num Vendor:</strong><br />
+                <span
+                        style="font-size: 11px; font-family: Arial, sans-serif;"
+                        class="m-0"
+                    ><t t-esc="doc.user_id.partner_id.phone" /></span>
             </div>
+        </div>
         </xpath>
 
         <xpath
@@ -74,9 +139,11 @@
             position="replace"
         >
             <table class="table table-sm o_main_table table-borderless mt-4">
-                <thead style="display: table-row-group">
+                <thead
+                    style="display: table-row-group; font-size: 12px; font-family: Arial, sans-serif;"
+                >
                     <tr>
-                        <th name="th_description" class="text-start">DESCRIPTION</th>
+                        <th name="th_description" class="text-center">DESCRIPTION</th>
                         <th name="th_quantity" class="text-end">QUANTITY</th>
                         <th name="th_priceunit" class="text-end">PRICE UNIT</th>
                         <th name="th_discount" t-if="display_discount" class="text-end">
@@ -87,7 +154,10 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="sale_tbody" style="font-size: 11px">
+                <tbody
+                    class="sale_tbody"
+                    style="font-size: 11px; font-family: Arial, sans-serif;"
+                >
 
                     <t t-set="current_subtotal" t-value="0" />
 
@@ -173,7 +243,11 @@
                             t-if="current_section and (line_last or lines_to_report[line_index+1].display_type == 'line_section') and not line.is_downpayment"
                         >
                             <tr class="is-subtotal text-end">
-                                <td name="td_section_subtotal" colspan="99">
+                                <td
+                                    name="td_section_subtotal"
+                                    style="padding: 2px 5px; vertical-align: middle; font-family: Arial, sans-serif;"
+                                    colspan="99"
+                                >
                                     <strong class="mr16">Subtotal</strong>
                                     <span
                                         t-out="current_subtotal"
@@ -211,10 +285,10 @@
 
                         <tr>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle;"
+                                style="padding: 2px 5px; vertical-align: middle; font-family: Arial, sans-serif; font-size: 12px;"
                             ><strong>Subtotal</strong></td>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle; text-align: right;"
+                                style="padding: 2px 5px; vertical-align: middle; text-align: right; font-family: Arial, sans-serif; font-size: 12px;"
                                 class="text-end"
                             >
                                 <span
@@ -226,10 +300,10 @@
 
                         <tr>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle;"
+                                style="padding: 2px 5px; vertical-align: middle; font-family: Arial, sans-serif; font-size: 12px;"
                             ><strong>Descuento</strong></td>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle; text-align: right;"
+                                style="padding: 2px 5px; vertical-align: middle; text-align: right; font-family: Arial, sans-serif; font-size: 12px;"
                                 class="text-end"
                             >
                                 <span
@@ -241,10 +315,10 @@
 
                         <tr>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle;"
+                                style="padding: 2px 5px; vertical-align: middle; font-family: Arial, sans-serif; font-size: 12px;"
                             ><strong>IVA</strong></td>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle; text-align: right;"
+                                style="padding: 2px 5px; vertical-align: middle; text-align: right; font-family: Arial, sans-serif; font-size: 12px;"
                                 class="text-end"
                             >
                                 <span
@@ -256,10 +330,10 @@
 
                         <tr>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle;"
+                                style="padding: 2px 5px; vertical-align: middle; font-family: Arial, sans-serif; font-size: 12px;"
                             ><strong>Total</strong></td>
                             <td
-                                style="padding: 2px 5px; vertical-align: middle; text-align: right;"
+                                style="padding: 2px 5px; vertical-align: middle; text-align: right; font-family: Arial, sans-serif; font-size: 12px;"
                                 class="text-end"
                             >
                                 <span
@@ -285,7 +359,7 @@
             <div class="row mb-2">
                 <div
                     class="col-12 text-center"
-                    style="font-size: 12px; line-height: 1.1;"
+                    style="font-size: 12px; line-height: 1.1; font-family: Arial, sans-serif;"
                 >
                     <img
                         t-if="company.logo"
@@ -302,12 +376,16 @@
                         </div>
                     </t>
                     <t t-else="">
-                        <div style="margin:0; padding:0;">
+                        <div
+                            style="margin:0; padding:0; font-size: 11px; font-family: Arial, sans-serif;"
+                        >
                             <span t-field="company.company_details" />
                         </div>
                     </t>
                     <t t-if="forced_vat">
-                        <div style="margin:0; padding:0;">
+                        <div
+                            style="margin:0; padding:0; font-size: 11px; font-family: Arial, sans-serif;"
+                        >
                             <t t-esc="company.country_id.vat_label or 'Tax ID'" />:
                             <span t-esc="forced_vat" />
                         </div>

@@ -4,16 +4,16 @@
         <t t-call="web.external_layout">
             <div class="page" style="font-size: 11px;">
                 <div class="label" style="text-align: center">
-                    <h2>Reporte de Comparación de Stock</h2>
+                    <h2>Stock Comparison Report</h2>
                 </div>
                 <t t-if="products">
                     <table class="table table-sm o_main_table">
                         <thead>
                             <tr>
-                                <th>Producto</th>
-                                <th>Cantidad Ubicación A</th>
-                                <th>Cantidad Ubicación B</th>
-                                <th>Mínimo requerido</th>
+                                <th>Product</th>
+                                <th>Quantity Location A</th>
+                                <th>Quantity Location B</th>
+                                <th>Minimum required</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,7 +29,7 @@
                     </table>
                 </t>
                 <t t-else="">
-                    <p>No hay datos para mostrar</p>
+                    <p>No data to display</p>
                 </t>
             </div>
 
