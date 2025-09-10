@@ -6,16 +6,18 @@
         <field name="arch" type="xml">
             <form string="Comparar Stock">
                 <group>
-                    <field name="location_a_id"/>
-                    <field name="location_b_id"/>
-                    <field name="min_qty"/>
+                    <field name="location_a_id" />
+                    <field name="location_b_id" />
+                    <field name="min_qty" />
                 </group>
                 <footer>
-                    <button string="Generar Reporte"
-                            type="object"
-                            name="action_compare"
-                            class="btn-primary"/>
-                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    <button
+                        string="Generar Reporte"
+                        type="object"
+                        name="action_compare"
+                        class="btn-primary"
+                    />
+                    <button string="Cancelar" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>

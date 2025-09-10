@@ -19,10 +19,10 @@
                         <tbody>
                             <t t-foreach="products" t-as="p">
                                 <tr>
-                                    <td><t t-esc="p['product']"/></td>
-                                    <td><t t-esc="p['a_qty']"/></td>
-                                    <td><t t-esc="p['b_qty']"/></td>
-                                    <td><t t-esc="p['min_qty']"/></td>
+                                    <td><t t-esc="p['product']" /></td>
+                                    <td><t t-esc="p['a_qty']" /></td>
+                                    <td><t t-esc="p['b_qty']" /></td>
+                                    <td><t t-esc="p['min_qty']" /></td>
                                 </tr>
                             </t>
                         </tbody>
