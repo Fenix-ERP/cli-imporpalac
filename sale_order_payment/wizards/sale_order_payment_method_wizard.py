@@ -142,6 +142,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
             )
         if self.is_pdc:
             self._check_unique_cheque_per_client()
+            self.sale_order_payment_id.is_pdc = True
             self.env["sale.order.payment.line"].create(
                 {
                     "payment_id": self.sale_order_payment_id.id,

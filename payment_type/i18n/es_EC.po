@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-28 05:59+0000\n"
-"PO-Revision-Date: 2025-08-28 05:59+0000\n"
+"POT-Creation-Date: 2025-09-11 20:41+0000\n"
+"PO-Revision-Date: 2025-09-11 20:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -73,6 +73,11 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: payment_type
+#: model_terms:ir.ui.view,arch_db:payment_type.view_pay_sales_order_inherit_imporpalac
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse__current_payment_type_ids_domain
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__current_payment_type_ids_domain
 msgid "Current Payment Type Ids Domain"
@@ -88,6 +93,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__display_name
 msgid "Display Name"
 msgstr "Nombre"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Exceeds the maximum value for end consumers"
+msgstr "Excede el valor máximo para consumidor final"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__id
@@ -237,11 +249,3 @@ msgstr "Términos de pago del cliente"
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "Exceeds the maximum value for end consumers"
-msgstr "Excede el valor máximo para consumidor final"

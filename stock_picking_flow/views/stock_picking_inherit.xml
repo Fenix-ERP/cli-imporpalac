@@ -8,12 +8,6 @@
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="readonly">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='location_id'][1]" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='location_id'][2]" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
             <xpath expr="//field[@name='scheduled_date']" position="attributes">
                 <attribute name="readonly">1</attribute>
             </xpath>
