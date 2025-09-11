@@ -163,3 +163,31 @@ class StockPicking(models.Model):
                     invoice.state_send_document = "in_process"
                     picking.invoice_number = invoice.name
         return res
+
+
+class PickingType(models.Model):
+    _inherit = "stock.picking.type"
+
+    def action_assign(self):
+        """Check availability of picking moves.
+        This has the effect of changing the state and reserve quants on available moves, and may
+        also impact the state of the picking as it is computed based on move's states.
+        @return: True
+        """
+        self.mapped("package_level_ids").filtered(
+            lambda pl: pl.state == "draft" and not pl.move_ids
+        )._generate_moves()
+        self.filtered(lambda picking: picking.state == "draft").action_confirm()
+        moves = self.move_ids.filtered(
+            lambda move: move.state not in ("draft", "cancel", "done")
+        ).sorted(
+            key=lambda move: (
+                -int(move.priority),
+                not bool(move.date_deadline),
+                move.date_deadline,
+                move.date,
+                move.id,
+            )
+        )
+        moves._action_assign()
+        return True
