@@ -146,7 +146,7 @@
                         <th name="th_description" class="text-center">DESCRIPTION</th>
                         <th name="th_quantity" class="text-end">QUANTITY</th>
                         <th name="th_priceunit" class="text-end">PRICE UNIT</th>
-                        <th name="th_discount" t-if="display_discount" class="text-end">
+                        <th name="th_discount" class="text-end">
                             <span>DESC.%</span>
                         </th>
                         <th name="th_subtotal" class="text-end">
@@ -200,11 +200,10 @@
                                     />
                                 </td>
                                 <td
-                                    t-if="display_discount"
                                     style="padding: 2px 5px; vertical-align: middle;"
                                     class="text-end"
                                 >
-                                    <span t-field="line.discount">-</span>
+                                    <span t-esc="line.discount" />%
                                 </td>
                                 <td
                                     t-if="not line.is_downpayment"
@@ -356,35 +355,46 @@
         priority="100"
     >
         <xpath expr="//div[@class='o_clean_header']" position="replace">
-            <div class="row mb-2">
+            <div class="row mb-2" style="margin:0; padding:0;">
                 <div
                     class="col-12 text-center"
-                    style="font-size: 12px; line-height: 1.1; font-family: Arial, sans-serif;"
+                    style="font-size: 12px; line-height:1; font-family: Arial, sans-serif; margin:0; padding:0;"
                 >
+
+                    <!-- Logo -->
                     <img
                         t-if="company.logo"
                         t-att-src="image_data_uri(company.logo)"
-                        style="max-width: 250px; height:auto; margin-bottom: 3px; display:block; margin-left:auto; margin-right:auto;"
+                        style="max-width: 250px; height:auto; display:block; margin:0 auto 3px auto;"
                         alt="Logo"
                     />
+
+                    <!-- Detalles de la compañía -->
                     <t t-if="company.is_company_details_empty">
-                        <div style="margin:0; padding:0;">
+                        <div
+                            style="margin:0; padding:0; line-height:1; font-size:12px; font-family:Arial, sans-serif;"
+                        >
                             <span
                                 t-field="company.partner_id"
-                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": true}'
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": true, "style": "line-height: 1.1;"}'
+                                style="line-height: 1.1;"
                             />
                         </div>
                     </t>
                     <t t-else="">
-                        <div
-                            style="margin:0; padding:0; font-size: 11px; font-family: Arial, sans-serif;"
-                        >
-                            <span t-field="company.company_details" />
+                        <div style="margin:0; padding:0; line-height:1;">
+                            <span
+                                t-field="company.company_details"
+                                t-options='{"widget": "text"}'
+                                style="margin:0; padding:0; line-height:1;"
+                            />
                         </div>
                     </t>
+
+                    <!-- VAT -->
                     <t t-if="forced_vat">
                         <div
-                            style="margin:0; padding:0; font-size: 11px; font-family: Arial, sans-serif;"
+                            style="margin:0; padding:0; font-size:11px; line-height:1; font-family: Arial, sans-serif;"
                         >
                             <t t-esc="company.country_id.vat_label or 'Tax ID'" />:
                             <span t-esc="forced_vat" />
@@ -393,6 +403,7 @@
                 </div>
             </div>
         </xpath>
+
         <xpath
             expr="//div[@t-attf-class='footer o_clean_footer o_company_#{company.id}_layout']"
             position="replace"
