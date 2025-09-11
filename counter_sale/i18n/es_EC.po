@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 16:29+0000\n"
-"PO-Revision-Date: 2025-08-06 16:29+0000\n"
+"POT-Creation-Date: 2025-09-11 21:49+0000\n"
+"PO-Revision-Date: 2025-09-11 21:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,11 @@ msgid "Admin"
 msgstr "Administrador"
 
 #. module: counter_sale
+#: model:ir.actions.server,name:counter_sale.ir_cron_expire_quotations_ir_actions_server
+msgid "Automatic expiration of quotes"
+msgstr "Expiración automática de cotizaciones"
+
+#. module: counter_sale
 #: model:ir.module.category,name:counter_sale.module_category_counter_sale
 msgid "Counter Sale"
 msgstr "Venta en mostrador"
@@ -34,11 +39,6 @@ msgstr "Venta en mostrador"
 #: model:res.groups,name:counter_sale.group_counter_sale_dispatcher
 msgid "Dispatcher"
 msgstr "Despachador"
-
-#. module: counter_sale
-#: model:ir.actions.server,name:counter_sale.ir_cron_expire_quotations_ir_actions_server
-msgid "Expire Quotations After 48h"
-msgstr "Expiración automática de cotizaciones"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__expired
@@ -52,6 +52,13 @@ msgid "Internal Location"
 msgstr "Ubicación interna"
 
 #. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/sale_order.py:0
+#, python-format
+msgid "Invalid status"
+msgstr "Estado inválido"
+
+#. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
 msgid "Is Rectified"
 msgstr "Recificada"
@@ -60,11 +67,6 @@ msgstr "Recificada"
 #: model:ir.model,name:counter_sale.model_account_move
 msgid "New account move model with electronic documents"
 msgstr "Asiento contable"
-
-#. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_sale_order__note
-msgid "Note"
-msgstr "Términos y condiciones"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__rectified_product_uom_qty
@@ -87,6 +89,11 @@ msgid "Print Ticket"
 msgstr "Imprimir Ticket"
 
 #. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__purchase_person_id
+msgid "Purchase Person"
+msgstr "Comprador"
+
+#. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__rectified_order_id
 msgid "Rectified Sale Order"
 msgstr "Orden de Venta Rectificada"
@@ -97,8 +104,13 @@ msgid "Reprocess"
 msgstr "Reprocesar"
 
 #. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__sale_person_id
+msgid "Sale Person"
+msgstr "Vendedor"
+
+#. module: counter_sale
 #: model:ir.model,name:counter_sale.model_sale_order
-msgid "Sale order"
+msgid "Sales Order"
 msgstr "Orden de venta"
 
 #. module: counter_sale
@@ -127,8 +139,19 @@ msgstr "La entrega aún no ha sido completada."
 #. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
-msgid "There is no payment journal for %s in warehouse %s, please assign it."
-msgstr "No hay diario de pago para %s en el almacén %s, por favor, asígnelo."
+msgid "The order must be in Confirmed state to print."
+msgstr "La orden debe estar Confirmada para ser impresa"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/sale_order.py:0
+#, python-format
+msgid ""
+"There is no payment journal for %(payment_method)s in warehouse "
+"%(warehouse)s, please assign it."
+msgstr ""
+"No existe un diario de pago para %(payment_method)s en el almacén "
+"%(warehouse)s, por favro asígnelo."
 
 #. module: counter_sale
 #. odoo-python
@@ -149,19 +172,9 @@ msgstr ""
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir "
+msgstr "Transferencia "
 
 #. module: counter_sale
 #: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
 msgid "Ubicación interna asociada al producto"
 msgstr ""
-
-#. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__sale_person_id
-msgid "Sale Person"
-msgstr "Vendedor"
-
-#. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__purchase_person_id
-msgid "Purchase Person"
-msgstr "Comprador"

@@ -21,7 +21,6 @@ msgid "If you change the pricelist, only newly added lines will be affected."
 msgstr "Si cambias la lista de precio, solo las nuevas lineas seran afectas"
 
 #. module: price_list_line
-#: model:ir.model.fields,field_description:price_list_line.field_sale_order_line__pricelist_line2_id
 #: model:ir.model.fields,field_description:price_list_line.field_sale_order_line__pricelist_line_id
 msgid "Pricelist Line"
 msgstr "Lista de Precio"

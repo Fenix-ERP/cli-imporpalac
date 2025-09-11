@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class SaleOrderPayment(models.Model):
@@ -60,10 +60,11 @@ class SaleOrderPayment(models.Model):
         [
             ("draft", "Pending"),
             ("processed", "Processed"),
-            ("cancel", "Cancel"),
+            ("cancel", "Cancelled"),
         ],
         default="draft",
     )
+    is_pdc = fields.Boolean(default=False)
 
     payment_method = fields.Many2one(
         comodel_name="payment.type",
@@ -165,7 +166,7 @@ class SaleOrderPayment(models.Model):
                             "target": "new",
                             "context": ctx,
                         }
-            if not self.is_mixed_payment:
+            if not self.is_mixed_payment and not self.is_pdc:
                 self.env["sale.order.payment.line"].create(
                     {
                         "payment_id": self.id,
@@ -173,6 +174,7 @@ class SaleOrderPayment(models.Model):
                         "payment_method_line_id": self.payment_method_line_id.id,
                         "amount": self.amount,
                         "card_id": self.card_id.id,
+                        "reference": self.reference,
                     }
                 )
             payment.state = "processed"
@@ -224,6 +226,74 @@ class SaleOrderPaymentLine(models.Model):
     card_id = fields.Many2one("account.card", string="Card Used")
     amount = fields.Monetary(required=True, default=0)
     currency_id = fields.Many2one("res.currency", string="Currency")
+
+    @api.constrains("reference", "payment_method_line_id", "journal_id")
+    def _check_global_reference(self):
+        lines = self.payment_id.payment_line_ids
+        duplicates = lines.filtered(
+            lambda line: len(
+                lines.filtered(
+                    lambda x: x.reference == line.reference
+                    and x.payment_method_line_id == line.payment_method_line_id
+                )
+            )
+            > 1
+        )
+        if duplicates:
+            raise ValidationError(_("There are duplicated references"))
+        bank_journals = self.env["account.journal"].search([("type", "=", "bank")])
+        incoming_accounts = bank_journals.mapped(
+            "inbound_payment_method_line_ids.payment_account_id"
+        )
+        outgoing_accounts = bank_journals.mapped(
+            "outbound_payment_method_line_ids.payment_account_id"
+        )
+        bank_accounts = incoming_accounts + outgoing_accounts
+        bank_lines = self.filtered(
+            lambda line: line.payment_method_line_id.payment_account_id in bank_accounts
+        )
+        if not bank_lines:
+            return
+        lines_with_ref = bank_lines.filtered(lambda line: line.reference)
+        if not lines_with_ref:
+            raise UserError(_("Please enter a Reference to continue."))
+        account_id = bank_lines.payment_method_line_id.payment_account_id
+        self.env.cr.execute(
+            """
+            SELECT sopl.id, sopl.reference, COUNT(*)
+            FROM sale_order_payment_line sopl
+            INNER JOIN account_payment_method_line apml
+            ON apml.id=sopl.payment_method_line_id
+            INNER JOIN sale_order_payment sop
+            ON sop.id=sopl.payment_id
+            WHERE apml.payment_account_id IN %s
+            AND sopl.id != %s
+            AND sopl.reference = %s
+            AND sop.state ='processed'
+            GROUP BY sopl.id, sopl.reference
+            HAVING COUNT(*) >= 1
+        """,
+            (
+                tuple(account_id.ids),
+                bank_lines.id,
+                bank_lines.reference,
+            ),
+        )
+
+        duplicates = self.env.cr.fetchall()
+        if duplicates:
+            dup_refs = duplicates[0][1]
+            acc_names = ", ".join([acc.name for acc in account_id])
+            raise ValidationError(
+                _(
+                    "The following Reference(s): '%(dup_refs)s' are duplicated"
+                    " for the bank accounts: '%(account)s'"
+                )
+                % {
+                    "dup_refs": dup_refs,
+                    "account": acc_names,
+                }
+            )
 
 
 class SaleOrder(models.Model):

@@ -14,6 +14,7 @@
                             <field
                                 name="reference"
                                 invisible="is_mixed_payment or is_pdc"
+                                required="not is_mixed_payment and not is_pdc"
                             />
                             <field name="available_journal_ids" invisible="1" />
                             <field name="sale_order_payment_id" invisible="1" />
@@ -49,6 +50,7 @@
                             <field
                                 name="card_id"
                                 options="{'no_create': True}"
+                                required="sale_order_payment_method_code=='credit_card' and not is_mixed_payment"
                                 invisible="sale_order_payment_method_code!='credit_card' or is_mixed_payment"
                             />
                         </group>
@@ -117,6 +119,7 @@
                             <field
                                 name="card_id"
                                 invisible="not card_required"
+                                required="card_required"
                                 column_invisible="context.get('payment_method') != 'credit_card'"
                                 options="{'no_create': True}"
                             />
@@ -138,7 +141,7 @@
                         name="action_confirm"
                     />
                     <button
-                        string="Cancel "
+                        string="Cancel"
                         class="btn-secondary"
                         special="cancel"
                         data-hotkey="x"

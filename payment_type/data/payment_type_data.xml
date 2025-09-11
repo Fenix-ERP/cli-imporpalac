@@ -8,12 +8,8 @@
         <field name="name">Crédito</field>
         <field name="code">credit</field>
     </record>
-    <record model="payment.type" id="payment_type_check">
-        <field name="name">Cheque</field>
-         <field name="code">check</field>
-    </record>
     <record model="payment.type" id="payment_type_pdc">
-        <field name="name">Cheque Postfechado</field>
+        <field name="name">Cheque / Postfechado</field>
          <field name="code">postdated_check</field>
     </record>
     <record model="payment.type" id="payment_type_credit_card">

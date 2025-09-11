@@ -83,7 +83,7 @@ class SaleOrder(models.Model):
                     rectified_amount = 0
                 else:
                     rectified_amount = self.rectified_order_id.amount_total
-            self.env["sale.order.payment"].create(
+            self.sudo().env["sale.order.payment"].create(
                 {
                     "client_id": self.partner_id.id,
                     "order_id": self.id,
