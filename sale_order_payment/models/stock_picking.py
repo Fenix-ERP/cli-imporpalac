@@ -14,6 +14,6 @@ class StockPicking(models.Model):
         default="not_paid",
     )
 
-    delivery_status = fields.Selection(
+    delivery_status_sale = fields.Selection(
         related="sale_id.delivery_status",
     )
