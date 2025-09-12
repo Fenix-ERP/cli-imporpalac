@@ -16,12 +16,12 @@
                     optional="hide"
                 />
                 <field
-                    name="delivery_status"
+                    name="delivery_status_sale"
                     widget="badge"
-                    decoration-danger="delivery_status == 'waiting'"
-                    decoration-warning="delivery_status == 'picking'"
-                    decoration-muted="delivery_status == 'to_deliver'"
-                    decoration-success="delivery_status == 'delivered'"
+                    decoration-danger="delivery_status_sale == 'waiting'"
+                    decoration-warning="delivery_status_sale == 'picking'"
+                    decoration-muted="delivery_status_sale == 'to_deliver'"
+                    decoration-success="delivery_status_sale == 'delivered'"
                 />
             </xpath>
         </field>
