@@ -23,8 +23,9 @@ class SaleOrder(models.Model):
         store=True,
         help="User who performed the dispatch",
     )
+
     delivery_status = fields.Selection(
-        [
+        selection_add=[
             ("waiting", "En Espera"),
             ("picking", "Picking"),
             ("to_deliver", "Por Entregar"),
