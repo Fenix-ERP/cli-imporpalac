@@ -1,6 +1,6 @@
 # Copyright (C) Softhealer Technologies.
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 try:
     import barcode
@@ -31,15 +31,26 @@ def generate_ean(barcode_type):
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
-    barcode_supp = fields.Char(
-        "Supplier Barcode",
-        copy=False,
-        index="btree_not_null",
-        help="International Supplier Article Number used for product identification.",
-    )
+
+    barcode_supp = fields.Char("Supplier Barcode", compute="_compute_supp_barcode")
+
+    @api.depends("product_variant_ids.barcode_supp")
+    def _compute_supp_barcode(self):
+        self._compute_template_field_from_variant_field("barcode_supp")
+
     sh_product_barcode_img_supp = fields.Binary(
         string="Supplier Barcode Image", readonly=True
     )
+
+    @api.model
+    def get_barcodes(self, product_id):
+        barcodes = super(ProductTemplate, self).get_barcodes(product_id)
+        product_id = self.browse(product_id)
+        if not product_id.exists():
+            raise ValidationError(_("Product template not found."))
+        if product_id.barcode_supp:
+            barcodes.append(product_id.barcode_supp)
+        return barcodes
 
     def action_generate_barcode_image_supp(self):
         self.ensure_one()
