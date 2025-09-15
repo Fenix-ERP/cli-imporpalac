@@ -151,7 +151,7 @@ msgid ""
 "%(warehouse)s, please assign it."
 msgstr ""
 "No existe un diario de pago para %(payment_method)s en el almacén "
-"%(warehouse)s, por favro asígnelo."
+"%(warehouse)s, por favor asígnelo."
 
 #. module: counter_sale
 #. odoo-python

@@ -93,6 +93,7 @@ class StockPicking(models.Model):
                     payment_line.reference if payment_line.card_id.id else False
                 ),
                 "date": fields.Date.today(),
+                "company_id": payment_line.payment_id.company_id.id
                 # "currency_id": journal_id.currency_id,
             }
         )
