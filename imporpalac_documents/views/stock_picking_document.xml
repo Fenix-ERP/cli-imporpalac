@@ -125,7 +125,7 @@
             <div class="col-auto col-3 mw-100 mb-2" name="new_info">
                 <strong
                         style="font-size: 11px; font-family: Arial, sans-serif"
-                    >Num Vendor:</strong><br />
+                    >Num Vendedor:</strong><br />
                 <span
                         style="font-size: 11px; font-family: Arial, sans-serif;"
                         class="m-0"
@@ -146,9 +146,6 @@
                         <th name="th_description" class="text-center">DESCRIPTION</th>
                         <th name="th_quantity" class="text-end">QUANTITY</th>
                         <th name="th_priceunit" class="text-end">PRICE UNIT</th>
-                        <th name="th_discount" class="text-end">
-                            <span>DESC.%</span>
-                        </th>
                         <th name="th_subtotal" class="text-end">
                             <span>TOTAL</span>
                         </th>
@@ -198,12 +195,6 @@
                                         t-esc="line.price_unit"
                                         t-options='{"widget": "monetary", "display_currency": line.currency_id, "precision": 2}'
                                     />
-                                </td>
-                                <td
-                                    style="padding: 2px 5px; vertical-align: middle;"
-                                    class="text-end"
-                                >
-                                    <span t-esc="line.discount" />%
                                 </td>
                                 <td
                                     t-if="not line.is_downpayment"

@@ -32,11 +32,37 @@ class SaleOrder(models.Model):
                     raise ValidationError(
                         _("Exceeds the maximum value for end consumers")
                     )
+
+            insufficient_products = []
+            for line in order.order_line:
+                if line.product_id.type == "product":
+                    if line.product_uom_qty > line.product_id.qty_available:
+                        insufficient_products.append(
+                            _(
+                                "%(product)s (Solicitado: %(requested)s, Disponible: %(available)s)"
+                            )
+                            % {
+                                "product": line.product_id.display_name,
+                                "requested": line.product_uom_qty,
+                                "available": line.product_id.qty_available,
+                            }
+                        )
+            if insufficient_products:
+                raise ValidationError(
+                    _(
+                        "There is insufficient stock for the following products:\n%(products)s"
+                    )
+                    % {
+                        "products": "\n".join(insufficient_products),
+                    }
+                )
+
             pickings = order.picking_ids.filtered(
                 lambda p: p.state not in ["done", "cancel"]
             )
             for picking in pickings:
                 picking.payment_method = order.payment_method
+
         return res
 
     def _create_invoices(self, grouped=False, final=False):
