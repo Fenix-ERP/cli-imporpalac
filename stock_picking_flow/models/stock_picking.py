@@ -50,11 +50,14 @@ class StockPicking(models.Model):
 
     def action_reserve_picking(self):
         for picking in self:
-            self.action_assign_picker(picking.id, self.env.user.id)
+            picking.picker_user_id = self.env.user.id
+            picking.state = "confirmed"
 
     @api.model
     def action_confirm_by_picker(self, data):
-        picking_id = data.get("picking_id")
+        picking_data = data.get("picking_data")
+        picking_id = picking_data.get("pickingId", False)
+        picking_moves = picking_data.get("moveLines", [])
         user_id = data.get("user_id")
         picking = self.browse(picking_id)
         if not picking.exists():
@@ -73,6 +76,13 @@ class StockPicking(models.Model):
                     picking.picker_user_id.name,
                 )
             )
+        for line_data in picking_moves:
+            line_id = line_data.get("id", False)
+            qty = line_data.get("quantity", 0)
+            move_line = picking.move_line_ids.filtered(lambda ml: ml.id == line_id)
+            if not move_line:
+                raise ValidationError(_("Stock Move Line not found."))
+            move_line.quantity = qty
         picking.picker_user_id = user_id
         picking.state = "assigned"
         return {
@@ -84,9 +94,8 @@ class StockPicking(models.Model):
 
     def action_confirm_picking(self):
         for picking in self:
-            self.action_confirm_by_picker(
-                {"picking_id": picking.id, "user_id": self.env.user.id}
-            )
+            picking.picker_user_id = self.env.user.id
+            picking.state = "assigned"
 
     @api.model_create_multi
     def create(self, vals_list):
