@@ -1,5 +1,5 @@
 /** @odoo-module **/
-/* global qz */
+/* global qz, RSVP */
 import {registry} from "@web/core/registry";
 
 const RSVP_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/rsvp/4.8.5/rsvp.min.js";
@@ -100,6 +100,7 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         configureQzApi();
         await setupQzSecurity();
         if (!qz.websocket.isActive()) await qz.websocket.connect();
+        debugger;
         const availablePrinters = await qz.printers.find();
         const zebraPrinter = availablePrinters.find(
             (printer) => printer === "Zebra_ZD220"

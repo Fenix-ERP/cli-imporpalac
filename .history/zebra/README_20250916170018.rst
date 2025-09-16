@@ -16,9 +16,13 @@ License
 Lesser General Public License, Version 3 (LGPL v3).
 (https://www.gnu.org/licenses/agpl-3.0-standalone.html)
 
+Company
+-------
+* `FenixERP`__
+
 Credits
 -------
-*  Developer: (V17)Anthony S 
+*  Developer: (V17)Anthony S ,
 
 Bug Tracker
 -----------

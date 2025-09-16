@@ -1,5 +1,4 @@
-from odoo import models, api
-from odoo.http import request
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -70,8 +69,12 @@ class StockPicking(models.Model):
         product1_lines = self._split_text_into_lines(product1.name) if product1 else ""
         product2_lines = self._split_text_into_lines(product2.name) if product2 else ""
 
-        product1_code = product1.default_code if product1 and product1.default_code else ""
-        product2_code = product2.default_code if product2 and product2.default_code else ""
+        product1_code = (
+            product1.default_code if product1 and product1.default_code else ""
+        )
+        product2_code = (
+            product2.default_code if product2 and product2.default_code else ""
+        )
 
         barcode1 = product1.barcode if product1 and product1.barcode else ""
         barcode2 = product2.barcode if product2 and product2.barcode else ""

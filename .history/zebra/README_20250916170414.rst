@@ -18,7 +18,7 @@ Lesser General Public License, Version 3 (LGPL v3).
 
 Credits
 -------
-*  Developer: (V17)Anthony S 
+*  Developer: (V17)Anthony S ,
 
 Bug Tracker
 -----------

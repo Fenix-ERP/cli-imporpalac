@@ -1,5 +1,5 @@
 /** @odoo-module **/
-/* global qz */
+/* global qz, RSVP */
 import {registry} from "@web/core/registry";
 
 const RSVP_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/rsvp/4.8.5/rsvp.min.js";
@@ -9,6 +9,7 @@ const QZ_SIGNATURE_URL = "/qz/sign";
 
 // Cargar librería si no existe
 async function loadScriptIfNeeded(url, globalVar) {
+    debugger;
     if (window[globalVar]) return;
     return new Promise((resolve, reject) => {
         const script = document.createElement("script");
@@ -19,6 +20,7 @@ async function loadScriptIfNeeded(url, globalVar) {
     });
 }
 function configureQzApi() {
+    debugger;
     if (!qz.api) return;
 
     // Forzar uso de Promises de JavaScript
@@ -87,6 +89,7 @@ async function setupQzSecurity() {
 const actionRegistry = registry.category("actions");
 
 actionRegistry.add("zebra_print_action", async (env, action) => {
+    debugger;
     const zplCode = action.params.zpl_code;
     if (!zplCode) {
         alert("No hay ZPL para imprimir");
@@ -100,6 +103,7 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         configureQzApi();
         await setupQzSecurity();
         if (!qz.websocket.isActive()) await qz.websocket.connect();
+        debugger;
         const availablePrinters = await qz.printers.find();
         const zebraPrinter = availablePrinters.find(
             (printer) => printer === "Zebra_ZD220"

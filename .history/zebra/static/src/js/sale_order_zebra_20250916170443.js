@@ -1,5 +1,5 @@
 /** @odoo-module **/
-/* global qz */
+/* global qz, RSVP */
 import {registry} from "@web/core/registry";
 
 const RSVP_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/rsvp/4.8.5/rsvp.min.js";
