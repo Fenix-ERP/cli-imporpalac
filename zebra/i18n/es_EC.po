@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* imporpalac_documents
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-02 14:12+0000\n"
+"PO-Revision-Date: 2025-09-02 14:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "27.00"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "31.05"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<span>DESC.%</span>"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<span>TOTAL</span>"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<strong>Descuent</strong>"
+msgstr "<strong>Descuento</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<strong>Payment Method:</strong>"
+msgstr "<strong>Metodo de pago:</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<strong>Num Vendor:</strong><br/>"
+msgstr "<strong>Num Vendedor:</strong><br/>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "<strong>Shipping Address:</strong>"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "A note, whose content usually applies to the section or product above."
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "A section title"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Bacon Burger"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "QUANTITY"
+msgstr "CANTIDAD"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "DESCRIPTION"
+msgstr "DESCRIPCION"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
+msgid "Logo"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Order #"
+msgstr "Numero de Orden"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "PRICE UNIT"
+msgstr "PRECIO UNITARIO"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Pro-Forma Invoice #"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "Quotation #"
+msgstr "COTIZACION"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+msgid "SO0000"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
+msgid "Tax ID"
+msgstr ""

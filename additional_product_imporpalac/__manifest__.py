@@ -5,7 +5,7 @@
     "summary": "Fields Additional Products Imporpalac",
     "author": "Jorge Armas / FenixERP",
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
-    "depends": ["stock", "l10n_ec_purchase_reception"],
+    "depends": ["stock", "l10n_ec_purchase_reception", "account"],
     "data": [
         "security/hide_product_price_cost_groups.xml",
         "views/additional_product_inherit_view.xml",
