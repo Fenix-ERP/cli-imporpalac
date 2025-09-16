@@ -36,25 +36,48 @@ class SaleOrder(models.Model):
             insufficient_products = []
             for line in order.order_line:
                 if line.product_id.type == "product":
-                    if line.product_uom_qty > line.product_id.qty_available:
+                    # Verificar stock en la ubicación específica de la línea
+                    available_qty = 0.0
+
+                    if line.internal_location_id:
+                        quants = self.env["stock.quant"].search(
+                            [
+                                ("product_id", "=", line.product_id.id),
+                                ("location_id", "=", line.internal_location_id.id),
+                                ("quantity", ">", 0),
+                            ]
+                        )
+                        available_qty = sum(quants.mapped("quantity")) - sum(
+                            quants.mapped("reserved_quantity")
+                        )
+                    else:
+                        available_qty = (
+                            line.product_id.qty_available - line.product_id.outgoing_qty
+                        )
+
+                    if line.product_uom_qty > available_qty:
+                        location_info = ""
+                        if line.internal_location_id:
+                            location_info = (
+                                f" en {line.internal_location_id.display_name}"
+                            )
+
                         insufficient_products.append(
                             _(
-                                "%(product)s (Solicitado: %(requested)s, Disponible: %(available)s)"
+                                "%(product)s (Solicitado: %(requested)s, Disponible: %(available)s%(location)s)"
                             )
                             % {
                                 "product": line.product_id.display_name,
                                 "requested": line.product_uom_qty,
-                                "available": line.product_id.qty_available,
+                                "available": available_qty,
+                                "location": location_info,
                             }
                         )
+
             if insufficient_products:
                 raise ValidationError(
-                    _(
-                        "There is insufficient stock for the following products:\n%(products)s"
-                    )
-                    % {
-                        "products": "\n".join(insufficient_products),
-                    }
+                    _("There is insufficient stock for the following products:\n%s")
+                    % "\n".join(insufficient_products)
                 )
 
             pickings = order.picking_ids.filtered(
