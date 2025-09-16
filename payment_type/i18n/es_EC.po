@@ -249,3 +249,11 @@ msgstr "Términos de pago del cliente"
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "There is insufficient stock for the following products:\n%s"
+msgstr "No hay stock suficiente para los siguientes productos:\n%s"
