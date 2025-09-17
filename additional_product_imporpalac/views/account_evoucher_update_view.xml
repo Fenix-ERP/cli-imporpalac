@@ -9,9 +9,6 @@
             ref="l10n_ec_purchase_reception.account_evoucher_form_view"
         />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='estab']" position="after">
-                <field name="product_type_selection" string="Product Type" />
-            </xpath>
             <xpath expr="// button[@name='action_homologate_article']" position="after">
                 <button
                     name="update_costs_action"
@@ -25,7 +22,6 @@
                 position="before"
             >
                 <div class="d-flex align-items-center" style="gap: 15px;">
-                    <field name="product_type_selection" />
                     <button
                         name="action_export_template"
                         type="object"
@@ -37,99 +33,5 @@
             </xpath>
         </field>
     </record>
-    <!-- <record id="evoucher_search_view_inherit" model="ir.ui.view">
-        <field name="name">evoucher.search.view.inherit</field>
-        <field name="model">account.evoucher</field>
-        <field
-            name="inherit_id"
-            ref="l10n_ec_purchase_reception.evoucher_search_view"
-        />
-        <field name="arch" type="xml">
-            <xpath expr="//filter[@name='document_type'][last()]" position="after">
-                <filter
-                    name='filter_service_products'
-                    string="Con Productos de Servicio"
-                    domain="[('lines_ride.type', '=', 'service')]"
-                />
-            </xpath>
-        </field>
-    </record> -->
-
-
-    <record id="evoucher_search_view_inherit" model="ir.ui.view">
-        <field name="name">evoucher.search.view.inherit</field>
-        <field name="model">account.evoucher</field>
-        <field
-            name="inherit_id"
-            ref="l10n_ec_purchase_reception.evoucher_search_view"
-        />
-        <field name="arch" type="xml">
-            <xpath expr="//filter[@name='document_type'][last()]" position="after">
-                <filter
-                    name='filter_service_products'
-                    string="Con Productos de Servicio"
-                    domain="[('product_type_selection', '=', 'service')]"
-                />
-                <filter
-                    name='filter_product_products'
-                    string="Con Productos Almacenables"
-                    domain="[('product_type_selection', '=', 'product')]"
-                />
-            </xpath>
-        </field>
-    </record>
-
-    <record id="action_evoucher_service_view" model="ir.actions.act_window">
-        <field name="name">Comprobantes de Servicios</field>
-        <field name="res_model">account.evoucher</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('product_type_selection', '=', 'service')]</field>
-        <field name="context">
-            {
-                'search_default_filter_service_products': 1,
-                'default_product_type_selection': 'service'
-            }
-        </field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Comprobantes Electrónicos de Servicios
-            </p>
-        </field>
-    </record>
-
-    <record id="action_evoucher_product_view" model="ir.actions.act_window">
-        <field name="name">Comprobantes de Productos Almacenables</field>
-        <field name="res_model">account.evoucher</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('product_type_selection', '=', 'product')]</field>
-        <field name="context">
-            {
-                'search_default_filter_product_products': 1,
-                'default_product_type_selection': 'product'
-            }
-        </field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Comprobantes Electrónicos de Productos Almacenables
-            </p>
-        </field>
-    </record>
-
-
-    <menuitem
-        id="submenu_evoucher_service"
-        name="Facturas de Servicios"
-        parent="l10n_ec_purchase_reception.menu_purchase_reception"
-        sequence="4"
-        action="action_evoucher_service_view"
-    />
-    <menuitem
-        id="submenu_evoucher_inventory"
-        name="Facturas de Inventario"
-        parent="l10n_ec_purchase_reception.menu_purchase_reception"
-        sequence="5"
-        action="action_evoucher_product_view"
-    />
-
 
 </odoo>
