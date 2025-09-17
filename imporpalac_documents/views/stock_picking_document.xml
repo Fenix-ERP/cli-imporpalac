@@ -11,10 +11,15 @@
         </xpath>
         <xpath expr="//div[span[@t-field='doc.note']]" position="replace">
             <div>
-                <p style="font-size: 12px; font-family: Arial, sans-serif;">
-                    <strong>Payment Method:</strong>
-                    <span t-field="doc.payment_method" />
-                </p>
+              <p style="font-size: 12px; font-family: Arial, sans-serif; margin: 0;">
+                <strong>Payment Method:</strong>
+                <span t-field="doc.payment_method" />
+              </p>
+              <div
+                    style="font-size: 12px; font-family: Arial, sans-serif; margin-top: 4px;"
+                >
+                <t t-raw="doc.company_id.report_header" />
+              </div>
             </div>
         </xpath>
 

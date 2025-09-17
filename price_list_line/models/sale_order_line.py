@@ -9,6 +9,12 @@ class SaleOrderLine(models.Model):
         "product.pricelist", string="Lista de precios por línea"
     )
 
+    @api.onchange("product_id")
+    def _onchange_product_id_set_pricelist(self):
+        for line in self:
+            if not line.line_pricelist_id and line.order_id:
+                line.line_pricelist_id = line.order_id.pricelist_id
+
     @api.onchange(
         "product_id", "line_pricelist_id", "order_id.pricelist_id", "product_uom_qty"
     )
