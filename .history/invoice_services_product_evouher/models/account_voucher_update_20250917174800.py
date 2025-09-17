@@ -1,4 +1,3 @@
-# pylint: skip-file
 import logging
 
 from odoo import api, fields, models

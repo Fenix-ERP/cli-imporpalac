@@ -1,4 +1,3 @@
-# pylint: skip-file
 import logging
 
 from odoo import api, fields, models
@@ -27,7 +26,7 @@ class ElectronicVoucherUpdate(models.Model):
     def _compute_product_type_selection(self):
         total_records = len(self)
 
-        for i, record in enumerate(self, 1):
+        for record in enumerate(self, 1):
             try:
                 if record.product_type_selection in ["product", "service"]:
                     continue

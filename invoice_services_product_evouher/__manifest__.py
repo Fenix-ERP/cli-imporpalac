@@ -2,7 +2,7 @@
     "name": "Invoice Services Product Evoucher",
     "version": "17.0.0.0.1",
     "category": "stock",
-    "summary": "Determine if an e-voucher contains services or storable products based on vendor tags and product types.",
+    "summary": "Determine if an e-voucher contains services or products",
     "author": "Anthony Simbaña / FenixERP",
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "depends": ["stock", "l10n_ec_purchase_reception", "account"],

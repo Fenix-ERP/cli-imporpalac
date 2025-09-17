@@ -19,4 +19,4 @@ exclude =
     price_list_line/models/sale_order_line.py,
     payment_type/models/sale_order.py,
     zebra/models/sale_order_zebra.py,
-    invoice_services_product_evouher/models/account_voucher_update.py,
+    invoice_services_product_voucher/models/account_voucher_update.py
