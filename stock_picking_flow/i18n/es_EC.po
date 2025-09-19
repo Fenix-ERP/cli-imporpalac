@@ -6,14 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 23:11+0000\n"
-"PO-Revision-Date: 2025-07-24 23:11+0000\n"
+"POT-Creation-Date: 2025-09-19 17:18+0000\n"
+"PO-Revision-Date: 2025-09-19 17:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "Cannot assign picker: picking '%s' is not in waiting state."
+msgstr "No se puede asignar el recolector: El picking '%s' no está en estado de espera."
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "Cannot confirm this picking:'%s' is not in confirmed state."
+msgstr "No se puede confirmar este picking:'%s' no está en estado confirmado"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__is_owner_picker_user
@@ -24,6 +38,14 @@ msgstr "Es propietario recolector"
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__picker_user_id
 msgid "Picker User"
 msgstr "Recolector"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "Picking not found."
+msgstr "Picking no encontrado"
 
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_purchase_order
@@ -44,6 +66,27 @@ msgstr "Reservar Picking"
 #: model:ir.model,name:stock_picking_flow.model_sale_order
 msgid "Sales Order"
 msgstr "Orden de venta"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "Stock Move Line not found."
+msgstr "Línea de movimiento de stock no encontrada."
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "This picking is already assigned to %s "
+msgstr "Esta picking ya está asignado a %s"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "This picking is assigned to %s, you cannot confirm it"
+msgstr "Este picking está asignado a %s, no puede ser confirmardo"
 
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_picking

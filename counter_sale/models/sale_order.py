@@ -44,6 +44,8 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         self.ensure_one()
         res = super(SaleOrder, self).action_confirm()
+        if self.state == "draft":
+            return res
         rectified_related_pickings = self.rectified_order_id.picking_ids
         related_pickings = self.picking_ids
         for old_picking, new_picking in zip(
