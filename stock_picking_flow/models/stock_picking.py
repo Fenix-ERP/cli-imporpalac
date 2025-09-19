@@ -25,18 +25,18 @@ class StockPicking(models.Model):
         picking = self.browse(picking_id)
         if not picking.exists():
             raise ValidationError(_("Picking not found."))
-        if picking.state not in ["draft", "waiting"]:
-            raise ValidationError(
-                _(
-                    "Cannot assign picker: picking '%s' is not in draft state.",
-                    picking.display_name,
-                )
-            )
         if picking.picker_user_id:
             raise ValidationError(
                 _(
                     "This picking is already assigned to %s ",
                     picking.picker_user_id.name,
+                )
+            )
+        if picking.state not in ["draft", "waiting"]:
+            raise ValidationError(
+                _(
+                    "Cannot assign picker: picking '%s' is not in waiting state.",
+                    picking.display_name,
                 )
             )
         picking.picker_user_id = user_id
@@ -62,18 +62,18 @@ class StockPicking(models.Model):
         picking = self.browse(picking_id)
         if not picking.exists():
             raise ValidationError(_("Picking not found."))
-        if picking.state != "confirmed":
-            raise ValidationError(
-                _(
-                    "Cannot confirm this picking:'%s' is not in confirmed state.",
-                    picking.display_name,
-                )
-            )
         if picking.picker_user_id and picking.picker_user_id.id != user_id:
             raise ValidationError(
                 _(
                     "This picking is assigned to %s, you cannot confirm it",
                     picking.picker_user_id.name,
+                )
+            )
+        if picking.state != "confirmed":
+            raise ValidationError(
+                _(
+                    "Cannot confirm this picking:'%s' is not in confirmed state.",
+                    picking.display_name,
                 )
             )
         for line_data in picking_moves:

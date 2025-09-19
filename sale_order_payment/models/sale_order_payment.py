@@ -229,6 +229,8 @@ class SaleOrderPaymentLine(models.Model):
 
     @api.constrains("reference", "payment_method_line_id", "journal_id")
     def _check_global_reference(self):
+        if not self.env.context.get("check_global_reference"):
+            return
         lines = self.payment_id.payment_line_ids
         duplicates = lines.filtered(
             lambda line: len(
