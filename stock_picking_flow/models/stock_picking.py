@@ -84,7 +84,7 @@ class StockPicking(models.Model):
                 raise ValidationError(_("Stock Move Line not found."))
             move_line.quantity = qty
         picking.picker_user_id = user_id
-        picking.state = "assigned"
+        picking.move_ids.sudo().write({"state": "assigned"})
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
@@ -95,7 +95,7 @@ class StockPicking(models.Model):
     def action_confirm_picking(self):
         for picking in self:
             picking.picker_user_id = self.env.user.id
-            picking.state = "assigned"
+            picking.move_ids.sudo().write({"state": "assigned"})
 
     @api.model_create_multi
     def create(self, vals_list):

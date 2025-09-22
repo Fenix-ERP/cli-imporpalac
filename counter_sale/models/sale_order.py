@@ -46,6 +46,15 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         if self.state == "draft":
             return res
+        self.add_or_update_lines_info(
+            [
+                {"name": _("Order"), "description": self.name},
+                {
+                    "name": _("Payment Method"),
+                    "description": self.payment_method.name,
+                },
+            ]
+        )
         rectified_related_pickings = self.rectified_order_id.picking_ids
         related_pickings = self.picking_ids
         for old_picking, new_picking in zip(
@@ -101,8 +110,7 @@ class SaleOrder(models.Model):
                 }
             )
         else:
-            for picking in related_pickings:
-                picking.payment_state = "credit"
+            related_pickings.sudo().write({"payment_state": "credit"})
         return res
 
     def action_cancel(self):

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 21:49+0000\n"
-"PO-Revision-Date: 2025-09-11 21:49+0000\n"
+"POT-Creation-Date: 2025-09-22 19:40+0000\n"
+"PO-Revision-Date: 2025-09-22 19:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -79,9 +79,28 @@ msgid "Old Quantity"
 msgstr "Cantidad antigua"
 
 #. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/sale_order.py:0
+#, python-format
+msgid "Order"
+msgstr "Orden"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/sale_order.py:0
+#, python-format
+msgid "Payment Method"
+msgstr "Forma de pago"
+
+#. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_picker
 msgid "Picker"
 msgstr "Recolector"
+
+#. module: counter_sale
+#: model:ir.model,name:counter_sale.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de recolección"
 
 #. module: counter_sale
 #: model:ir.actions.server,name:counter_sale.action_print_ticket_server

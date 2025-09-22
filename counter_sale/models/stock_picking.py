@@ -79,7 +79,7 @@ class StockPicking(models.Model):
     def _create_payment(self, partner_id, payment_line):
         payment_obj = self.env["account.payment"]
 
-        payment = payment_obj.create(
+        payment = payment_obj.sudo().create(
             {
                 "payment_type": "inbound",
                 "partner_type": "customer",
@@ -93,7 +93,7 @@ class StockPicking(models.Model):
                     payment_line.reference if payment_line.card_id.id else False
                 ),
                 "date": fields.Date.today(),
-                "company_id": payment_line.payment_id.company_id.id
+                "company_id": payment_line.payment_id.company_id.id,
                 # "currency_id": journal_id.currency_id,
             }
         )
@@ -106,7 +106,7 @@ class StockPicking(models.Model):
             for picking in self:
                 if picking.state != "done" and picking.picking_type_code == "outgoing":
                     raise ValidationError(_("The delivery has not been completed."))
-                sale_order = picking.sale_id
+                sale_order = picking.sudo().sale_id
                 if sale_order and not picking.return_id:
                     if self.payment_state == "not_paid":
                         raise ValidationError(
@@ -163,6 +163,15 @@ class StockPicking(models.Model):
                     invoice.info_message = "En cola de autorización"
                     invoice.state_send_document = "in_process"
                     picking.invoice_number = invoice.name
+        return res
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get("move_ids") or vals.get("move_ids_without_package"):
+            if not self.picker_user_id:
+                self.move_ids.sudo().write({"state": "waiting"})
+            if self.picker_user_id and not self.user_id:
+                self.move_ids.sudo().write({"state": "confirmed"})
         return res
 
 
