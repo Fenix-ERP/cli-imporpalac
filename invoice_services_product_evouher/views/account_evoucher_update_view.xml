@@ -89,6 +89,20 @@
         sequence="5"
         action="action_evoucher_product_view"
     />
+    <menuitem
+        id="submenu_evoucher_service_data"
+        name="Facturas de Servicios"
+        parent="l10n_ec_purchase_reception.menu_stock_purchase_reception"
+        sequence="4"
+        action="action_evoucher_service_view"
+    />
+    <menuitem
+        id="submenu_evoucher_inventory_data"
+        name="Facturas de Inventario"
+        parent="l10n_ec_purchase_reception.menu_stock_purchase_reception"
+        sequence="5"
+        action="action_evoucher_product_view"
+    />
 
 
 </odoo>

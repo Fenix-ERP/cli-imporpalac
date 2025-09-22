@@ -22,7 +22,7 @@ class ElectronicVoucherUpdate(models.Model):
     )
 
     @api.depends(
-        "lines_ride.product_id", "lines_ride.product_id.type", "vendor_id.category_id"
+        "lines_ride.product_id", "lines_ride.product_id.type", "ident_supplier"
     )
     def _compute_product_type_selection(self):
         total_records = len(self)
@@ -38,10 +38,13 @@ class ElectronicVoucherUpdate(models.Model):
                 ]:
                     record.product_type_selection = "none"
                     continue
-
                 vendor_categories = []
-                if record.vendor_id and record.vendor_id.category_id:
-                    vendor_categories = record.vendor_id.category_id.mapped("name")
+                partner = self.env["res.partner"].search(
+                    [("vat", "=", record.ident_supplier)], limit=1
+                )
+                if partner.category_id:
+                    vendor_categories = partner.category_id.mapped("name")
+                    _logger.info("📋 Categorías del partner: %s", vendor_categories)
 
                 almacenable_tags = ["EXTERIOR", "LOCAL INVENTARIOS"]
                 servicio_tags = ["LOCAL SERVICIOS", "LOCAL GASTOS"]
@@ -54,14 +57,16 @@ class ElectronicVoucherUpdate(models.Model):
                 )
 
                 if has_almacenable_tag and has_servicio_tag:
-                    vendor_forced_type = "product"
+                    record.product_type_selection = "product"
+                    continue
                 elif has_almacenable_tag:
-                    vendor_forced_type = "product"
+                    record.product_type_selection = "product"
+                    continue
                 elif has_servicio_tag:
-                    vendor_forced_type = "service"
-                else:
-                    vendor_forced_type = None
+                    record.product_type_selection = "service"
+                    continue
 
+                # SEGUNDO: Solo si el vendedor NO tiene etiquetas, consultar los productos
                 service_found = False
                 product_found = False
 
@@ -72,9 +77,7 @@ class ElectronicVoucherUpdate(models.Model):
                         elif line.product_id.type == "product":
                             product_found = True
 
-                if vendor_forced_type:
-                    record.product_type_selection = vendor_forced_type
-                elif service_found and product_found:
+                if service_found and product_found:
                     record.product_type_selection = "product"
                 elif service_found:
                     record.product_type_selection = "service"

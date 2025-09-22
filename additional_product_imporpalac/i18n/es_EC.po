@@ -302,7 +302,7 @@ msgstr "No se puede crear un producto almacenable con la categoría «Todos»."
 #: code:addons/additional_product_imporpalac/models/sale_order_time.py:0
 #, python-format
 msgid "Without picking"
-msgstr "Sin seleccionar"
+msgstr "Sin recoger"
 
 #. module: additional_product_imporpalac
 #. odoo-python
