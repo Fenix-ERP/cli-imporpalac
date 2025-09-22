@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* imporpalac_documents
+# 	* zebra
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 14:12+0000\n"
-"PO-Revision-Date: 2025-09-02 14:12+0000\n"
+"POT-Creation-Date: 2025-09-18 16:08+0000\n"
+"PO-Revision-Date: 2025-09-18 16:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,108 +15,107 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "27.00"
+#. module: zebra
+#: model_terms:ir.ui.view,arch_db:zebra.view_print_label_wizard_form
+msgid "Cancelar"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "31.05"
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__create_uid
+msgid "Created by"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<span>DESC.%</span>"
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__create_date
+msgid "Created on"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<span>TOTAL</span>"
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__display_name
+msgid "Display Name"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong class=\"mr16\">Subtotal</strong>"
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__id
+msgid "ID"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Descuent</strong>"
-msgstr "<strong>Descuento</strong>"
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Payment Method:</strong>"
-msgstr "<strong>Metodo de pago:</strong>"
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Num Vendor:</strong><br/>"
-msgstr "<strong>Num Vendedor:</strong><br/>"
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "<strong>Shipping Address:</strong>"
+#. module: zebra
+#: model_terms:ir.ui.view,arch_db:zebra.view_print_label_wizard_form
+msgid "Imprimir"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "A note, whose content usually applies to the section or product above."
+#. module: zebra
+#: model:ir.model,name:zebra.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferir "
+
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__write_uid
+msgid "Last Updated by"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "A section title"
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__write_date
+msgid "Last Updated on"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "Bacon Burger"
+#. module: zebra
+#: model:ir.actions.act_window,name:zebra.action_print_label_wizard
+#: model_terms:ir.ui.view,arch_db:zebra.view_print_label_wizard_form
+msgid "Print Options"
+msgstr "Opciones de impresión"
+
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__print_barcode
+msgid "Print barcode"
+msgstr "Imprimir código de barras"
+
+#. module: zebra
+#: model:ir.model.fields,field_description:zebra.field_print_label_wizard__print_supplier_barcode
+msgid "Print supplier barcode"
+msgstr "Imprimir código de barras del proveedor"
+
+#. module: zebra
+#: model_terms:ir.ui.view,arch_db:zebra.view_print_label_wizard_form
+msgid "Select which barcodes to print:"
+msgstr "Seleccione los códigos de barras que desea imprimir:"
+
+#. module: zebra
+#: model:ir.model,name:zebra.model_print_label_wizard
+msgid "Wizard for printing Zebra labels"
+msgstr "Asistente para imprimir etiquetas Zebra"
+
+#. module: zebra
+#: model_terms:ir.ui.view,arch_db:zebra.view_picking_form_inherit_label_button
+msgid "Zebra"
 msgstr ""
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "QUANTITY"
-msgstr "CANTIDAD"
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "DESCRIPTION"
-msgstr "DESCRIPCION"
+#. module: zebra
+#. odoo-python
+#: code:addons/zebra/models/sale_order_zebra.py:0
+#, python-format
+msgid "You can only select one option: Product code or supplier code."
+msgstr "Solo puede seleccionar una opción: Código de producto o código de proveedor."
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
-msgid "Logo"
-msgstr ""
+#. module: zebra
+#. odoo-python
+#: code:addons/zebra/models/sale_order_zebra.py:0
+#, python-format
+msgid "The product %s does not have a configured product barcode"
+msgstr "El producto %s no tiene un código de barras de producto configurado"
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "Order #"
-msgstr "Numero de Orden"
+#. module: zebra
+#. odoo-python
+#: code:addons/zebra/models/sale_order_zebra.py:0
+#, python-format
+msgid "The product %s does not have a configured supplier barcode"
+msgstr "El producto %s no tiene un código de barras de proveedor configurado"
 
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "PRICE UNIT"
-msgstr "PRECIO UNITARIO"
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "Pro-Forma Invoice #"
-msgstr ""
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "Quotation #"
-msgstr "COTIZACION"
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-msgid "SO0000"
-msgstr ""
-
-#. module: imporpalac_documents
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
-msgid "Tax ID"
-msgstr ""
+#. module: zebra
+#. odoo-python
+#: code:addons/zebra/models/your_model.py:0
+#, python-format
+msgid "Print Zebra Labels"
+msgstr "Imprimir etiquetas Zebra"

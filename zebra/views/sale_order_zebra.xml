@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button
-                    name="action_print_test_label"
+                    name="action_open_print_wizard"
                     string="Zebra"
                     type="object"
                     class="btn-primary"
