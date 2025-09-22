@@ -6,7 +6,11 @@
     "author": "Anthony Simbaña / FenixERP",
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "depends": ["base", "sale"],
-    "data": ["views/sale_order_zebra.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/sale_order_zebra.xml",
+        "wizard/picking_zebra_print_label_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "zebra/static/src/js/sale_order_zebra.js",
