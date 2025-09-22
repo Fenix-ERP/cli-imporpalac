@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
             self.payment_method = self.partner_id.payment_method
 
     def action_confirm(self):
-        res = super().action_confirm()
+
         for order in self:
             identifier = order.partner_id.is_end_consumer
             if identifier:
@@ -85,7 +85,7 @@ class SaleOrder(models.Model):
             )
             for picking in pickings:
                 picking.payment_method = order.payment_method
-
+        res = super().action_confirm()
         return res
 
     def _create_invoices(self, grouped=False, final=False):
