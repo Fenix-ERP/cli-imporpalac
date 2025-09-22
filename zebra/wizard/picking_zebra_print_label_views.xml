@@ -9,14 +9,19 @@
                 <sheet>
                     <group>
                         <group string="Select which barcodes to print:">
-                            <field name="print_barcode"/>
-                            <field name="print_supplier_barcode"/>
+                            <field name="print_barcode" />
+                            <field name="print_supplier_barcode" />
                         </group>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_print_labels" string="Imprimir" type="object" class="btn-primary"/>
-                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    <button
+                        name="action_print_labels"
+                        string="Imprimir"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancelar" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>
