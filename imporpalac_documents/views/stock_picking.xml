@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="delivery_footer_document_inherited"
+        inherit_id="stock.report_delivery_document"
+        priority="100"
+    >
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div
+                t-if="o.state"
+                class="col-auto col-3 mw-100 mb-2"
+                name="div_location_id"
+            >
+                <strong>Ubication of Origin:</strong>
+                <p t-field="o.location_id" class="m-0" />
+            </div>
+            <div
+                t-if="o.location_dest_id"
+                class="col-auto col-3 mw-100 mb-2"
+                name="div_location_dest_id"
+            >
+                <strong>Ubication of Destination:</strong>
+                <p t-field="o.location_dest_id" class="m-0" />
+            </div>
+            <div t-if="o.state" class="col-auto col-3 mw-100 mb-2" name="div_user_id">
+                <strong>Responsible:</strong>
+                <p t-field="o.user_id" class="m-0" />
+            </div>
+        </xpath>
+    </template>
+</odoo>

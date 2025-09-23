@@ -130,7 +130,7 @@
             <div class="col-auto col-3 mw-100 mb-2" name="new_info">
                 <strong
                         style="font-size: 11px; font-family: Arial, sans-serif"
-                    >Num Vendedor:</strong><br />
+                    >Telf. Vendedor:</strong><br />
                 <span
                         style="font-size: 11px; font-family: Arial, sans-serif;"
                         class="m-0"
@@ -358,10 +358,17 @@
                 >
 
                     <!-- Logo -->
-                    <img
+                    <!-- <img
                         t-if="company.logo"
                         t-att-src="image_data_uri(company.logo)"
                         style="max-width: 250px; height:auto; display:block; margin:0 auto 3px auto;"
+                        alt="Logo"
+                    /> -->
+
+                    <img
+                        t-if="company.logo"
+                        t-att-src="image_data_uri(company.logo)"
+                        style="max-width: 400px; max-height: 120px; display:block; margin:0 auto 3px auto;"
                         alt="Logo"
                     />
 

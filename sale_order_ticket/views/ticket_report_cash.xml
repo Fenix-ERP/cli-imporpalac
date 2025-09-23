@@ -105,12 +105,8 @@
                         <t t-esc="o.company_id.vat" />
                     </t>
                     <br />
-                    <t class="pos-info-line" t-if="o.company_id.email">
-                        <t t-esc="o.company_id.email" />
-                    </t>
-                    <br />
-                    <t t-if="o.company_id.website">
-                        <t t-esc="o.company_id.website" />
+                    <t t-if="o.company_id.company_details">
+                        <t t-esc="o.company_id.company_details" />
                     </t>
                 </div>
 
@@ -122,7 +118,27 @@
                 </div>
 
                 <div>
+                    Fecha:
+                    <span t-esc="o.date_order.strftime('%d/%m/%Y')" />
+                </div>
+
+                <div>
+                    RUC:
+                    <span t-esc="o.partner_id.vat" />
+                </div>
+
+                <div>
                     <t t-esc="o.partner_id.name" />
+                </div>
+
+                <div>
+                    Direccion:
+                    <t t-esc="o.partner_id.street" />
+                </div>
+
+                <div>
+                    Telefono:
+                    <t t-esc="o.partner_id.phone" />
                 </div>
 
                 <div>
@@ -135,7 +151,7 @@
 
                 <div class="pos-order-lines-header">
                     <div class="flex-qty">Cant.</div>
-                    <div class="flex-product">Producto</div>
+                    <div class="flex-product">Descripción</div>
                     <div class="flex-price">Total</div>
                 </div>
 
@@ -261,7 +277,7 @@
                 <div class="pos-line" />
 
                 <div class="pos-center">
-                    <t t-esc="o.date_order" />
+                    <span t-esc="o.date_order.strftime('%H:%M')" />
                 </div>
             </div>
         </t>
