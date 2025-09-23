@@ -48,7 +48,7 @@ msgstr "<strong>Descuento</strong>"
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
 msgid "<strong>Payment Method:</strong>"
-msgstr "<strong>Metodo de pago:</strong>"
+msgstr "<strong>Método de pago:</strong>"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
@@ -63,7 +63,7 @@ msgstr "Referencia:"
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
 msgid "Quotation Date:"
-msgstr "Fecha de cotizacion:"
+msgstr "Fecha de cotización:"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
@@ -108,7 +108,7 @@ msgstr "CANT"
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
 msgid "DESCRIPTION"
-msgstr "DESCRIPCION"
+msgstr "DESCRIPCIÓN"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
@@ -118,7 +118,7 @@ msgstr ""
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
 msgid "Order #"
-msgstr "Numero de Orden"
+msgstr "Orden"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
@@ -133,7 +133,7 @@ msgstr ""
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
 msgid "Quotation #"
-msgstr "COTIZACION"
+msgstr "COTIZACIÓN"
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.sale_order_document_inherited
@@ -145,3 +145,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.web_boxed_document_inherited
 msgid "Tax ID"
 msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Ubication of Origin:</strong>"
+msgstr "Ubicación de Origen:"

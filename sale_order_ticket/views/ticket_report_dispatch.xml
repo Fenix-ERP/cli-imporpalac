@@ -86,9 +86,13 @@
 
             <div class="pos-ticket">
 
-                <div class="pos-center pos-header">
-                    <t t-esc="o.company_id.name" />
-                </div>
+                <t t-if="o.company_id.logo">
+                    <img
+                        class="pos-o-logo"
+                        t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
+                        alt="Logo"
+                    />
+                </t>
 
 
                 <div class="pos-line" />
@@ -99,7 +103,17 @@
                 </div>
 
                 <div>
+                    RUC:
+                    <span t-esc="o.partner_id.vat" />
+                </div>
+
+                <div>
                     <t t-esc="o.partner_id.name" />
+                </div>
+
+                <div>
+                    Direccion:
+                    <t t-esc="o.partner_id.street" />
                 </div>
 
                 <div>
@@ -113,7 +127,7 @@
 
                 <div class="pos-order-lines-header">
                     <div class="flex-qty">Cant.</div>
-                    <div class="flex-product">Producto</div>
+                    <div class="flex-product">Descripción</div>
                     <div class="flex-price">Total</div>
                 </div>
 

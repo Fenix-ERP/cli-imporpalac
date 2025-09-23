@@ -7,7 +7,8 @@
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "depends": ["base", "sale"],
     "data": [
-        "views/stock_picking_document.xml",
+        "views/stock_picking.xml",
+        "views/sale_order.xml",
     ],
     "application": False,
     "installable": True,

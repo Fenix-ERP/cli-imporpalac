@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_round
 
 
 class SaleOrderPaymentMethod(models.TransientModel):
@@ -83,13 +84,17 @@ class SaleOrderPaymentMethod(models.TransientModel):
                 continue
             total = sum(line.amount for line in wizard.method_line_ids)
             total += wizard.chq_amount
-            if total < wizard.balance:
+
+            total = float_round(total, precision_digits=2)
+            balance = float_round(wizard.balance, precision_digits=2)
+
+            if total < balance:
                 raise ValidationError(
                     _(
                         "The total amount of payment lines (%(total).2f) must be equal"
                         " to or greater than the total balance (%(amount).2f).",
                         total=total,
-                        amount=wizard.balance,
+                        amount=balance,
                     )
                 )
 
