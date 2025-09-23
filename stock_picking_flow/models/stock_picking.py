@@ -13,9 +13,14 @@ class StockPicking(models.Model):
 
     @api.model
     def get_states(self):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        allowed_states = ["confirmed", "assigned", "done", "cancel"]
+        selection = dict(self._fields["state"]._description_selection(self.env))
+        states = allowed_states or selection.keys()
         return [
-            {"value": value, "label": _(label)}
-            for value, label in self._fields["state"].selection
+            {"value": val, "label": selection[val]}
+            for val in states
+            if val in selection
         ]
 
     @api.model
