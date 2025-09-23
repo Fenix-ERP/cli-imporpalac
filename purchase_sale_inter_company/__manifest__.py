@@ -8,7 +8,7 @@
     "summary": "Intercompany PO/SO rules",
     "version": "17.0.1.0.0",
     "category": "Purchase Management",
-    "website": "https://github.com/OCA/multi-company",
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "author": "Odoo SA, Akretion, Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,

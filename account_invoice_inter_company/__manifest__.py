@@ -9,7 +9,7 @@
     "summary": "Intercompany invoice rules",
     "version": "17.0.1.1.2",
     "category": "Accounting & Finance",
-    "website": "https://github.com/OCA/multi-company",
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": ["account", "base_setup"],
