@@ -40,12 +40,16 @@ class SaleOrder(models.Model):
                     available_qty = 0.0
 
                     if line.internal_location_id:
-                        quants = self.env["stock.quant"].search(
-                            [
-                                ("product_id", "=", line.product_id.id),
-                                ("location_id", "=", line.internal_location_id.id),
-                                ("quantity", ">", 0),
-                            ]
+                        quants = (
+                            self.sudo()
+                            .env["stock.quant"]
+                            .search(
+                                [
+                                    ("product_id", "=", line.product_id.id),
+                                    ("location_id", "=", line.internal_location_id.id),
+                                    ("quantity", ">", 0),
+                                ]
+                            )
                         )
                         available_qty = sum(quants.mapped("quantity")) - sum(
                             quants.mapped("reserved_quantity")
@@ -83,8 +87,7 @@ class SaleOrder(models.Model):
             pickings = order.picking_ids.filtered(
                 lambda p: p.state not in ["done", "cancel"]
             )
-            for picking in pickings:
-                picking.payment_method = order.payment_method
+            pickings.sudo().write({"payment_method": order.payment_method})
         res = super().action_confirm()
         return res
 

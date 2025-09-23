@@ -13,9 +13,14 @@ class StockPicking(models.Model):
 
     @api.model
     def get_states(self):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        allowed_states = ["confirmed", "assigned", "done", "cancel"]
+        selection = dict(self._fields["state"]._description_selection(self.env))
+        states = allowed_states or selection.keys()
         return [
-            {"value": value, "label": _(label)}
-            for value, label in self._fields["state"].selection
+            {"value": val, "label": selection[val]}
+            for val in states
+            if val in selection
         ]
 
     @api.model
@@ -84,7 +89,7 @@ class StockPicking(models.Model):
                 raise ValidationError(_("Stock Move Line not found."))
             move_line.quantity = qty
         picking.picker_user_id = user_id
-        picking.state = "assigned"
+        picking.move_ids.sudo().write({"state": "assigned"})
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
@@ -95,7 +100,7 @@ class StockPicking(models.Model):
     def action_confirm_picking(self):
         for picking in self:
             picking.picker_user_id = self.env.user.id
-            picking.state = "assigned"
+            picking.move_ids.sudo().write({"state": "assigned"})
 
     @api.model_create_multi
     def create(self, vals_list):

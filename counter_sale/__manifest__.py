@@ -15,6 +15,7 @@
         "bi_so_po_catalog_view",
         "qz_tray_printer",
         "post_dated_cheque_management_knk",
+        "sale_info_additional",
     ],
     "data": [
         "security/counter_sale_security.xml",
