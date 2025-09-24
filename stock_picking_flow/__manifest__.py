@@ -11,6 +11,7 @@
     ],
     "data": [
         "views/stock_picking_inherit.xml",
+        "views/stock_move_inherit.xml",
     ],
     "demo": [],
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",

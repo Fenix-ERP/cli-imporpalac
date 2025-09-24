@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        model="ir.ui.view"
+        id="view_stock_move_operations_inherit_stock_picking_flow"
+    >
+        <field name="name">view.stock.move.operations.inherit.stock.picking.flow</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='product_id']]" position="after">
+                <group>
+                    <field
+                        name="has_issue"
+                        widget="boolean_toggle"
+                        readonly="state not in ['draft','confirmed']"
+                    />
+                </group>
+            </xpath>
+            <xpath expr="//group[group[field[@name='product_id']]]" position="after">
+
+                <group string="Issues" invisible="not has_issue">
+                    <group>
+                        <field
+                            name="issue_type"
+                            readonly="state not in ['draft','confirmed']"
+                        />
+                    </group>
+                    <group>
+                        <field
+                            name="issue_qty"
+                            readonly="state not in ['draft','confirmed']"
+                        />
+                    </group>
+                    <label for="issue_notes" />
+                    <field
+                        name="issue_notes"
+                        readonly="state not in ['draft','confirmed']"
+                    />
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
