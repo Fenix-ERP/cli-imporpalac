@@ -24,6 +24,16 @@ class StockMove(models.Model):
     issue_qty = fields.Float("Issue Quantity")
     issue_notes = fields.Text(help="Here you can write your issues")
 
+    @api.model
+    def get_issue_types(self):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        allowed_states = ["broken", "damaged", "missing", "expired"]
+        selection = dict(self._fields["issue_type"]._description_selection(self.env))
+        types = allowed_states or selection.keys()
+        return [
+            {"value": val, "label": selection[val]} for val in types if val in selection
+        ]
+
     @api.constrains("has_issue")
     def _check_has_issue(self):
         for record in self:
