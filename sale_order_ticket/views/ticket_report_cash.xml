@@ -276,7 +276,10 @@
 
                 <div class="pos-line" />
 
-                <div class="pos-center">
+                <div class="pos-center" style="font-size: 10px;">
+                    Agente de Retención - Resolucion Nro. NAC-DNCRASC20-00000001
+                    Documento sin valor tributario
+                    <br />
                     <span t-esc="o.date_order.strftime('%H:%M')" />
                 </div>
             </div>
