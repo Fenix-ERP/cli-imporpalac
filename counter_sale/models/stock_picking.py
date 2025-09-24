@@ -165,6 +165,24 @@ class StockPicking(models.Model):
                     picking.invoice_number = invoice.name
         return res
 
+    @api.model
+    def create(self, vals):
+        record = super().create(vals)
+        users = self.env["res.users"].search([("active", "=", True)])
+        notifications = []
+        for target in users:
+            notifications.append(
+                (
+                    target.partner_id,
+                    "tree_view_refresh",
+                    {
+                        "presence_status": record.state,
+                    },
+                )
+            )
+        self.env["bus.bus"]._sendmany(notifications)
+        return record
+
     def write(self, vals):
         res = super().write(vals)
         if vals.get("move_ids") or vals.get("move_ids_without_package"):

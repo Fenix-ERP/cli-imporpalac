@@ -28,6 +28,7 @@
     "assets": {
         "web.assets_backend": [
             "counter_sale/static/src/js/confirm_btn_controller.js",
+            "counter_sale/static/src/js/tree_view_refresh.js",
         ],
     },
     "demo": [],

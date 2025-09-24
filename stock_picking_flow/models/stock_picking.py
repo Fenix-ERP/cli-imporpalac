@@ -83,11 +83,33 @@ class StockPicking(models.Model):
             )
         for line_data in picking_moves:
             line_id = line_data.get("id", False)
-            qty = line_data.get("quantity", 0)
-            move_line = picking.move_line_ids.filtered(lambda ml: ml.id == line_id)
+            move_line = picking.move_ids_without_package.filtered(
+                lambda ml: ml.id == line_id
+            )
             if not move_line:
                 raise ValidationError(_("Stock Move Line not found."))
-            move_line.quantity = qty
+            qty = line_data.get("quantity", 0)
+            issue = line_data.get("issue", False)
+            has_issue = False
+            issue_qty = 0
+            issue_type = False
+            issue_notes = False
+            if issue:
+                has_issue = True
+                issue_qty = issue.get("quantity", 0)
+                issue_type = issue.get("type", False)
+                issue_notes = issue.get("notes", [])
+                issue_notes = "\n".join(issue_notes)
+
+            move_line.sudo().write(
+                {
+                    "quantity": qty,
+                    "has_issue": has_issue,
+                    "issue_qty": issue_qty,
+                    "issue_type": issue_type,
+                    "issue_notes": issue_notes,
+                }
+            )
         picking.picker_user_id = user_id
         picking.move_ids.sudo().write({"state": "assigned"})
         return {
