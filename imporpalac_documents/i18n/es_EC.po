@@ -148,6 +148,55 @@ msgstr ""
 
 #. module: imporpalac_documents
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
-#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
 msgid "<strong>Ubication of Origin:</strong>"
-msgstr "Ubicación de Origen:"
+msgstr "<strong>Ubicación Origen:</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Ubication of Destination:</strong>"
+msgstr "<strong>Ubicación Destino:</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Responsible:</strong>"
+msgstr "<strong>Responsable:</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "WH/OUT/0001"
+msgstr ""
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Ordered</strong>"
+msgstr "<strong>Ordenado</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Delivered</strong>"
+msgstr "<strong>Entregado</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "Customizable Desk"
+msgstr "Mueble Personalizable"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "Description on transfer"
+msgstr "Descripción en transferencia"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "units"
+msgstr "Unidades"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<strong>Lot/Serial Number</strong>"
+msgstr "<strong>Lote/Numero de Serie</strong>"
