@@ -50,6 +50,7 @@ class ProductTemplate(models.Model):
             raise ValidationError(_("Product template not found."))
         if product_id.barcode_supp:
             barcodes.append(product_id.barcode_supp)
+        barcodes.append(product_id.default_code)
         return barcodes
 
     def action_generate_barcode_image_supp(self):
