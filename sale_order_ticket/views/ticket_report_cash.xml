@@ -88,25 +88,21 @@
             </style>
 
             <div class="pos-ticket">
-                <t t-if="o.company_id.logo">
-                    <img
-                        class="pos-o-logo"
-                        t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
-                        alt="Logo"
-                    />
-                </t>
+                <img
+                    class="pos-o-logo"
+                    src="/sale_order_ticket/static/src/img/logo.png"
+                    alt="Logo"
+                />
 
                 <div class="pos-center">
-                    <t t-if="o.company_id.phone">
-                        <t t-esc="o.company_id.phone" />
-                    </t>
-                    <br />
                     <t t-if="o.company_id.vat">
                         <t t-esc="o.company_id.vat" />
                     </t>
                     <br />
-                    <t t-if="o.company_id.company_details">
-                        <t t-esc="o.company_id.company_details" />
+                    <t t-if="o.company_id.city and o.company_id.country_id">
+                        <t t-esc="o.company_id.city" /> - <t
+                            t-esc="o.company_id.country_id.name"
+                        />
                     </t>
                 </div>
 

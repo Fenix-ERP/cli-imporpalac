@@ -200,3 +200,13 @@ msgstr "Unidades"
 #: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
 msgid "<strong>Lot/Serial Number</strong>"
 msgstr "<strong>Lote/Numero de Serie</strong>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<span><strong>Delivery Address:</strong></span>"
+msgstr "<span><strong>Dirección de Entrega:</strong></span>"
+
+#. module: imporpalac_documents
+#: model_terms:ir.ui.view,arch_db:imporpalac_documents.delivery_footer_document_inherited
+msgid "<span><strong>Warehouse Address:</strong></span>"
+msgstr "<span><strong>Dirección del almacén:</strong></span>"
