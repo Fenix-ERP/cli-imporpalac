@@ -41,6 +41,7 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div class="text-start">
                     <t t-set="information_block">
+                        <br />
                         <div
                             t-field="doc.partner_invoice_id"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'

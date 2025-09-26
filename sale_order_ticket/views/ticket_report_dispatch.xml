@@ -86,14 +86,11 @@
 
             <div class="pos-ticket">
 
-                <t t-if="o.company_id.logo">
-                    <img
-                        class="pos-o-logo"
-                        t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
-                        alt="Logo"
-                    />
-                </t>
-
+                <img
+                    class="pos-o-logo"
+                    src="/sale_order_ticket/static/src/img/logo.png"
+                    alt="Logo"
+                />
 
                 <div class="pos-line" />
 
@@ -109,11 +106,6 @@
 
                 <div>
                     <t t-esc="o.partner_id.name" />
-                </div>
-
-                <div>
-                    Direccion:
-                    <t t-esc="o.partner_id.street" />
                 </div>
 
                 <div>
