@@ -42,7 +42,9 @@ class StockMove(models.Model):
                     {"issue_qty": 0, "issue_notes": False, "issue_type": False}
                 )
 
-    @api.constrains("has_issue", "issue_qty", "product_uom_qty", "product_uom")
+    @api.constrains(
+        "issue_qty", "issue_type", "product_uom_qty", "product_uom", "quantity"
+    )
     def _check_issue_qty(self):
         for record in self:
             if not record.has_issue:
@@ -62,16 +64,19 @@ class StockMove(models.Model):
                 )
             if (
                 float_compare(
-                    record.issue_qty, record.product_uom_qty, precision_digits=precision
+                    record.issue_qty + record.quantity,
+                    record.product_uom_qty,
+                    precision_digits=precision,
                 )
                 > 0
             ):
                 raise ValidationError(
                     _(
-                        "Issue Quantity (%(issue_qty)s) for product '%(product)s' "
+                        "Issue Quantity (%(qty)s + %(issue_qty)s) for product '%(product)s' "
                         "cannot exceed demand (%(product_uom_qty)s)."
                     )
                     % {
+                        "qty": record.quantity,
                         "issue_qty": record.issue_qty,
                         "product": product_name,
                         "product_uom_qty": record.product_uom_qty,

@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 class StockPicking(models.Model):
@@ -97,6 +98,7 @@ class StockPicking(models.Model):
                 # "currency_id": journal_id.currency_id,
             }
         )
+        payment.sudo().write({"create_uid": payment_line.payment_id.user_id.id})
         payment.action_post()
         return payment
 
@@ -185,12 +187,109 @@ class StockPicking(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if vals.get("move_ids") or vals.get("move_ids_without_package"):
-            if not self.picker_user_id:
-                self.move_ids.sudo().write({"state": "waiting"})
-            if self.picker_user_id and not self.user_id:
-                self.move_ids.sudo().write({"state": "confirmed"})
+        has_moves = "move_ids" in vals or "move_ids_without_package" in vals
+        if not has_moves:
+            return res
+        if not self.picker_user_id:
+            self.move_ids.sudo().write({"state": "waiting"})
+        elif self.picker_user_id and not self.user_id:
+            self.move_ids.sudo().write({"state": "confirmed"})
         return res
+
+    def _check_assignable(self):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        has_issue = False
+        for move in self.move_ids:
+            precision = move.product_uom.rounding or 0.0001
+            product_name = move.product_id.display_name or _("Unknown Product")
+            demand = move.product_uom_qty
+            quant = move.quantity
+            if float_compare(demand, quant, precision_rounding=precision) > 0:
+                if move.has_issue:
+                    has_issue = True
+                else:
+                    raise ValidationError(
+                        _(
+                            "Quantity of product '%s' must be equals to demand. "
+                            "Please assign a issue to report this picking.",
+                            product_name,
+                        )
+                    )
+        if has_issue:
+            if self.issue_reported:
+                return False
+            target = self.sale_id or self.purchase_id
+            if not target:
+                return False
+            user_id = target.user_id.id
+            summary = _("Issue detected in Picking %s", (self.name or ""))
+            note = _(
+                "<h5>Order Issue Report</h5>"
+                "<br/>Please review this order due to the following issues:"
+            )
+            for move in self.move_ids:
+                if move.has_issue:
+                    selection = move._fields["issue_type"]._description_selection(
+                        self.env
+                    )
+                    issue_label = next(
+                        (lbl for val, lbl in selection if val == move.issue_type),
+                        move.issue_type,
+                    )
+                    note += _(
+                        "<ul>"
+                        "<p><b>%(product)s</b></p>"
+                        "<li>Problem: %(issue_type)s</li>"
+                        "<li>Quants: %(issue_qty)s/%(demand_qty)s</li>"
+                        "<li>Observations: %(issue_notes)s</li>"
+                        "</ul>"
+                    ) % {
+                        "product": move.product_id.display_name,
+                        "issue_type": issue_label,
+                        "issue_qty": move.issue_qty,
+                        "demand_qty": move.product_uom_qty,
+                        "issue_notes": move.issue_notes or "-",
+                    }
+            activity_vals = {
+                "res_model_id": self.env["ir.model"]._get_id(target._name),
+                "res_id": target.id,
+                "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
+                "user_id": user_id,
+                "summary": summary,
+                "note": note,
+            }
+            self.sudo().write({"issue_reported": True})
+            self.env["mail.activity"].create(activity_vals)
+        return not has_issue
+
+    @api.model
+    def action_confirm_by_picker(self, data):
+        confirm_res = super(StockPicking, self).action_confirm_by_picker(data)
+        if confirm_res:
+            picking = self.browse(confirm_res.get("picking_id", False))
+            if picking.exists():
+                res = picking._check_assignable()
+                if not res:
+                    picking.move_ids.sudo().write({"state": "confirmed"})
+                    return {
+                        "picking_id": picking.id,
+                        "picking_name": picking.name,
+                        "picking_state": picking.state,
+                        "message": _("This picking has been reported correctly."),
+                        "user_id": picking.picker_user_id.name,
+                    }
+        return confirm_res
+
+    def action_confirm_picking(self):
+
+        for picking in self:
+            res = picking._check_assignable()
+            if not res:
+                return self.env.user.notify_warning(
+                    message=_("This picking has been reported correctly."),
+                    title=_("Issue Reported"),
+                )
+        return super(StockPicking, self).action_confirm_picking()
 
 
 class PickingType(models.Model):

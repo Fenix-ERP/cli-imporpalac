@@ -6,14 +6,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-22 19:40+0000\n"
-"PO-Revision-Date: 2025-09-22 19:40+0000\n"
+"POT-Creation-Date: 2025-09-29 18:11+0000\n"
+"PO-Revision-Date: 2025-09-29 18:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid ""
+"<h5>Order Issue Report</h5><br/>Please review this order due to the "
+"following issues:"
+msgstr ""
+"<h5>Reporte de incidencias</h5><br/>Por favor, revise este pedido debido a "
+"los siguientes problemas:"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid ""
+"<ul><p><b>%(product)s</b></p><li>Problem: %(issue_type)s</li><li>Quants: "
+"%(issue_qty)s/%(demand_qty)s</li><li>Observations: %(issue_notes)s</li></ul>"
+msgstr ""
+"<ul><p><b>%(product)s</b></p><li>Problema: %(issue_type)s</li><li>Cantidad: "
+"%(issue_qty)s/%(demand_qty)s</li><li>Observaciones: %(issue_notes)s</li></ul>"
 
 #. module: counter_sale
 #: model:ir.module.category,description:counter_sale.module_category_counter_sale
@@ -29,6 +51,11 @@ msgstr "Administrador"
 #: model:ir.actions.server,name:counter_sale.ir_cron_expire_quotations_ir_actions_server
 msgid "Automatic expiration of quotes"
 msgstr "Expiración automática de cotizaciones"
+
+#. module: counter_sale
+#: model_terms:ir.ui.view,arch_db:counter_sale.view_sale_order_counter_sale
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. module: counter_sale
 #: model:ir.module.category,name:counter_sale.module_category_counter_sale
@@ -52,6 +79,11 @@ msgid "Internal Location"
 msgstr "Ubicación interna"
 
 #. module: counter_sale
+#: model:ir.model,name:counter_sale.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferencia"
+
+#. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
@@ -62,6 +94,20 @@ msgstr "Estado inválido"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
 msgid "Is Rectified"
 msgstr "Recificada"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid "Issue Reported"
+msgstr "Incidencia reportada"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid "Issue detected in Picking %s"
+msgstr "Incidencia detectada en Picking %s"
 
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_account_move
@@ -111,6 +157,17 @@ msgstr "Imprimir Ticket"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__purchase_person_id
 msgid "Purchase Person"
 msgstr "Comprador"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Quantity of product '%s' must be equals to demand. Please assign a issue to "
+"report this picking."
+msgstr ""
+"La cantidad del producto '%s' debe ser igual a la demanda. Por favor si no "
+"es el caso, asigne una incidencia al producto." 
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__rectified_order_id
@@ -182,6 +239,14 @@ msgstr "Esta orden ya tiene una factura asignada y no puede ser cancelada"
 #. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/stock_picking.py:0
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid "This picking has been reported correctly."
+msgstr "Este picking ha sido reportado correctamente."
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
 #, python-format
 msgid ""
 "This picking has not yet been paid, please request payment at the checkout."
@@ -189,11 +254,13 @@ msgstr ""
 "Este picking aún no ha sido pagado, por favor solicite el pago en la caja."
 
 #. module: counter_sale
-#: model:ir.model,name:counter_sale.model_stock_picking
-msgid "Transfer"
-msgstr "Transferencia "
-
-#. module: counter_sale
 #: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
 msgid "Ubicación interna asociada al producto"
 msgstr ""
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/stock_picking.py:0
+#, python-format
+msgid "Unknown Product"
+msgstr "Producto Desconocido"

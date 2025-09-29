@@ -17,7 +17,7 @@ class SaleOrderPayment(models.Model):
     client_id = fields.Many2one(
         related="order_id.partner_id", string="Client", store=True
     )
-
+    user_id = fields.Many2one("res.users", string="Cashier")
     order_id = fields.Many2one("sale.order", string="Sale Order")
     rectified_order_id = fields.Many2one("sale.order", string="Rectified Sale Order")
 
@@ -179,8 +179,8 @@ class SaleOrderPayment(models.Model):
                 )
             payment.state = "processed"
             payment.hour_register = datetime.now()
-            for picking in payment.order_id.picking_ids:
-                picking.payment_state = "paid"
+            payment.order_id.picking_ids.sudo().write({"payment_state": "paid"})
+            payment.user_id = self.env.user.id
 
     def unlink(self):
         if not self._context.get("force_delete"):

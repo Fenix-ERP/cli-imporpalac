@@ -119,7 +119,12 @@ class SaleOrder(models.Model):
             raise UserError(
                 _("This order already has an invoice assigned and cannot be cancelled.")
             )
+        dissable_locked = self.env.context.get("force_dissable_locked", False)
+        if dissable_locked:
+            self.sudo().locked = False
         res = super(SaleOrder, self).action_cancel()
+        if dissable_locked:
+            self.sudo().locked = True
         return res
 
     def action_expire_quotations(self, hours=48):
