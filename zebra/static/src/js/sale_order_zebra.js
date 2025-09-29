@@ -102,7 +102,7 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         if (!qz.websocket.isActive()) await qz.websocket.connect();
         const availablePrinters = await qz.printers.find();
         const zebraPrinter = availablePrinters.find(
-            (printer) => printer === "Zebra_ZD220"
+            (printer) => printer === "ZDesigner ZD220-203dpi ZPL"
         );
         const config = qz.configs.create(zebraPrinter, {forceRaw: true});
         const data = [
