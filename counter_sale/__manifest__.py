@@ -22,6 +22,7 @@
         "data/expire_quotation_cron.xml",
         "data/ir_config_parameter.xml",
         "views/sale_order_inherit.xml",
+        "views/stock_move_inherit.xml",
         "views/stock_picking_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
     ],

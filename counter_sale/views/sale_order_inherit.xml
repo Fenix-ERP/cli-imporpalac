@@ -72,6 +72,18 @@
                     counter_sale.group_counter_sale_admin
                 </attribute>
             </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button
+                    name="action_cancel"
+                    type="object"
+                    string="Cancel"
+                    class="btn-secondary"
+                    groups="counter_sale.group_counter_sale_admin"
+                    invisible="state not in ['draft', 'sent', 'sale'] or not locked"
+                    data-hotkey="x"
+                    context="{'force_dissable_locked': True,}"
+                />
+            </xpath>
         </field>
     </record>
     <record id="action_print_ticket_server" model="ir.actions.server">

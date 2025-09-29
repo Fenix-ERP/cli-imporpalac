@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_stock_move_operations_inherit_counter_sale">
+        <field name="name">view.stock.move.operations.inherit.stock.counter.sale</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_line_ids']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_line_ids']" position="before">
+                <field name="state" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
