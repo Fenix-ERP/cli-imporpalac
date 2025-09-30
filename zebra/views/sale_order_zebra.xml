@@ -12,6 +12,7 @@
                     type="object"
                     class="btn-primary"
                     icon="fa-print"
+                    invisible="picking_type_code != 'incoming'"
                 />
             </xpath>
         </field>
