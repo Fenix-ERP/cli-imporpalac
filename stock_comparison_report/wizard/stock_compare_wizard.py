@@ -13,18 +13,23 @@ class StockCompareWizard(models.TransientModel):
     )
     min_qty = fields.Float(string="Cantidad mínima", required=True, default=1)
 
+    category_id = fields.Many2one("product.category", string="Categoría")
+
     def generate_report_data_stock(self):
         domain = [
             ("location_id", "in", [self.location_a_id.id, self.location_b_id.id]),
         ]
-        quants = self.env["stock.quant"].search(domain)
+        if self.category_id:
+            domain.append(("categ_id", "=", self.category_id.id))
+        quants = self.env["stock.quant"].sudo().search(domain)
 
         data = {}
         for quant in quants:
             data.setdefault(
                 quant.product_id.id,
                 {
-                    "product": quant.product_id.display_name,
+                    "product": quant.product_id.code,
+                    "product_name": quant.product_id.name,
                     "a_qty": 0,
                     "b_qty": 0,
                     "min_qty": self.min_qty,
@@ -37,12 +42,20 @@ class StockCompareWizard(models.TransientModel):
 
         filtered = [vals for vals in data.values() if vals["b_qty"] < self.min_qty]
 
-        return {"products": filtered}
+        return {
+            "products": filtered,
+            "location_a_name": self.location_a_id.display_name,
+            "location_b_name": self.location_b_id.display_name,
+        }
 
     def action_compare(self):
-        """Llama al reporte PDF pasando los datos correctamente"""
         data = self.generate_report_data_stock()
-        # Pasamos self como docs y los datos en 'data'
         return self.env.ref(
             "stock_comparison_report.action_report_stock_compare"
+        ).report_action(self, data=data)
+
+    def action_compare_xls(self):
+        data = self.generate_report_data_stock()
+        return self.env.ref(
+            "stock_comparison_report.action_report_stock_compare_xls"
         ).report_action(self, data=data)

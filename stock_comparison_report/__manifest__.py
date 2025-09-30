@@ -1,7 +1,7 @@
 {
     "name": "Stock Compare",
     "version": "17.0.1.0.0",
-    "depends": ["stock"],
+    "depends": ["stock", "report_xlsx"],
     "category": "Inventory",
     "data": [
         "security/ir.model.access.csv",
