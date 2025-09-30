@@ -19,8 +19,8 @@ class StockCompareReportXLSX(models.AbstractModel):
         # Encabezados
         sheet.write(row, col, "Código", bold)
         sheet.write(row, col + 1, "Nombre", bold)
-        sheet.write(row, col + 2, data.get('location_a_name'), bold)
-        sheet.write(row, col + 3, data.get('location_b_name'), bold)
+        sheet.write(row, col + 2, data.get("location_a_name"), bold)
+        sheet.write(row, col + 3, data.get("location_b_name"), bold)
         sheet.write(row, col + 4, "Minimo", bold)
         row += 1
 
@@ -35,8 +35,6 @@ class StockCompareReportXLSX(models.AbstractModel):
             row += 1
             total_a_qty += product.get("a_qty", 0.0)
             total_b_qty += product.get("b_qty", 0.0)
-        
+
         sheet.write(row, col + 2, total_a_qty, money)
         sheet.write(row, col + 3, total_b_qty, money)
-        
-            
