@@ -10,7 +10,7 @@
                     string="Reprocess"
                     class="btn btn-primary"
                     name="action_reprocess"
-                    groups="counter_sale.group_counter_sale_picker"
+                    groups="counter_sale.group_counter_sale_seller"
                 />
             </xpath>
         </field>
