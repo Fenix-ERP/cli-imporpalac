@@ -86,12 +86,20 @@
 
             <div class="pos-ticket">
 
-                <img
-                    class="pos-o-logo"
-                    src="/sale_order_ticket/static/src/img/logo.png"
-                    alt="Logo"
-                />
-
+                <div class="pos-center">
+                    <img
+                        class="pos-o-logo"
+                        t-if="logo_custom"
+                        t-att-src="'data:image/png;base64,%s' % logo_custom"
+                        alt="Logo"
+                        style="max-height:80px"
+                    />
+                    <t t-if="o.company_id.city and o.company_id.country_id">
+                        <t t-esc="o.company_id.city" /> - <t
+                            t-esc="o.company_id.country_id.name"
+                        />
+                    </t>
+                </div>
                 <div class="pos-line" />
 
                 <div class="pos-center pos-header pos-sale-order">
