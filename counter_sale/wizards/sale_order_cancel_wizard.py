@@ -6,6 +6,7 @@ class SaleOrderCancel(models.TransientModel):
 
     def action_reprocess(self):
         self.ensure_one()
+        self = self.sudo()
         new_order = self.order_id.copy()
         new_order.rectified_order_id = self.order_id
 

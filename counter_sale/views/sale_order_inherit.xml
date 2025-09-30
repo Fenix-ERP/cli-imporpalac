@@ -78,7 +78,7 @@
                     type="object"
                     string="Cancel"
                     class="btn-secondary"
-                    groups="counter_sale.group_counter_sale_admin"
+                    groups="counter_sale.group_counter_sale_seller"
                     invisible="state not in ['draft', 'sent', 'sale'] or not locked"
                     data-hotkey="x"
                     context="{'force_dissable_locked': True,}"
