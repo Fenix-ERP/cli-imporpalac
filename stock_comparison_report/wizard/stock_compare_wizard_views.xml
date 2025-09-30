@@ -9,12 +9,19 @@
                     <field name="location_a_id" />
                     <field name="location_b_id" />
                     <field name="min_qty" />
+                    <field name="category_id" />
                 </group>
                 <footer>
                     <button
                         string="Generar Reporte"
                         type="object"
                         name="action_compare"
+                        class="btn-primary"
+                    />
+                    <button
+                        string="Generar Reporte Excel"
+                        type="object"
+                        name="action_compare_xls"
                         class="btn-primary"
                     />
                     <button string="Cancelar" class="btn-secondary" special="cancel" />

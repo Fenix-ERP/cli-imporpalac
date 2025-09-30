@@ -11,21 +11,41 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
-                                <th>Quantity Location A</th>
-                                <th>Quantity Location B</th>
+                                <th t-esc="location_a_name" />
+                                <th t-esc="location_b_name" />
                                 <th>Minimum required</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <t t-set="total_a_qty" t-value="0.0" />
+                            <t t-set="total_b_qty" t-value="0.0" />
                             <t t-foreach="products" t-as="p">
                                 <tr>
                                     <td><t t-esc="p['product']" /></td>
+                                    <td><t t-esc="p['product_name']" /></td>
                                     <td><t t-esc="p['a_qty']" /></td>
                                     <td><t t-esc="p['b_qty']" /></td>
                                     <td><t t-esc="p['min_qty']" /></td>
                                 </tr>
+                                <t
+                                    t-set="total_a_qty"
+                                    t-value="total_a_qty + p['a_qty']"
+                                />
+                                <t
+                                    t-set="total_b_qty"
+                                    t-value="total_b_qty + p['b_qty']"
+                                />
                             </t>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td />
+                                <td />
+                                <td><t t-esc="total_a_qty" /></td>
+                                <td><t t-esc="total_b_qty" /></td>
+                                <td />
+                            </tr>
+                        </tfoot>
                     </table>
                 </t>
                 <t t-else="">
