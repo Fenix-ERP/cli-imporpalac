@@ -42,6 +42,7 @@ class SaleOrder(models.Model):
         }
 
     def action_confirm(self):
+        self = self.sudo()
         self.ensure_one()
         res = super(SaleOrder, self).action_confirm()
         if self.state == "draft":

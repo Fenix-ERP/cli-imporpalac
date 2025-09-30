@@ -10,7 +10,7 @@
             </xpath>
             <xpath expr="//button[@name='393']" position="attributes">
                 <attribute name="groups">
-                    counter_sale.group_counter_sale_seller
+                    counter_sale.group_counter_sale_seller, counter_sale.group_counter_sale_dispatcher
                 </attribute>
             </xpath>
             <xpath
