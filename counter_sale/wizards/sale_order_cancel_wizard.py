@@ -38,6 +38,7 @@ class SaleOrderCancel(models.TransientModel):
         }
 
     def action_cancel(self):
+        self = self.sudo()
         res = super(SaleOrderCancel, self).action_cancel()
         for payment in self.order_id.payment_ids:
             if payment.state != "processed":
