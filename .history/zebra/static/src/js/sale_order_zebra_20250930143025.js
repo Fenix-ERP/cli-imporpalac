@@ -41,6 +41,7 @@ function configureQzApi() {
 }
 async function getSystemParameter(key) {
     try {
+        debugger;
         const response = await fetch("/web/dataset/call_kw", {
             method: "POST",
             headers: {
@@ -126,6 +127,7 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         configureQzApi();
         await setupQzSecurity();
         if (!qz.websocket.isActive()) await qz.websocket.connect();
+        debugger;
         const printerName = await getSystemParameter("qz.printer.zebra.name");
         const availablePrinters = await qz.printers.find();
         const zebraPrinter = availablePrinters.find(
