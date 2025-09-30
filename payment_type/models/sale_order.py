@@ -83,12 +83,12 @@ class SaleOrder(models.Model):
                     _("There is insufficient stock for the following products:\n%s")
                     % "\n".join(insufficient_products)
                 )
-
+        res = super().action_confirm()
+        for order in self:
             pickings = order.picking_ids.filtered(
                 lambda p: p.state not in ["done", "cancel"]
             )
             pickings.sudo().write({"payment_method": order.payment_method})
-        res = super().action_confirm()
         return res
 
     def _create_invoices(self, grouped=False, final=False):
