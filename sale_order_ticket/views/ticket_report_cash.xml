@@ -90,8 +90,10 @@
             <div class="pos-ticket">
                 <img
                     class="pos-o-logo"
-                    src="/sale_order_ticket/static/src/img/logo.png"
+                    t-if="logo_custom"
+                    t-att-src="'data:image/png;base64,%s' % logo_custom"
                     alt="Logo"
+                    style="max-height:80px"
                 />
 
                 <div class="pos-center">
