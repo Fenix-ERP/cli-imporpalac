@@ -103,6 +103,7 @@ class StockPicking(models.Model):
         return payment
 
     def button_validate(self):
+        self = self.sudo()
         res = super(StockPicking, self).button_validate()
         if res:
             for picking in self:
