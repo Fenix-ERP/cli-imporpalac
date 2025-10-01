@@ -40,7 +40,11 @@ class StockCompareWizard(models.TransientModel):
             elif quant.location_id == self.location_b_id:
                 data[quant.product_id.id]["b_qty"] += quant.quantity
 
-        filtered = [vals for vals in data.values() if vals["b_qty"] < self.min_qty]
+        filtered = [
+            vals
+            for vals in data.values()
+            if vals["b_qty"] < self.min_qty and vals["a_qty"] != 0
+        ]
 
         return {
             "products": filtered,
