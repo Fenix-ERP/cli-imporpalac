@@ -278,7 +278,7 @@ class StockPicking(models.Model):
             picking = self.browse(confirm_res.get("picking_id", False))
             if picking.exists():
                 res = picking._check_assignable()
-                if not res and picking.picking.picking_type_code == "outgoing":
+                if not res and picking.picking_type_code == "outgoing":
                     picking.move_ids.sudo().write({"state": "confirmed"})
                     return {
                         "picking_id": picking.id,
