@@ -9,15 +9,11 @@ class StockMove(models.Model):
     issue_type = fields.Selection(
         [
             ("broken", "Broken"),
-            ("damaged", "Damaged"),
-            ("missing", "Missing"),
-            ("expired", "Expired"),
-            ("wrong_uom", "Wrong Unit of Measure"),
-            ("wrong_location", "Wrong Location"),
-            ("over_received", "Over Received"),
-            ("under_received", "Under Received"),
-            ("lot_missing", "Lot/Serial Missing"),
-            ("quality_failed", "Quality Failed"),
+            ("defective", "Defective"),
+            ("struck", "Struck"),
+            ("mislabelled", "Mislabelled"),
+            ("not_fitting", "Not Fitting"),
+            ("out_of_stock", "Out of Stock"),
         ],
         string="Issue",
     )

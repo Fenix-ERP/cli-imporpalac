@@ -46,6 +46,7 @@ class StockPicking(models.Model):
                 )
             )
         picking.picker_user_id = user_id
+        picking.sudo().confirmed_date = fields.Datetime.now()
         picking.move_ids.sudo().write({"state": "confirmed"})
         return {
             "picking_id": picking.id,
@@ -57,6 +58,7 @@ class StockPicking(models.Model):
     def action_reserve_picking(self):
         for picking in self:
             picking.picker_user_id = self.env.user.id
+            picking.sudo().confirmed_date = fields.Datetime.now()
             picking.move_ids.sudo().write({"state": "confirmed"})
 
     @api.model
