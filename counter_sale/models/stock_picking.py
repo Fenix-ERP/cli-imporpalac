@@ -43,7 +43,9 @@ class StockPicking(models.Model):
         payment_type = (
             "money_send" if invoice.move_type == "in_invoice" else "money_receive"
         )
-        ctx = self.env.context
+        cashier_env = self.env(user=payment_line.payment_id.user_id)
+        cashier_env.su = True
+        ctx = cashier_env.context
         wizard_vals = {
             "partner_name": ctx.get("default_partner_name", invoice.partner_id.id),
             "payment_amount": payment_line.amount,
@@ -61,13 +63,12 @@ class StockPicking(models.Model):
                 else False
             ),
         }
-
-        pdc_wizard = self.env["post.cheque.wizard"].create(wizard_vals)
+        pdc_wizard = cashier_env["post.cheque.wizard"].create(wizard_vals)
         result = pdc_wizard.button_register()
-        post_cheque = self.env["post.cheque"].browse(result.get("res_id"))
+        post_cheque = cashier_env["post.cheque"].browse(result.get("res_id"))
         post_cheque.write({"invoice_ids": [(6, 0, [invoice.id])]})
         post_cheque.with_context(last_deposit=False).deposting_action()
-        pdc_move = self.env["account.move"].search(
+        pdc_move = cashier_env["account.move"].search(
             [
                 "|",
                 ("pd_cheque_id", "=", post_cheque.id),
@@ -78,8 +79,8 @@ class StockPicking(models.Model):
         return pdc_move
 
     def _create_payment(self, partner_id, payment_line):
-        payment_obj = self.env["account.payment"]
-
+        cashier_env = self.env(user=payment_line.payment_id.user_id)
+        payment_obj = cashier_env["account.payment"]
         payment = payment_obj.sudo().create(
             {
                 "payment_type": "inbound",
@@ -98,7 +99,6 @@ class StockPicking(models.Model):
                 # "currency_id": journal_id.currency_id,
             }
         )
-        payment.sudo().write({"create_uid": payment_line.payment_id.user_id.id})
         payment.action_post()
         return payment
 
@@ -222,7 +222,7 @@ class StockPicking(models.Model):
             target = self.sale_id or self.purchase_id
             if not target:
                 return False
-            user_id = target.user_id.id
+            user_id = target.user_id
             summary = _("Issue detected in Picking %s", (self.name or ""))
             note = _(
                 "<h5>Order Issue Report</h5>"
@@ -255,10 +255,18 @@ class StockPicking(models.Model):
                 "res_model_id": self.env["ir.model"]._get_id(target._name),
                 "res_id": target.id,
                 "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
-                "user_id": user_id,
+                "user_id": user_id.id,
                 "summary": summary,
                 "note": note,
             }
+            Channel = self.env["discuss.channel"]
+            channel_id = Channel.channel_get([user_id.partner_id.id])
+            channel_id.message_post(
+                body=_("There are issues with your order: ") + target._get_html_link(),
+                author_id=self.env.user.partner_id.id,
+                message_type="comment",
+                subtype_xmlid="mail.mt_comment",
+            )
             self.sudo().write({"issue_reported": True})
             self.env["mail.activity"].create(activity_vals)
         return not has_issue
