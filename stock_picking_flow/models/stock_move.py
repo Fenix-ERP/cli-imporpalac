@@ -23,7 +23,14 @@ class StockMove(models.Model):
     @api.model
     def get_issue_types(self):
         self = self.with_context(lang=self.env.user.lang or "en_US")
-        allowed_states = ["broken", "damaged", "missing", "expired"]
+        allowed_states = [
+            "broken",
+            "defective",
+            "struck",
+            "mislabelled",
+            "not_fitting",
+            "out_of_stock",
+        ]
         selection = dict(self._fields["issue_type"]._description_selection(self.env))
         types = allowed_states or selection.keys()
         return [
@@ -65,6 +72,7 @@ class StockMove(models.Model):
                     precision_digits=precision,
                 )
                 > 0
+                and record.picking_id.picking_type_code == "outgoing"
             ):
                 raise ValidationError(
                     _(

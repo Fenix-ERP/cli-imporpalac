@@ -200,16 +200,15 @@ class StockPicking(models.Model):
 
     def _check_assignable(self):
         self = self.with_context(lang=self.env.user.lang or "en_US")
-        has_issue = False
+        has_issue = 0
         for move in self.move_ids:
             precision = move.product_uom.rounding or 0.0001
             product_name = move.product_id.display_name or _("Unknown Product")
             demand = move.product_uom_qty
             quant = move.quantity
+            has_issue = has_issue + 1 if move.has_issue else has_issue
             if float_compare(demand, quant, precision_rounding=precision) > 0:
-                if move.has_issue:
-                    has_issue = True
-                else:
+                if not move.has_issue:
                     raise ValidationError(
                         _(
                             "Quantity of product '%s' must be equals to demand. "
@@ -217,7 +216,7 @@ class StockPicking(models.Model):
                             product_name,
                         )
                     )
-        if has_issue:
+        if has_issue > 0:
             if self.issue_reported:
                 return False
             target = self.sale_id or self.purchase_id
@@ -279,7 +278,7 @@ class StockPicking(models.Model):
             picking = self.browse(confirm_res.get("picking_id", False))
             if picking.exists():
                 res = picking._check_assignable()
-                if not res:
+                if not res and picking.picking.picking_type_code == "outgoing":
                     picking.move_ids.sudo().write({"state": "confirmed"})
                     return {
                         "picking_id": picking.id,
@@ -294,7 +293,7 @@ class StockPicking(models.Model):
 
         for picking in self:
             res = picking._check_assignable()
-            if not res:
+            if not res and picking.picking_type_code == "outgoing":
                 return self.env.user.notify_warning(
                     message=_("This picking has been reported correctly."),
                     title=_("Issue Reported"),

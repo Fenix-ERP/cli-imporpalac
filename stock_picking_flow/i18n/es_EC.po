@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-29 22:41+0000\n"
-"PO-Revision-Date: 2025-09-29 22:41+0000\n"
+"POT-Creation-Date: 2025-10-01 22:47+0000\n"
+"PO-Revision-Date: 2025-10-01 22:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,14 +37,9 @@ msgid "Cannot confirm this picking:'%s' is not in confirmed state."
 msgstr "No se puede confirmar este picking:'%s' no está en estado confirmado"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__damaged
-msgid "Damaged"
-msgstr "Dañado"
-
-#. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__expired
-msgid "Expired"
-msgstr "Expirado"
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__defective
+msgid "Defective"
+msgstr "Defectuoso"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_move__has_issue
@@ -59,7 +54,12 @@ msgstr "Aquí puede escribir las incidencias"
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_picking
 msgid "Internal Transfer Upload Imporpalac"
-msgstr "Transferencia"
+msgstr "Transferir "
+
+#. module: stock_picking_flow
+#: model:ir.model,name:stock_picking_flow.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__is_owner_picker_user
@@ -89,8 +89,8 @@ msgid ""
 "Issue Quantity (%(qty)s + %(issue_qty)s) for product '%(product)s' cannot "
 "exceed demand (%(product_uom_qty)s)."
 msgstr ""
-"La cantidad reportada (%(qty)s + %(issue_qty)s) del producto '%(product)s' no puede "
-"exeder la demanda (%(product_uom_qty)s)."
+"La cantidad reportada (%(qty)s + %(issue_qty)s) del producto '%(product)s' "
+"no puede exeder la demanda (%(product_uom_qty)s)."
 
 #. module: stock_picking_flow
 #. odoo-python
@@ -110,19 +110,19 @@ msgid "Issues"
 msgstr "Incidencias"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__lot_missing
-msgid "Lot/Serial Missing"
-msgstr "Lote/Serie Faltante"
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__mislabelled
+msgid "Mislabelled"
+msgstr "Mal Etiquetado"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__missing
-msgid "Missing"
-msgstr "Perdido"
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__not_fitting
+msgid "Not Fitting"
+msgstr "No Calza"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__over_received
-msgid "Over Received"
-msgstr "Recibido en Exceso"
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__out_of_stock
+msgid "Out of Stock"
+msgstr "Sin Stock"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__picker_user_id
@@ -141,11 +141,6 @@ msgstr "Picking no encontrado"
 #: model:ir.model,name:stock_picking_flow.model_purchase_order
 msgid "Purchase Order"
 msgstr "Orden de compra"
-
-#. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__quality_failed
-msgid "Quality Failed"
-msgstr "Falta de Calidad"
 
 #. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow
@@ -175,6 +170,11 @@ msgid "Stock Move Line not found."
 msgstr "Línea de movimiento de stock no encontrada."
 
 #. module: stock_picking_flow
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__struck
+msgid "Struck"
+msgstr "Golpeado"
+
+#. module: stock_picking_flow
 #. odoo-python
 #: code:addons/stock_picking_flow/models/stock_picking.py:0
 #, python-format
@@ -189,26 +189,11 @@ msgid "This picking is assigned to %s, you cannot confirm it"
 msgstr "Este picking está asignado a %s, no puede ser confirmardo"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__under_received
-msgid "Under Received"
-msgstr "Sub Recibido"
-
-#. module: stock_picking_flow
 #. odoo-python
 #: code:addons/stock_picking_flow/models/stock_move.py:0
 #, python-format
 msgid "Unknown Product"
 msgstr "Producto Desconocido"
-
-#. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__wrong_location
-msgid "Wrong Location"
-msgstr "Ubicación Incorrecta"
-
-#. module: stock_picking_flow
-#: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__wrong_uom
-msgid "Wrong Unit of Measure"
-msgstr "Unidad de Medida Incorrecta"
 
 #. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow
