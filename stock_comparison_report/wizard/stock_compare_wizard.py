@@ -20,7 +20,7 @@ class StockCompareWizard(models.TransientModel):
             ("location_id", "in", [self.location_a_id.id, self.location_b_id.id]),
         ]
         if self.category_id:
-            domain.append(("categ_id", "=", self.category_id.id))
+            domain = [("product_id.categ_id", "=", self.category_id.id)]
         quants = self.env["stock.quant"].sudo().search(domain)
 
         data = {}

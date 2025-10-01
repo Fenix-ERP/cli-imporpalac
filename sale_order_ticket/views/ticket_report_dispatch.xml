@@ -4,7 +4,7 @@
         <t t-name="sale_order_ticket.report_ticket_dispatch_document">
             <style>
                 .pos-ticket {
-                    width: 260px; /* ~80mm */
+                    width: 245px; /* ~80mm */
                     font-family: monospace, Arial, sans-serif;
                     font-size: 12px;
                     margin: 0 auto;
@@ -61,6 +61,7 @@
                     flex: 0 0 60px;
                     text-align: right;
                     font-weight: bold;
+                    font-size: 10px;
                 }
                 .pos-info-line {
                     word-break: break-word;
@@ -168,8 +169,8 @@
                 <div
                     style="display:flex; justify-content: space-between; font-weight: bold;"
                 >
-                    <div>Total:</div>
-                    <div class="pos-right">
+                    <div clas="flex-price">Total:</div>
+                    <div class="flex-price">
                         <t t-esc="o.amount_total" />
                     </div>
                 </div>
