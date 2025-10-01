@@ -12,7 +12,8 @@ class SaleOrderCancel(models.TransientModel):
 
         move_quantities = {}
         for picking in self.order_id.picking_ids.filtered(
-            lambda pick: pick.state == "assigned"
+            lambda pick: pick.state == "confirmed"
+            and pick.picking_type_code == "outgoing"
         ):
             for move in picking.move_ids:
                 move.rectified_product_uom_qty = move.quantity
@@ -22,6 +23,8 @@ class SaleOrderCancel(models.TransientModel):
         for line in new_order.order_line:
             if line.product_id.id in move_quantities:
                 line.product_uom_qty = move_quantities[line.product_id.id]
+                if move_quantities[line.product_id.id] == 0:
+                    line.unlink()
 
         self.order_id.with_context(disable_cancel_warning=True).action_cancel()
 

@@ -110,6 +110,7 @@ class StockPicking(models.Model):
                 if picking.state != "done" and picking.picking_type_code == "outgoing":
                     raise ValidationError(_("The delivery has not been completed."))
                 sale_order = picking.sudo().sale_id
+                picking.user_id = self.env.user
                 if sale_order and not picking.return_id:
                     if self.payment_state == "not_paid":
                         raise ValidationError(

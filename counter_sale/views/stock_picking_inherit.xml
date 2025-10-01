@@ -10,7 +10,8 @@
             </xpath>
             <xpath expr="//button[@name='393']" position="attributes">
                 <attribute name="groups">
-                    counter_sale.group_counter_sale_seller, counter_sale.group_counter_sale_dispatcher
+                    counter_sale.group_counter_sale_seller,
+                    counter_sale.group_counter_sale_dispatcher
                 </attribute>
             </xpath>
             <xpath
@@ -55,8 +56,16 @@
                 expr="//page[@name='extra']//group[@name='other_infos']//field[@name='user_id']"
                 position="after"
             >
-                <field name="sale_person_id" />
-                <field name="purchase_person_id" />
+                <field
+                    name="sale_person_id"
+                    widget="many2one_avatar_user"
+                    invisible="not sale_person_id"
+                />
+                <field
+                    name="purchase_person_id"
+                    widget="many2one_avatar_user"
+                    invisible="not purchase_person_id"
+                />
             </xpath>
         </field>
     </record>
