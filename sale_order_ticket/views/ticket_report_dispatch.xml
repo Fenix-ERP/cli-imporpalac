@@ -187,7 +187,7 @@
                 </t>
                 <div class="pos-line" />
                 <div class="pos-center">
-                    <t t-esc="o.date_order" />
+                    <span t-field="o.date_order" t-options="{'widget': 'datetime'}" />
                 </div>
             </div>
         </t>

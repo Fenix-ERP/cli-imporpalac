@@ -16,28 +16,8 @@
         <field name="name">Tarjeta de Crédito</field>
          <field name="code">credit_card</field>
     </record>
-    <record model="payment.type" id="payment_type_credit_note">
-        <field name="name">Nota de Crédito</field>
-         <field name="code">credit_note</field>
-    </record>
-    <record model="payment.type" id="payment_type_debit_note">
-        <field name="name">Nota de Débito</field>
-         <field name="code">debit_note</field>
-    </record>
-    <record model="payment.type" id="payment_type_digital">
-        <field name="name">Dinero Electrónico</field>
-         <field name="code">digital</field>
-    </record>
-    <record model="payment.type" id="payment_type_return">
-        <field name="name">Devolución</field>
-         <field name="code">return</field>
-    </record>
-    <record model="payment.type" id="payment_type_agreement">
-        <field name="name">Convenio de Pago</field>
-         <field name="code">agreement</field>
-    </record>
-    <record model="payment.type" id="payment_type_advance_clearance">
-        <field name="name">Cruce de Anticipos</field>
-         <field name="code">advance_clearance</field>
+    <record model="payment.type" id="payment_type_deposit">
+        <field name="name">Depósito y Transferencia</field>
+         <field name="code">deposit</field>
     </record>
 </odoo>
