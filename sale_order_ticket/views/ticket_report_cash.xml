@@ -277,7 +277,7 @@
                 <div class="pos-center" style="font-size: 10px;">
                     Documento sin validez tributaria
                     <br />
-                    <span t-esc="o.date_order.strftime('%H:%M')" />
+                    <span t-field="o.date_order" t-options="{'widget': 'datetime'}" />
                 </div>
             </div>
         </t>
