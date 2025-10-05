@@ -82,17 +82,17 @@ class SaleOrder(models.Model):
             order.picking_elapsed_time = self._format_delta(delta)
 
     # -------------------- Delivery Status --------------------
-    @api.depends("picking_ids.state")
+    @api.depends("picking_ids.collection_state", "picking_ids.state")
     def _compute_delivery_status(self):
         for order in self:
             if not order.picking_ids:
                 order.delivery_status = False
             else:
                 states = order.picking_ids.mapped("state")
-
-                if any(s == "waiting" for s in states):
+                collection_states = order.picking_ids.mapped("collection_state")
+                if any(s == "waiting" for s in collection_states):
                     order.delivery_status = "waiting"  # Rojo
-                elif any(s == "confirmed" for s in states):
+                elif any(s == "assigned" for s in collection_states):
                     order.delivery_status = "picking"  # Amarillo
                 elif any(s == "assigned" for s in states):
                     order.delivery_status = "to_deliver"  # Gris

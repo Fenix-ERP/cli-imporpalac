@@ -146,11 +146,13 @@ class StockPicking(models.Model):
                     if first_payment:
                         for payment_line in first_payment.payment_line_ids:
                             if payment_line.chq_refr:
-                                self._create_pdc_payment(invoice, payment_line)
+                                self.with_context(
+                                    check_global_reference=True
+                                )._create_pdc_payment(invoice, payment_line)
                             else:
-                                payment = self._create_payment(
-                                    invoice.partner_id, payment_line
-                                )
+                                payment = self.with_context(
+                                    check_global_reference=True
+                                )._create_payment(invoice.partner_id, payment_line)
                                 invoice_receivable_accounts = invoice.line_ids.filtered(
                                     lambda line: line.account_id.account_type
                                     == "asset_receivable"
@@ -169,18 +171,7 @@ class StockPicking(models.Model):
                     picking.invoice_number = invoice.name
         return res
 
-    def write(self, vals):
-        res = super().write(vals)
-        has_moves = "move_ids" in vals or "move_ids_without_package" in vals
-        if not has_moves:
-            return res
-        if not self.picker_user_id:
-            self.move_ids.sudo().write({"state": "waiting"})
-        elif self.picker_user_id and not self.user_id:
-            self.move_ids.sudo().write({"state": "confirmed"})
-        return res
-
-    def _check_assignable(self):
+    def _check_confirmable(self):
         self = self.with_context(lang=self.env.user.lang or "en_US")
         has_issue = 0
         for move in self.move_ids:
@@ -199,7 +190,7 @@ class StockPicking(models.Model):
                         )
                     )
         if has_issue > 0:
-            if self.issue_reported:
+            if self.collection_state == "issue":
                 return False
             target = self.sale_id or self.purchase_id
             if not target:
@@ -249,7 +240,7 @@ class StockPicking(models.Model):
                 message_type="comment",
                 subtype_xmlid="mail.mt_comment",
             )
-            self.sudo().write({"issue_reported": True})
+            self.collection_state = "issue"
             self.env["mail.activity"].create(activity_vals)
         return not has_issue
 
@@ -259,13 +250,14 @@ class StockPicking(models.Model):
         if confirm_res:
             picking = self.browse(confirm_res.get("picking_id", False))
             if picking.exists():
-                res = picking._check_assignable()
+                res = picking._check_confirmable()
                 if not res and picking.picking_type_code == "outgoing":
-                    picking.move_ids.sudo().write({"state": "confirmed"})
+                    picking.move_ids.sudo().write({"collection_state": "issue"})
                     return {
                         "picking_id": picking.id,
                         "picking_name": picking.name,
                         "picking_state": picking.state,
+                        "collection_state": picking.collection_state,
                         "message": _("This picking has been reported correctly."),
                         "user_id": picking.picker_user_id.name,
                     }
@@ -274,7 +266,7 @@ class StockPicking(models.Model):
     def action_confirm_picking(self):
 
         for picking in self:
-            res = picking._check_assignable()
+            res = picking._check_confirmable()
             if not res and picking.picking_type_code == "outgoing":
                 return self.env.user.notify_warning(
                     message=_("This picking has been reported correctly."),

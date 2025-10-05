@@ -16,6 +16,7 @@
         "qz_tray_printer",
         "post_dated_cheque_management_knk",
         "sale_info_additional",
+        "base_accounting_kit",
     ],
     "data": [
         "security/counter_sale_security.xml",

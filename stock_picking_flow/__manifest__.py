@@ -8,7 +8,6 @@
         "sale_management",
         "account",
         "stock",
-        "additional_product_imporpalac",
     ],
     "data": [
         "views/stock_picking_inherit.xml",

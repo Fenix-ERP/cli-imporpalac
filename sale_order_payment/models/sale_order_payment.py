@@ -123,6 +123,7 @@ class SaleOrderPayment(models.Model):
             rec.difference = rec.amount - rec.rectified_amount
 
     def process_payment(self):
+        self = self.with_context(check_global_reference=True)
         for payment in self:
             if (
                 payment.delivery_status != "to_deliver"
@@ -237,6 +238,7 @@ class SaleOrderPaymentLine(models.Model):
                 lines.filtered(
                     lambda x: x.reference == line.reference
                     and x.payment_method_line_id == line.payment_method_line_id
+                    and x.card_id == line.card_id
                 )
             )
             > 1
@@ -260,8 +262,7 @@ class SaleOrderPaymentLine(models.Model):
         if not lines_with_ref:
             raise UserError(_("Please enter a Reference to continue."))
         account_id = bank_lines.payment_method_line_id.payment_account_id
-        self.env.cr.execute(
-            """
+        query = """
             SELECT sopl.id, sopl.reference, COUNT(*)
             FROM sale_order_payment_line sopl
             INNER JOIN account_payment_method_line apml
@@ -272,16 +273,15 @@ class SaleOrderPaymentLine(models.Model):
             AND sopl.id != %s
             AND sopl.reference = %s
             AND sop.state ='processed'
-            GROUP BY sopl.id, sopl.reference
-            HAVING COUNT(*) >= 1
-        """,
-            (
-                tuple(account_id.ids),
-                bank_lines.id,
-                bank_lines.reference,
-            ),
+            {filter_card}
+            GROUP BY sopl.id, sopl.reference HAVING COUNT(*) >= 1
+        """.format(
+            filter_card="AND sopl.card_id = %s" if self.card_id else ""
         )
-
+        params = [tuple(account_id.ids), bank_lines.id, bank_lines.reference]
+        if self.card_id:
+            params.append(self.card_id.id)
+        self.env.cr.execute(query, params)
         duplicates = self.env.cr.fetchall()
         if duplicates:
             dup_refs = duplicates[0][1]
