@@ -146,11 +146,13 @@ class StockPicking(models.Model):
                     if first_payment:
                         for payment_line in first_payment.payment_line_ids:
                             if payment_line.chq_refr:
-                                self._create_pdc_payment(invoice, payment_line)
+                                self.with_context(
+                                    check_global_reference=True
+                                )._create_pdc_payment(invoice, payment_line)
                             else:
-                                payment = self._create_payment(
-                                    invoice.partner_id, payment_line
-                                )
+                                payment = self.with_context(
+                                    check_global_reference=True
+                                )._create_payment(invoice.partner_id, payment_line)
                                 invoice_receivable_accounts = invoice.line_ids.filtered(
                                     lambda line: line.account_id.account_type
                                     == "asset_receivable"

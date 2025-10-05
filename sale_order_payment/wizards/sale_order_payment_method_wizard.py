@@ -132,6 +132,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
 
     def action_confirm(self):
         self.ensure_one()
+        self = self.with_context(check_global_reference=True)
         self.sale_order_payment_id.reference = self.reference
         self.sale_order_payment_id.card_id = self.card_id
         for line in self.method_line_ids:
