@@ -21,11 +21,3 @@ class StockMove(models.Model):
         related="sale_line_id.internal_location_id",
         readonly=True,
     )
-
-    def _action_confirm(self, merge=True, merge_into=False):
-        moves = super()._action_confirm(merge=merge, merge_into=merge_into)
-        if not moves.picking_id.picker_user_id:
-            moves.sudo().write({"state": "waiting"})
-        if moves.picking_id.picker_user_id and not moves.picking_id.user_id:
-            moves.sudo().write({"state": "confirmed"})
-        return moves

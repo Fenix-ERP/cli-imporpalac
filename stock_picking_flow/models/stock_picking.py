@@ -6,23 +6,30 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
     picker_user_id = fields.Many2one("res.users", string="Picker User", readonly=True)
     is_owner_picker_user = fields.Boolean(compute="_compute_is_owner_user")
-    issue_reported = fields.Boolean(default=False)
+    collection_state = fields.Selection(
+        [
+            ("waiting", "Waiting"),
+            ("assigned", "Assigned"),
+            ("confirmed", "Confirmed"),
+            ("issue", "With Issue"),
+        ],
+        string="Collection Status",
+        default="waiting",
+        nocopy=True,
+    )
 
     def _compute_is_owner_user(self):
         for picking in self:
             picking.is_owner_picker_user = picking.picker_user_id.id == self.env.user.id
 
     @api.model
-    def get_states(self):
+    def get_states(self, state_type):
         self = self.with_context(lang=self.env.user.lang or "en_US")
-        allowed_states = ["draft", "waiting", "confirmed", "assigned", "done", "cancel"]
-        selection = dict(self._fields["state"]._description_selection(self.env))
-        states = allowed_states or selection.keys()
-        return [
-            {"value": val, "label": selection[val]}
-            for val in states
-            if val in selection
-        ]
+        field = self._fields.get(state_type, False)
+        if not field:
+            return []
+        selection = field._description_selection(self.env)
+        return [{"value": value, "label": label} for value, label in selection]
 
     @api.model
     def action_assign_picker(self, data):
@@ -38,7 +45,7 @@ class StockPicking(models.Model):
                     picking.picker_user_id.name,
                 )
             )
-        if picking.state not in ["draft", "waiting"]:
+        if picking.collection_state != "waiting":
             raise ValidationError(
                 _(
                     "Cannot assign picker: picking '%s' is not in waiting state.",
@@ -46,20 +53,19 @@ class StockPicking(models.Model):
                 )
             )
         picking.picker_user_id = user_id
-        picking.sudo().confirmed_date = fields.Datetime.now()
-        picking.move_ids.sudo().write({"state": "confirmed"})
+        picking.collection_state = "assigned"
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
             "picking_state": picking.state,
+            "collection_state": picking.collection_state,
             "user_id": picking.picker_user_id.name,
         }
 
     def action_reserve_picking(self):
         for picking in self:
             picking.picker_user_id = self.env.user.id
-            picking.sudo().confirmed_date = fields.Datetime.now()
-            picking.move_ids.sudo().write({"state": "confirmed"})
+            picking.collection_state = "assigned"
 
     @api.model
     def action_confirm_by_picker(self, data):
@@ -77,10 +83,10 @@ class StockPicking(models.Model):
                     picking.picker_user_id.name,
                 )
             )
-        if picking.state != "confirmed":
+        if picking.collection_state != "assigned":
             raise ValidationError(
                 _(
-                    "Cannot confirm this picking:'%s' is not in confirmed state.",
+                    "Cannot confirm this picking:'%s' is not in assigned state.",
                     picking.display_name,
                 )
             )
@@ -114,18 +120,19 @@ class StockPicking(models.Model):
                 }
             )
         picking.picker_user_id = user_id
-        picking.move_ids.sudo().write({"state": "assigned"})
+        picking.sudo().collection_state = "confirmed"
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
             "picking_state": picking.state,
+            "collection_state": picking.collection_state,
             "user_id": picking.picker_user_id.name,
         }
 
     def action_confirm_picking(self):
         for picking in self:
             picking.picker_user_id = self.env.user.id
-            picking.move_ids.sudo().write({"state": "assigned"})
+            picking.sudo().collection_state = "confirmed"
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -133,3 +140,14 @@ class StockPicking(models.Model):
             if vals.get("acc_number"):
                 vals["picker_user_id"] = self.env.user.id
         return super(StockPicking, self).create(vals_list)
+
+
+class ReturnPicking(models.TransientModel):
+    _inherit = "stock.return.picking"
+
+    def _prepare_picking_default_values(self):
+        res = super(ReturnPicking, self)._prepare_picking_default_values()
+        res["collection_state"] = "waiting"
+        res["user_id"] = False
+        res["picker_user_id"] = False
+        return res

@@ -10,6 +10,14 @@ class StockPicking(models.Model):
         copy=False,
     )
 
+    def write(self, vals):
+        res = super().write(vals)
+        if "collection_state" in vals and vals["collection_state"] == "assigned":
+            for picking in self:
+                if not picking.confirmed_date:
+                    picking.confirmed_date = fields.Datetime.now()
+        return res
+
 
 class StockMove(models.Model):
     _inherit = "stock.move"

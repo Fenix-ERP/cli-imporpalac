@@ -12,7 +12,7 @@
                 <group>
                     <field
                         name="has_issue"
-                        readonly="state not in ['draft','confirmed']"
+                        readonly="parent.collection_state not in ['assigned']"
                     />
                 </group>
             </xpath>
@@ -22,21 +22,21 @@
                     <group>
                         <field
                             name="issue_type"
-                            readonly="state not in ['draft','confirmed']"
+                            readonly="parent.collection_state not in ['assigned']"
                             required="has_issue"
                         />
                     </group>
                     <group>
                         <field
                             name="issue_qty"
-                            readonly="state not in ['draft','confirmed']"
+                            readonly="parent.collection_state not in ['assigned']"
                             required="has_issue"
                         />
                     </group>
                     <label for="issue_notes" />
                     <field
                         name="issue_notes"
-                        readonly="state not in ['draft','confirmed']"
+                        readonly="parent.collection_state not in ['assigned']"
                     />
                 </group>
 
