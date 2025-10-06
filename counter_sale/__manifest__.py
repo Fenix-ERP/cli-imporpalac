@@ -25,6 +25,7 @@
         "views/sale_order_inherit.xml",
         "views/stock_move_inherit.xml",
         "views/stock_picking_inherit.xml",
+        "views/account_payment_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
     ],
     "assets": {
