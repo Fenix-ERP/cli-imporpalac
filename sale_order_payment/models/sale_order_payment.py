@@ -245,6 +245,7 @@ class SaleOrderPaymentLine(models.Model):
         )
         if duplicates:
             raise ValidationError(_("There are duplicated references"))
+        duplicates = []
         bank_journals = self.env["account.journal"].search([("type", "=", "bank")])
         incoming_accounts = bank_journals.mapped(
             "inbound_payment_method_line_ids.payment_account_id"
@@ -263,39 +264,68 @@ class SaleOrderPaymentLine(models.Model):
             raise UserError(_("Please enter a Reference to continue."))
         account_id = bank_lines.payment_method_line_id.payment_account_id
         query = """
-            SELECT sopl.id, sopl.reference, COUNT(*)
-            FROM sale_order_payment_line sopl
+            SELECT ap.id,ap.global_reference
+            FROM account_payment ap
             INNER JOIN account_payment_method_line apml
-            ON apml.id=sopl.payment_method_line_id
-            INNER JOIN sale_order_payment sop
-            ON sop.id=sopl.payment_id
+                ON apml.id = ap.payment_method_line_id
+            INNER JOIN account_move am
+                ON am.id = ap.move_id
             WHERE apml.payment_account_id IN %s
-            AND sopl.id != %s
-            AND sopl.reference = %s
-            AND sop.state ='processed'
-            {filter_card}
-            GROUP BY sopl.id, sopl.reference HAVING COUNT(*) >= 1
+              AND ap.global_reference = %s
+              AND am.state = 'posted'
+              {filter_card_payment}
+            GROUP BY ap.id, ap.global_reference
+            HAVING COUNT(*) >= 1
         """.format(
-            filter_card="AND sopl.card_id = %s" if self.card_id else ""
+            filter_card_payment=("AND ap.payment_card_id = %s" if self.card_id else "")
         )
-        params = [tuple(account_id.ids), bank_lines.id, bank_lines.reference]
+        params = [tuple(account_id.ids), self.reference]
         if self.card_id:
             params.append(self.card_id.id)
+
         self.env.cr.execute(query, params)
-        duplicates = self.env.cr.fetchall()
+        duplicates.extend(self.env.cr.fetchall())
+
+        query = """
+            SELECT sopl.id,sopl.reference
+            FROM sale_order_payment_line sopl
+            INNER JOIN account_payment_method_line apml
+                ON apml.id = sopl.payment_method_line_id
+            INNER JOIN sale_order_payment sop
+                ON sop.id = sopl.payment_id
+            WHERE apml.payment_account_id IN %s
+              AND sopl.id != %s
+              AND sopl.reference = %s
+              AND sop.state = 'processed'
+              {filter_card_sale}
+            GROUP BY sopl.id, sopl.reference
+            HAVING COUNT(*) >= 1
+        """.format(
+            filter_card_sale="AND sopl.card_id = %s" if self.card_id else ""
+        )
+        params = [tuple(account_id.ids), self.id, self.reference]
+        if self.card_id:
+            params.append(self.card_id.id)
+
+        self.env.cr.execute(query, params)
+        duplicates.extend(self.env.cr.fetchall())
+
         if duplicates:
             dup_refs = duplicates[0][1]
             acc_names = ", ".join([acc.name for acc in account_id])
-            raise ValidationError(
-                _(
-                    "The following Reference(s): '%(dup_refs)s' are duplicated"
-                    " for the bank accounts: '%(account)s'"
+            error = _(
+                "The following Reference(s): '%(dup_refs)s' are duplicated"
+                " for the bank accounts: '%(account)s'"
+            ) % {
+                "dup_refs": dup_refs,
+                "account": acc_names,
+            }
+            if self.card_id:
+                error += _(
+                    " with the card: '%(card)s'.",
+                    card=self.card_id.name,
                 )
-                % {
-                    "dup_refs": dup_refs,
-                    "account": acc_names,
-                }
-            )
+            raise ValidationError(error)
 
 
 class SaleOrder(models.Model):
