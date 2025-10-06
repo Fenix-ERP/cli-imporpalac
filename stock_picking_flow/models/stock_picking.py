@@ -15,7 +15,7 @@ class StockPicking(models.Model):
         ],
         string="Collection Status",
         default="waiting",
-        nocopy=True,
+        copy=False,
     )
 
     def _compute_is_owner_user(self):
