@@ -4,10 +4,6 @@ from odoo import fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    state = fields.Selection(
-        selection_add=[("approved", "Approved")],
-    )
-
     payment_method = fields.Many2one(
         comodel_name="payment.type",
         string="Payment method",

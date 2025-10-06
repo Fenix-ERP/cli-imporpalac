@@ -41,11 +41,6 @@ msgstr ""
 " * Cancelado: se canceló el traslado."
 
 #. module: payment_type
-#: model:ir.model.fields.selection,name:payment_type.selection__stock_picking__state__approved
-msgid "Approved"
-msgstr "Aprobado"
-
-#. module: payment_type
 #: model_terms:ir.actions.act_window,help:payment_type.payment_type_action
 msgid "Can you create the first payment type"
 msgstr ""
