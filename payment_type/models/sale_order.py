@@ -23,6 +23,13 @@ class SaleOrder(models.Model):
         if self.partner_id:
             self.payment_method = self.partner_id.payment_method
 
+    @api.onchange("payment_method")
+    def _onchange_payment_method(self):
+        if self.pricelist_id.name == "Tarjeta":
+            self.payment_method = self.env.ref(
+                "payment_type.payment_type_credit_card", raise_if_not_found=False
+            )
+
     def action_confirm(self):
 
         for order in self:
