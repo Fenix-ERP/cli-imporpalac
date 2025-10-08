@@ -252,3 +252,36 @@ msgstr "Almacén"
 #, python-format
 msgid "There is insufficient stock for the following products:\n%s"
 msgstr "No hay stock suficiente para los siguientes productos:\n%s"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Payment method not allowed"
+msgstr "Método de pago no permitido"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "For end consumers, only cash payment is allowed."
+msgstr "Para el CONSUMIDOR FINAL, solo se permite el pago en efectivo."
+
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Price list not allowed"
+msgstr "Lista de Precios No Permitida"
+
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "For end consumers, only the cash price list is allowed."
+msgstr "Para el CONSUMIDOR FINAL, solo se permite la lista de precios en efectivo."
+
+
+

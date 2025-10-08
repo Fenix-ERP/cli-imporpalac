@@ -23,12 +23,52 @@ class SaleOrder(models.Model):
         if self.partner_id:
             self.payment_method = self.partner_id.payment_method
 
-    @api.onchange("payment_method")
-    def _onchange_payment_method(self):
-        if self.pricelist_id.name == "Tarjeta":
-            self.payment_method = self.env.ref(
-                "payment_type.payment_type_credit_card", raise_if_not_found=False
+    @api.onchange("pricelist_id", "payment_method")
+    def _onchange_pricelist_or_payment_method(self):
+        """Validate the price list and consumer payment method
+        When selecting a card as the payment method, credit card
+        """
+        if self.pricelist_id:
+            # card_pricelist = self.env['product.pricelist'].browse(6)
+            card_pricelist = self.env["product.pricelist"].search(
+                [("name", "ilike", "Tarjeta"), ("active", "=", True)], limit=1
             )
+
+            if self.pricelist_id == card_pricelist:
+                card_payment = self.env["payment.type"].search(
+                    [("name", "ilike", "tarjeta")], limit=1
+                )
+
+                if card_payment and self.payment_method != card_payment:
+                    self.payment_method = card_payment
+
+        if self.partner_id and self.partner_id.id == 7:
+            cash_payment = self.env.ref(
+                "payment_type.payment_type_cash", raise_if_not_found=False
+            )
+            cash_pricelist = self.env["product.pricelist"].browse(1)
+
+            if self.payment_method and self.payment_method != cash_payment:
+                self.payment_method = cash_payment
+                return {
+                    "warning": {
+                        "title": _("Payment method not allowed"),
+                        "message": _(
+                            "For end consumers, only cash payment is allowed."
+                        ),
+                    }
+                }
+
+            if self.pricelist_id and self.pricelist_id != cash_pricelist:
+                self.pricelist_id = cash_pricelist
+                return {
+                    "warning": {
+                        "title": _("Price list not allowed"),
+                        "message": _(
+                            "For end consumers, only the cash price list is allowed."
+                        ),
+                    }
+                }
 
     def action_confirm(self):
 
