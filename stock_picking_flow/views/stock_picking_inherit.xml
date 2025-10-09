@@ -87,4 +87,63 @@
             </xpath>
         </field>
     </record>
+    <record model="ir.ui.view" id="view_stock_picking_tree_inherit_stock_picking_flow">
+        <field name="name">view.stock.picking.tree.inherit.stock.picking.flow</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field
+                    name="collection_state"
+                    widget="badge"
+                    decoration-warning="collection_state == 'waiting'"
+                    decoration-info="collection_state == 'assigned'"
+                    decoration-success="collection_state == 'confirmed'"
+                    decoration-danger="collection_state == 'issue'"
+                    optional="show"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record
+        model="ir.ui.view"
+        id="view_picking_internal_search_inherit_stock_picking_flow"
+    >
+        <field name="name">stock.picking.internal.search.stock.picking.flow</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='available']" position="after">
+                <separator />
+                <filter
+                    name="collection_waiting"
+                    string="Collection Waiting"
+                    domain="[('collection_state', '=', 'waiting')]"
+                />
+                <filter
+                    name="collection_assigned"
+                    string="Collection Assigned"
+                    domain="[('collection_state', '=', 'assigned')]"
+                />
+                <filter
+                    name="collection_confirmed"
+                    string="Collection Confirmed"
+                    domain="[('collection_state', '=', 'confirmed')]"
+                />
+                <filter
+                    name="collection_issue"
+                    string="Collection with Issue"
+                    domain="[('collection_state', '=', 'issue')]"
+                />
+            </xpath>
+            <xpath expr="//group[last()]" position="inside">
+                <filter
+                    string="Collection state"
+                    name="group_by_collection_state"
+                    domain="[]"
+                    context="{'group_by': 'collection_state'}"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-05 17:23+0000\n"
-"PO-Revision-Date: 2025-10-05 17:23+0000\n"
+"POT-Creation-Date: 2025-10-09 21:23+0000\n"
+"PO-Revision-Date: 2025-10-09 21:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,9 +42,34 @@ msgid "Cannot confirm this picking:'%s' is not in assigned state."
 msgstr "No se puede confirmar este picking:'%s' no está en estado asignado"
 
 #. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_picking_internal_search_inherit_stock_picking_flow
+msgid "Collection Assigned"
+msgstr "Recolección Asignada"
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_picking_internal_search_inherit_stock_picking_flow
+msgid "Collection Confirmed"
+msgstr "Recolección Confirmada"
+
+#. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__collection_state
 msgid "Collection Status"
 msgstr "Estado de recolección"
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_picking_internal_search_inherit_stock_picking_flow
+msgid "Collection Waiting"
+msgstr "Recolección en Espera"
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_picking_internal_search_inherit_stock_picking_flow
+msgid "Collection state"
+msgstr "Estado de recolección"
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_picking_internal_search_inherit_stock_picking_flow
+msgid "Collection with Issue"
+msgstr "Recolección con Incidencia"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_picking__collection_state__confirmed
@@ -110,11 +135,6 @@ msgid "Issue Quantity for product '%s' must be greater than 0."
 msgstr "La cantidad reportada del producto '%s' debe ser mayor a 0."
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__issue_reported
-msgid "Issue Reported"
-msgstr "Incidencia reportada"
-
-#. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_move_operations_inherit_stock_picking_flow
 msgid "Issues"
 msgstr "Incidencias"
@@ -156,6 +176,11 @@ msgstr "Listo"
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow
 msgid "Reserve Picking"
 msgstr "Reservar Picking"
+
+#. module: stock_picking_flow
+#: model:ir.model,name:stock_picking_flow.model_stock_return_picking
+msgid "Return Picking"
+msgstr "Recolección de devolución"
 
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_move

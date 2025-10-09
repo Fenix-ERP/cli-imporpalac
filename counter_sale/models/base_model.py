@@ -6,7 +6,7 @@ class BaseModel(models.AbstractModel):
 
     def write(self, vals):
         res = super().write(vals)
-        if "state" in vals:
+        if any(field in vals for field in ("state", "collection_state")):
             active_users = (
                 self.env["res.users"]
                 .search([("active", "=", True)])
