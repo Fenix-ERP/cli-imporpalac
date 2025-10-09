@@ -7,6 +7,8 @@ class AccountPayment(models.Model):
 
     @api.constrains("payment_method_line_id", "global_reference", "journal_id")
     def _check_unique_global_reference(self):
+        if self.env.context.get("skip_check_global_reference"):
+            return
         if self.journal_id.type != "bank":
             return
         if not self.global_reference:
