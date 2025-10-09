@@ -252,7 +252,7 @@ class StockPicking(models.Model):
             if picking.exists():
                 res = picking._check_confirmable()
                 if not res and picking.picking_type_code == "outgoing":
-                    picking.move_ids.sudo().write({"collection_state": "issue"})
+                    picking.collection_state = "issue"
                     return {
                         "picking_id": picking.id,
                         "picking_name": picking.name,
