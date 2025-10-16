@@ -99,6 +99,7 @@ class ElectronicVoucherUpdate(models.Model):
 
         headers = [
             "Codigo",
+            "Ref",
             "Descripcion",
             "Cantidad",
             "Precio Unitario",
@@ -116,13 +117,19 @@ class ElectronicVoucherUpdate(models.Model):
         row = 1
         for line in self.lines_ride:
             sheet.write(row, column, line.code, example_format)
-            sheet.write(row, column + 1, line.description, example_format)
-            sheet.write(row, column + 2, line.quantity, example_format)
-            sheet.write(row, column + 3, line.price_unit, example_format)
-            sheet.write(row, column + 4, line.categ_id.name, example_format)
-            sheet.write(row, column + 5, line.discount, example_format)
-            sheet.write(row, column + 6, line.vat.display_name, example_format)
-            sheet.write(row, column + 7, line.price_total, example_format)
+            sheet.write(
+                row,
+                column + 1,
+                line.product_id.default_code if line.product_id else "",
+                example_format,
+            )
+            sheet.write(row, column + 2, line.description, example_format)
+            sheet.write(row, column + 3, line.quantity, example_format)
+            sheet.write(row, column + 4, line.price_unit, example_format)
+            sheet.write(row, column + 5, line.categ_id.name, example_format)
+            sheet.write(row, column + 6, line.discount, example_format)
+            sheet.write(row, column + 7, line.vat.display_name, example_format)
+            sheet.write(row, column + 8, line.price_total, example_format)
             row += 1
 
         workbook.close()
