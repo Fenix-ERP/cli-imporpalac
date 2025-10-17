@@ -35,7 +35,7 @@ class PayrollImportWizardExtension(models.TransientModel):
             "pres. hipotecario",
             "pres. emp",
             "vales caja",
-            "convenios empresa"
+            "convenios empresa",
         ]
         if headers != expected_headers:
             raise ValidationError(
@@ -228,7 +228,7 @@ class PayrollImportWizardExtension(models.TransientModel):
             "Pres. hipotecario",
             "Pres. emp",
             "Vales caja",
-            "Convenios empresa"
+            "Convenios empresa",
         ]
 
         for col_num, header in enumerate(headers):
