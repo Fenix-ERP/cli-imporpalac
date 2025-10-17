@@ -24,7 +24,9 @@ class StockMove(models.Model):
 
     @api.model
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
-        vals = super()._prepare_move_line_vals(quantity=quantity, reserved_quant=reserved_quant)
+        vals = super()._prepare_move_line_vals(
+            quantity=quantity, reserved_quant=reserved_quant
+        )
 
         # Assign the location if it is an outgoing pick (sale).
         if (
