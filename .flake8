@@ -20,3 +20,4 @@ exclude =
     payment_type/models/sale_order.py,
     zebra/models/sale_order_zebra.py,
     invoice_services_product_evouher/models/account_voucher_update.py,
+    hr_payroll_imporpalac/wizard/hr_import_wizard.py,
