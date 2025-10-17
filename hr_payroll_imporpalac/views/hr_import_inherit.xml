@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_payroll_import_wizard_lines_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payroll.import.wizard.lines.form.inherit</field>
+        <field name="model">hr.payroll.import.wizard</field>
+        <field
+            name="inherit_id"
+            ref="hr_payroll_import.view_payroll_import_wizard_lines_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='anticipo']" position="after">
+                <field name="multa" sum="Total" />
+                <field name="otros_egresos" sum="Total" />
+                <field name="prestamo_emp" sum="Total" />
+                <field name="vales_caja" sum="Total" />
+                <field name="convenios_empresa" sum="Total" />
+            </xpath>
+            <xpath expr="//field[@name='comision']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='impuesto_renta']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='hours25']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='supa']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='prestamo']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
