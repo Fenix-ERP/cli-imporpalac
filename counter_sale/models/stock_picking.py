@@ -174,6 +174,8 @@ class StockPicking(models.Model):
     def _check_confirmable(self):
         self = self.with_context(lang=self.env.user.lang or "en_US")
         has_issue = 0
+        if self.picking_type_code not in ("outgoing", "incoming"):
+            return True
         for move in self.move_ids:
             precision = move.product_uom.rounding or 0.0001
             product_name = move.product_id.display_name or _("Unknown Product")
