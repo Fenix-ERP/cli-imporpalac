@@ -17,6 +17,50 @@ class StockPicking(models.Model):
         default="waiting",
         copy=False,
     )
+    sale_person_id = fields.Many2one(
+        "res.users",
+        string="Sale Person",
+        compute="_compute_sale_person_id",
+    )
+
+    purchase_person_id = fields.Many2one(
+        "res.users",
+        string="Purchase Person",
+        compute="_compute_purchase_person_id",
+    )
+    confirmed_date = fields.Datetime(
+        string="Date confirmed",
+        readonly=True,
+        copy=False,
+    )
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "collection_state" in vals and vals["collection_state"] == "assigned":
+            for picking in self:
+                if not picking.confirmed_date:
+                    picking.confirmed_date = fields.Datetime.now()
+        return res
+
+    @api.depends("origin")
+    def _compute_purchase_person_id(self):
+        for picking in self:
+            purchase_order = self.env["purchase.order"].search(
+                [("name", "=", picking.origin)]
+            )
+            if purchase_order:
+                picking.purchase_person_id = purchase_order.user_id
+            else:
+                picking.purchase_person_id = False
+
+    @api.depends("origin")
+    def _compute_sale_person_id(self):
+        for picking in self:
+            sale_order = self.env["sale.order"].search([("name", "=", picking.origin)])
+            if sale_order:
+                picking.sale_person_id = sale_order.user_id
+            else:
+                picking.sale_person_id = False
 
     def _compute_is_owner_user(self):
         for picking in self:
@@ -30,6 +74,16 @@ class StockPicking(models.Model):
             return []
         selection = field._description_selection(self.env)
         return [{"value": value, "label": label} for value, label in selection]
+
+    @api.model
+    def get_state_label(self, state_type, value):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        field = self._fields.get(state_type)
+        if not field:
+            return None
+
+        selection = field._description_selection(self.env)
+        return next((label for val, label in selection if val == value), None)
 
     @api.model
     def action_assign_picker(self, data):
@@ -66,6 +120,46 @@ class StockPicking(models.Model):
         for picking in self:
             picking.picker_user_id = self.env.user.id
             picking.collection_state = "assigned"
+
+    @api.model
+    def get_picking(self, picking_id):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        picking = self.browse(picking_id)
+        if not picking.exists():
+            raise ValidationError(_("Picking not found."))
+        move_lines = []
+
+        for move in picking.move_ids_without_package:
+            move_lines.append(
+                {
+                    "id": move.id,
+                    "productId": {
+                        "id": move.product_id.product_tmpl_id.id,
+                        "qtyAvailable": move.product_id.qty_available,
+                        "barcodes": move.product_id.product_tmpl_id.barcodes,
+                        "name": move.product_id.product_tmpl_id.display_name,
+                    },
+                    "productUomQty": move.product_uom_qty,
+                    "quantity": 0,
+                    "internalLocationId": move.internal_location_id.display_name,
+                }
+            )
+        return {
+            "id": picking.id,
+            "origin": picking.origin,
+            "name": picking.name,
+            "partner_id": picking.partner_id.name,
+            "scheduled_date": picking.scheduled_date,
+            "state": picking.state,
+            "collection_state": picking.collection_state,
+            "picker_user_id": picking.picker_user_id.name,
+            "move_ids": move_lines,
+            "confirmed_date": picking.confirmed_date,
+            "date_done": picking.date_done,
+            "terms_and_conditions": picking.terms_and_conditions,
+            "responsible_person_id": picking.sale_person_id.name
+            or picking.purchase_person_id.name,
+        }
 
     @api.model
     def action_confirm_by_picker(self, data):

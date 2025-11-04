@@ -155,11 +155,6 @@ msgid "Print Ticket"
 msgstr "Imprimir Ticket"
 
 #. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__purchase_person_id
-msgid "Purchase Person"
-msgstr "Comprador"
-
-#. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/stock_picking.py:0
 #, python-format
@@ -179,11 +174,6 @@ msgstr "Orden de Venta Rectificada"
 #: model_terms:ir.ui.view,arch_db:counter_sale.sale_order_cancel_view_form_counter_sale
 msgid "Reprocess"
 msgstr "Reprocesar"
-
-#. module: counter_sale
-#: model:ir.model.fields,field_description:counter_sale.field_stock_picking__sale_person_id
-msgid "Sale Person"
-msgstr "Vendedor"
 
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_sale_order

@@ -1,6 +1,6 @@
 # Copyright (C) Softhealer Technologies.
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 try:
     import barcode
@@ -41,17 +41,6 @@ class ProductTemplate(models.Model):
     sh_product_barcode_img_supp = fields.Binary(
         string="Supplier Barcode Image", readonly=True
     )
-
-    @api.model
-    def get_barcodes(self, product_id):
-        barcodes = super(ProductTemplate, self).get_barcodes(product_id)
-        product_id = self.browse(product_id)
-        if not product_id.exists():
-            raise ValidationError(_("Product template not found."))
-        if product_id.barcode_supp:
-            barcodes.append(product_id.barcode_supp)
-        barcodes.append(product_id.default_code)
-        return barcodes
 
     def action_generate_barcode_image_supp(self):
         self.ensure_one()

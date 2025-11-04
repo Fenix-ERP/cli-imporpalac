@@ -6,6 +6,12 @@ from odoo.tools.float_utils import float_compare
 class StockMove(models.Model):
     _inherit = "stock.move"
     has_issue = fields.Boolean(default=False)
+    internal_location_id = fields.Many2one(
+        "stock.location",
+        string="Internal Location",
+        related="location_id",
+        readonly=True,
+    )
     issue_type = fields.Selection(
         [
             ("broken", "Broken"),

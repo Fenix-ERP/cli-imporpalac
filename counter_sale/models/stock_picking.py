@@ -7,38 +7,6 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
     is_rectified = fields.Boolean(default=False, readonly=True)
 
-    sale_person_id = fields.Many2one(
-        "res.users",
-        string="Sale Person",
-        compute="_compute_sale_person_id",
-    )
-
-    purchase_person_id = fields.Many2one(
-        "res.users",
-        string="Purchase Person",
-        compute="_compute_purchase_person_id",
-    )
-
-    @api.depends("origin")
-    def _compute_purchase_person_id(self):
-        for picking in self:
-            purchase_order = self.env["purchase.order"].search(
-                [("name", "=", picking.origin)]
-            )
-            if purchase_order:
-                picking.purchase_person_id = purchase_order.user_id
-            else:
-                picking.purchase_person_id = False
-
-    @api.depends("origin")
-    def _compute_sale_person_id(self):
-        for picking in self:
-            sale_order = self.env["sale.order"].search([("name", "=", picking.origin)])
-            if sale_order:
-                picking.sale_person_id = sale_order.user_id
-            else:
-                picking.sale_person_id = False
-
     def _create_pdc_payment(self, invoice, payment_line):
         payment_type = (
             "money_send" if invoice.move_type == "in_invoice" else "money_receive"

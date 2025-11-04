@@ -69,11 +69,6 @@ msgid "Año"
 msgstr ""
 
 #. module: additional_product_imporpalac
-#: model:ir.model.fields,field_description:additional_product_imporpalac.field_stock_picking__confirmed_date
-msgid "Date confirmed"
-msgstr "Fecha confirmada"
-
-#. module: additional_product_imporpalac
 #: model:ir.model.fields,field_description:additional_product_imporpalac.field_sale_order__delivery_status
 msgid "Delivery Status"
 msgstr "Estado de la entrega"

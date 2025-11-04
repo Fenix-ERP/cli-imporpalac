@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 21:23+0000\n"
-"PO-Revision-Date: 2025-10-09 21:23+0000\n"
+"POT-Creation-Date: 2025-11-04 23:19+0000\n"
+"PO-Revision-Date: 2025-11-04 23:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_picking__collection_state__assigned
 msgid "Assigned"
 msgstr "Asignado"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_product_product__barcodes
+#: model:ir.model.fields,field_description:stock_picking_flow.field_product_template__barcodes
+msgid "Barcodes"
+msgstr "Códigos de barra"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__broken
@@ -77,6 +83,11 @@ msgid "Confirmed"
 msgstr "Confirmado"
 
 #. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__confirmed_date
+msgid "Date confirmed"
+msgstr "Fecha confirmación"
+
+#. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__defective
 msgid "Defective"
 msgstr "Defectuoso"
@@ -92,9 +103,9 @@ msgid "Here you can write your issues"
 msgstr "Aquí puede escribir las incidencias"
 
 #. module: stock_picking_flow
-#: model:ir.model,name:stock_picking_flow.model_stock_picking
-msgid "Internal Transfer Upload Imporpalac"
-msgstr "Transferir "
+#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_move__internal_location_id
+msgid "Internal Location"
+msgstr "Ubicación Interna"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__is_owner_picker_user
@@ -163,9 +174,20 @@ msgstr "Recolector"
 #. odoo-python
 #: code:addons/stock_picking_flow/models/stock_picking.py:0
 #: code:addons/stock_picking_flow/models/stock_picking.py:0
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
 #, python-format
 msgid "Picking not found."
 msgstr "Picking no encontrado"
+
+#. module: stock_picking_flow
+#: model:ir.model,name:stock_picking_flow.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__purchase_person_id
+msgid "Purchase Person"
+msgstr "Comprador"
 
 #. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow
@@ -181,6 +203,20 @@ msgstr "Reservar Picking"
 #: model:ir.model,name:stock_picking_flow.model_stock_return_picking
 msgid "Return Picking"
 msgstr "Recolección de devolución"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__sale_person_id
+msgid "Sale Person"
+msgstr "Vendedor"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,help:stock_picking_flow.field_stock_move__internal_location_id
+msgid ""
+"Sets a location if you produce at a fixed location. This can be a partner "
+"location if you subcontract the manufacturing operations."
+msgstr ""
+"Indica una ubicación si se producen en una ubicación fija. Puede ser una "
+"ubicación de empresa si subcontrata las operaciones de fabricación."
 
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_move
@@ -212,6 +248,11 @@ msgstr "Esta picking ya está asignado a %s"
 #, python-format
 msgid "This picking is assigned to %s, you cannot confirm it"
 msgstr "Este picking está asignado a %s, no puede ser confirmardo"
+
+#. module: stock_picking_flow
+#: model:ir.model,name:stock_picking_flow.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
 
 #. module: stock_picking_flow
 #. odoo-python

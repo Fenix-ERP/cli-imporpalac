@@ -1,22 +1,4 @@
-from odoo import api, fields, models
-
-
-class StockPicking(models.Model):
-    _inherit = "stock.picking"
-
-    confirmed_date = fields.Datetime(
-        string="Date confirmed",
-        readonly=True,
-        copy=False,
-    )
-
-    def write(self, vals):
-        res = super().write(vals)
-        if "collection_state" in vals and vals["collection_state"] == "assigned":
-            for picking in self:
-                if not picking.confirmed_date:
-                    picking.confirmed_date = fields.Datetime.now()
-        return res
+from odoo import api, models
 
 
 class StockMove(models.Model):
