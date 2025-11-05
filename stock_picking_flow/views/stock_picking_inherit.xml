@@ -32,7 +32,7 @@
                 />
             </xpath>
             <xpath
-                expr="//button[@name='button_validate' and @class='oe_highlight']"
+                expr="//button[@name='button_validate' and hasclass('oe_highlight')]"
                 position="before"
             >
                 <button
@@ -56,7 +56,7 @@
                 <field name="is_owner_picker_user" invisible="1" />
             </xpath>
             <xpath
-                expr="//button[@name='button_validate' and @class='oe_highlight']"
+                expr="//button[@name='button_validate' and hasclass('oe_highlight')]"
                 position="attributes"
             >
                 <attribute name="invisible">
@@ -64,7 +64,7 @@
                 </attribute>
             </xpath>
             <xpath
-                expr="//button[@name='button_validate' and @class='o_btn_validate']"
+                expr="//button[@name='button_validate' and hasclass('o_btn_validate')]"
                 position="attributes"
             >
                 <attribute name="invisible">1 </attribute>
