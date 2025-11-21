@@ -7,7 +7,7 @@ class StockQuant(models.Model):
 
     def _validate_import_data(self, vals):
         for quant in vals:
-            product = self.env["product.product"].browse(vals.get("product_id"))
+            product = self.env["product.product"].browse(quant.get("product_id"))
             cost = product.standard_price or 0.0
             if cost <= 0:
                 raise UserError(
