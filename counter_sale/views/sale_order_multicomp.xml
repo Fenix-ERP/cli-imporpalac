@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form_hide_payments_intercompany" model="ir.ui.view">
+        <field name="name">sale.order.form.hide.payments.intercompany</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="before">
+                <field name="is_inter_company" invisible="1" />
+            </xpath>
+            <xpath expr="//button[@name='action_open_payments']" position="attributes">
+                <attribute
+                    name="invisible"
+                >payment_count == 0 or is_inter_company == True</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

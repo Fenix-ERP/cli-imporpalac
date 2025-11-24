@@ -6,6 +6,18 @@ from odoo.exceptions import UserError, ValidationError
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
+    is_inter_company = fields.Boolean(
+        compute="_compute_is_inter_company_sale", store=False
+    )
+
+    @api.depends("partner_id")
+    def _compute_is_inter_company_sale(self):
+        internal_partners = (
+            self.env["res.company"].sudo().search([]).mapped("partner_id")
+        )
+        for order in self:
+            # Reutilizamos la misma lógica
+            order.is_inter_company = order.partner_id in internal_partners
 
     rectified_order_id = fields.Many2one(
         "sale.order", string="Rectified Sale Order", readonly=True
