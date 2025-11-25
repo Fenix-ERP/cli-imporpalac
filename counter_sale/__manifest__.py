@@ -17,6 +17,7 @@
         "post_dated_cheque_management_knk",
         "sale_info_additional",
         "base_accounting_kit",
+        "sale_stock",
     ],
     "data": [
         "security/counter_sale_security.xml",
@@ -25,6 +26,7 @@
         "views/sale_order_inherit.xml",
         "views/stock_move_inherit.xml",
         "views/stock_picking_inherit.xml",
+        "views/stock_picking_multicomp_view.xml",
         "views/account_payment_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
     ],

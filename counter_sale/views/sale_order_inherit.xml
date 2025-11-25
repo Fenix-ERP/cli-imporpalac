@@ -5,6 +5,15 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
+            <xpath expr="//header" position="before">
+                <field name="is_inter_company" invisible="1" />
+            </xpath>
+            <xpath expr="//button[@name='action_open_payments']" position="attributes">
+                <attribute
+                    name="invisible"
+                    separator=" or "
+                >is_inter_company</attribute>
+            </xpath>
             <xpath expr="//form" position="attributes">
                 <attribute name="js_class">view_sale_order_counter_form</attribute>
             </xpath>
