@@ -8,15 +8,8 @@
             <xpath expr="//sheet" position="before">
                 <field name="is_inter_company" invisible="1" />
             </xpath>
-            <xpath expr="//widget[@name='web_ribbon'][1]" position="attributes">
-                <attribute
-                    name="invisible"
-                >payment_state != 'not_paid' or is_inter_company</attribute>
-            </xpath>
-            <xpath expr="//widget[@name='web_ribbon'][2]" position="attributes">
-                <attribute
-                    name="invisible"
-                >payment_state != 'paid' or is_inter_company</attribute>
+            <xpath expr="//widget[@name='web_ribbon']" position="attributes">
+                <attribute name="invisible" add="is_inter_company" separator=" or " />
             </xpath>
         </field>
     </record>

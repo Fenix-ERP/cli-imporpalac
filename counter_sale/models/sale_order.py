@@ -16,7 +16,6 @@ class SaleOrder(models.Model):
             self.env["res.company"].sudo().search([]).mapped("partner_id")
         )
         for order in self:
-            # Reutilizamos la misma lógica
             order.is_inter_company = order.partner_id in internal_partners
 
     rectified_order_id = fields.Many2one(

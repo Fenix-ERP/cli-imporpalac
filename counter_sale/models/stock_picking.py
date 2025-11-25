@@ -8,6 +8,14 @@ class StockPicking(models.Model):
     is_rectified = fields.Boolean(default=False, readonly=True)
     is_inter_company = fields.Boolean(compute="_compute_is_inter_company", store=False)
 
+    @api.depends("partner_id")
+    def _compute_is_inter_company(self):
+        internal_partners = (
+            self.env["res.company"].sudo().search([]).mapped("partner_id")
+        )
+        for picking in self:
+            picking.is_inter_company = picking.partner_id in internal_partners
+
     def _create_pdc_payment(self, invoice, payment_line):
         payment_type = (
             "money_send" if invoice.move_type == "in_invoice" else "money_receive"
@@ -80,16 +88,10 @@ class StockPicking(models.Model):
                     raise ValidationError(_("The delivery has not been completed."))
                 sale_order = picking.sudo().sale_id
                 picking.user_id = self.env.user
-                internal_company_partners = (
-                    self.env["res.company"].sudo().search([]).mapped("partner_id")
-                )
-                is_inter_company_transfer = (
-                    picking.partner_id in internal_company_partners
-                )
-                if is_inter_company_transfer:
+                if picking.is_inter_company:
                     continue
                 if sale_order and not picking.return_id:
-                    if self.payment_state == "not_paid":
+                    if picking.payment_state == "not_paid":
                         raise ValidationError(
                             _(
                                 "This picking has not yet been paid, "
@@ -147,14 +149,6 @@ class StockPicking(models.Model):
                     invoice.state_send_document = "in_process"
                     picking.invoice_number = invoice.name
         return res
-
-    @api.depends("partner_id")
-    def _compute_is_inter_company(self):
-        internal_partners = (
-            self.env["res.company"].sudo().search([]).mapped("partner_id")
-        )
-        for picking in self:
-            picking.is_inter_company = picking.partner_id in internal_partners
 
     def _check_confirmable(self):
         self = self.with_context(lang=self.env.user.lang or "en_US")
