@@ -135,7 +135,7 @@ class SaleOrderPayment(models.Model):
                         "the order has not been delivered."
                     )
                 )
-
+            self.reference = _("Payment for the sale: %s") % payment.order_id.name
             skip_open = self.env.context.get("skip_open_payment_method_wizard", False)
             if not skip_open:
                 method_lines = payment.journal_id.inbound_payment_method_line_ids
