@@ -160,7 +160,17 @@ class StockPicking(models.Model):
             product_name = move.product_id.display_name or _("Unknown Product")
             demand = move.product_uom_qty
             quant = move.quantity
+
             has_issue = has_issue + 1 if move.has_issue else has_issue
+            if quant < 0:
+                raise ValidationError(
+                    _("Quantity of product %s must be not negative") % product_name
+                )
+            if move.issue_qty < 0:
+                raise ValidationError(
+                    _("Quantity of product %s in Issue must be not negative")
+                    % product_name
+                )
             if float_compare(demand, quant, precision_rounding=precision) > 0:
                 if not move.has_issue:
                     raise ValidationError(

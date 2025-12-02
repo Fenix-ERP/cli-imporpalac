@@ -6,6 +6,7 @@
         "payment_type",
         "account_card_settlement",
         "devolutions",
+        "stock_picking_flow",
     ],
     "category": "Sales",
     "data": [
