@@ -164,9 +164,6 @@ class PurchaseOrder(models.Model):
                 "product_uom_qty": purchase_line.product_qty,
                 "auto_purchase_line_id": purchase_line.id,
                 "display_type": purchase_line.display_type,
-                "price_unit": purchase_line.product_id.with_company(
-                    dest_company.id
-                ).standard_price,
             }
         )
         for onchange_method in new_line._onchange_methods["product_id"]:

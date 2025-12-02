@@ -125,6 +125,16 @@ class SaleOrderPayment(models.Model):
     def process_payment(self):
         self = self.with_context(check_global_reference=True)
         for payment in self:
+            if payment.order_id and payment.payment_method.code != "cash":
+                for picking in payment.order_id.picking_ids:
+                    if picking.collection_state == "issue":
+                        raise UserError(
+                            _(
+                                "This payment cannot be processed because "
+                                "the order have issues."
+                            )
+                        )
+
             if (
                 payment.delivery_status != "to_deliver"
                 and payment.payment_method.code != "cash"
