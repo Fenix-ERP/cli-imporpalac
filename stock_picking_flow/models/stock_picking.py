@@ -12,6 +12,7 @@ class StockPicking(models.Model):
             ("assigned", "Assigned"),
             ("confirmed", "Confirmed"),
             ("issue", "With Issue"),
+            ("cancel", "Cancelled"),  # new state
         ],
         string="Collection Status",
         default="waiting",
@@ -33,6 +34,11 @@ class StockPicking(models.Model):
         readonly=True,
         copy=False,
     )
+
+    def action_cancel(self):
+        res = super().action_cancel()
+        self.write({"collection_state": "cancel"})
+        return res
 
     def write(self, vals):
         res = super().write(vals)
