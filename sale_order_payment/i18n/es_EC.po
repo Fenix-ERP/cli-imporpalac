@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 16:41+0000\n"
-"PO-Revision-Date: 2025-12-03 16:41+0000\n"
+"POT-Creation-Date: 2025-12-03 20:50+0000\n"
+"PO-Revision-Date: 2025-12-03 20:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -369,13 +369,6 @@ msgid "Payment Status"
 msgstr "Estado del pago"
 
 #. module: sale_order_payment
-#. odoo-python
-#: code:addons/sale_order_payment/models/sale_order_payment.py:0
-#, python-format
-msgid "Payment for the sale: %s"
-msgstr "Pago por la venta: %s"
-
-#. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__payment_line_ids
 msgid "Payment lines"
 msgstr "Lineas de pago"
@@ -386,6 +379,13 @@ msgstr "Lineas de pago"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__sale_order_payment_method_code
 msgid "Payment method"
 msgstr "Método de pago"
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/models/sale_order_payment.py:0
+#, python-format
+msgid "Payment of the sale: %s"
+msgstr "Pago de la venta: %s"
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_order_form_inherit_payment_button
