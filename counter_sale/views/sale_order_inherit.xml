@@ -9,10 +9,7 @@
                 <field name="is_inter_company" invisible="1" />
             </xpath>
             <xpath expr="//button[@name='action_open_payments']" position="attributes">
-                <attribute
-                    name="invisible"
-                    separator=" or "
-                >is_inter_company</attribute>
+                <attribute name="invisible" add="is_inter_company" separator=" or " />
             </xpath>
             <xpath expr="//form" position="attributes">
                 <attribute name="js_class">view_sale_order_counter_form</attribute>

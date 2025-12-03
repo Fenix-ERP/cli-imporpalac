@@ -132,6 +132,7 @@ class StockPicking(models.Model):
                                 payment = self.with_context(
                                     skip_check_global_reference=True
                                 )._create_payment(invoice.partner_id, payment_line)
+                                payment.sudo().write({"ref": invoice.name})
                                 invoice_receivable_accounts = invoice.line_ids.filtered(
                                     lambda line: line.account_id.account_type
                                     == "asset_receivable"
