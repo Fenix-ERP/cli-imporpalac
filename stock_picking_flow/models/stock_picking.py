@@ -12,7 +12,7 @@ class StockPicking(models.Model):
             ("assigned", "Assigned"),
             ("confirmed", "Confirmed"),
             ("issue", "With Issue"),
-            ("cancel", "Cancelled"),  # new state
+            ("cancel", "Cancelled"),
         ],
         string="Collection Status",
         default="waiting",
