@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 20:41+0000\n"
-"PO-Revision-Date: 2025-09-11 20:41+0000\n"
+"POT-Creation-Date: 2025-12-15 01:39+0000\n"
+"PO-Revision-Date: 2025-12-15 01:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,29 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: payment_type
-#: model:ir.model.fields,help:payment_type.field_stock_picking__state
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
 msgid ""
-" * Draft: The transfer is not confirmed yet. Reservation doesn't apply.\n"
-" * Waiting another operation: This transfer is waiting for another operation before being ready.\n"
-" * Waiting: The transfer is waiting for the availability of some products.\n"
-"(a) The shipping policy is \"As soon as possible\": no product could be reserved.\n"
-"(b) The shipping policy is \"When all products are ready\": not all the products could be reserved.\n"
-" * Ready: The transfer is ready to be processed.\n"
-"(a) The shipping policy is \"As soon as possible\": at least one product has been reserved.\n"
-"(b) The shipping policy is \"When all products are ready\": all product have been reserved.\n"
-" * Done: The transfer has been processed.\n"
-" * Cancelled: The transfer has been cancelled."
+"%(product)s (Solicitado: %(requested)s, Disponible: "
+"%(available)s%(location)s)"
 msgstr ""
-"* Borrador: no se ha confirmado el traslado. No se realizan reservas.\n"
-" * En espera de otra operación: el traslado espera otra operación antes de estar listo.\n"
-" * En espera: el traslado está en espera de disponibilidad de algunos productos.\n"
-"(a) La política de envío es \"Tan pronto como sea posible\": no se pudo reservar ningún producto.\n"
-"(b) La política de envío es \"Cuando todos los productos estén listos\": no se pueden reservar todos los productos.\n"
-" * Listo: el traslado está listo para ser procesado.\n"
-"(a) La política de envío es \"Tan pronto como sea posible\": se reservó al menos un producto.\n"
-"(b) La política de envío es \"Cuando todos los productos estén listos\": se reservaron todos los productos.\n"
-" * Hecho: se procesó el traslado.\n"
-" * Cancelado: se canceló el traslado."
 
 #. module: payment_type
 #: model_terms:ir.actions.act_window,help:payment_type.payment_type_action
@@ -97,6 +81,21 @@ msgid "Exceeds the maximum value for end consumers"
 msgstr "Excede el valor máximo para consumidor final"
 
 #. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "For end consumers, only cash payment is allowed."
+msgstr "Para el CONSUMIDOR FINAL, solo se permite el pago en efectivo."
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "For end consumers, only the cash price list is allowed."
+msgstr ""
+"Para el CONSUMIDOR FINAL, solo se permite la lista de precios en efectivo."
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__id
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__id
 msgid "ID"
@@ -108,6 +107,11 @@ msgid "Image"
 msgstr "Imagen"
 
 #. module: payment_type
+#: model:ir.model,name:payment_type.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferir "
+
+#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_stock_picking__invoice_number
 msgid "Invoice Number"
 msgstr "Factura"
@@ -116,13 +120,13 @@ msgstr "Factura"
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__write_uid
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__write_date
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_payment_type__name
@@ -162,6 +166,13 @@ msgid "Payment method"
 msgstr "Método Pago"
 
 #. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Payment method not allowed"
+msgstr "Método de pago no permitido"
+
+#. module: payment_type
 #: model:ir.actions.act_window,name:payment_type.payment_type_action
 #: model:ir.ui.menu,name:payment_type.menu_payment_type
 msgid "Payment type"
@@ -179,6 +190,13 @@ msgid "Phone"
 msgstr "Teléfono"
 
 #. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid "Price list not allowed"
+msgstr "Lista de Precios No Permitida"
+
+#. module: payment_type
 #: model:ir.model,name:payment_type.model_sale_order
 msgid "Sales Order"
 msgstr "Orden de venta"
@@ -189,14 +207,33 @@ msgid "Sales Order Line"
 msgstr "Línea de la orden de venta"
 
 #. module: payment_type
-#: model:ir.model.fields,field_description:payment_type.field_stock_picking__state
-msgid "Status"
-msgstr "Estado"
-
-#. module: payment_type
 #: model:ir.model,name:payment_type.model_stock_warehouse_payment_method
 msgid "Stock Warehouse Payment Method"
 msgstr "Método de pago de almacén"
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid ""
+"The 'Pending receipt accounts' field is empty for the payment method: %s\n"
+"\n"
+"Please correct the configuration before proceeding."
+msgstr ""
+"El campo 'Cuentas de recibos pendientes' está vacío para el método de pago: %s\n"
+"\n"
+"Corrija la configuración antes de continuar."
+
+#. module: payment_type
+#. odoo-python
+#: code:addons/payment_type/models/sale_order.py:0
+#, python-format
+msgid ""
+"There is insufficient stock for the following products:\n"
+"%s"
+msgstr ""
+"No hay stock suficiente para los siguientes productos:\n"
+"%s"
 
 #. module: payment_type
 #: model:ir.model.fields,help:payment_type.field_res_partner__property_payment_term_id
@@ -219,11 +256,6 @@ msgid "Total amount this customer owes you."
 msgstr "Cantidad total que este cliente debe."
 
 #. module: payment_type
-#: model:ir.model,name:payment_type.model_stock_picking
-msgid "Transfer"
-msgstr "Transferencia"
-
-#. module: payment_type
 #: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_form
 msgid "Type Payment Form"
 msgstr "Metodo de Pago"
@@ -244,44 +276,3 @@ msgstr "Términos de pago del cliente"
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "There is insufficient stock for the following products:\n%s"
-msgstr "No hay stock suficiente para los siguientes productos:\n%s"
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "Payment method not allowed"
-msgstr "Método de pago no permitido"
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "For end consumers, only cash payment is allowed."
-msgstr "Para el CONSUMIDOR FINAL, solo se permite el pago en efectivo."
-
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "Price list not allowed"
-msgstr "Lista de Precios No Permitida"
-
-
-#. module: payment_type
-#. odoo-python
-#: code:addons/payment_type/models/sale_order.py:0
-#, python-format
-msgid "For end consumers, only the cash price list is allowed."
-msgstr "Para el CONSUMIDOR FINAL, solo se permite la lista de precios en efectivo."
-
-
-

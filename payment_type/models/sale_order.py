@@ -80,6 +80,30 @@ class SaleOrder(models.Model):
                         _("Exceeds the maximum value for end consumers")
                     )
 
+            if order.warehouse_id and order.payment_method:
+
+                payment_method = order.warehouse_id.payment_method_ids.filtered(
+                    lambda pm: pm.payment_type_id == order.payment_method
+                )
+
+                if payment_method and payment_method.journal_payment_id:
+                    journal = payment_method.journal_payment_id
+
+                    method_lines = journal.inbound_payment_method_line_ids
+                    has_no_account = method_lines.filtered(
+                        lambda method: not method.payment_account_id
+                    )
+
+                    if has_no_account:
+                        raise ValidationError(
+                            _(
+                                "The 'Pending receipt accounts' field is empty for the payment method: "
+                                "%s\n\n"
+                                "Please correct the configuration before proceeding."
+                            )
+                            % journal.display_name
+                        )
+
             insufficient_products = []
             for line in order.order_line:
                 if line.product_id.type == "product":
