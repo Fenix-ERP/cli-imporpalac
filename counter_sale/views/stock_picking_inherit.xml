@@ -8,7 +8,10 @@
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="is_rectified" invisible="1" />
             </xpath>
-            <xpath expr="//button[@name='393']" position="attributes">
+            <xpath
+                expr="//button[@name='%(stock.act_stock_return_picking)d']"
+                position="attributes"
+            >
                 <attribute name="groups">
                     counter_sale.group_counter_sale_seller,
                     counter_sale.group_counter_sale_dispatcher
