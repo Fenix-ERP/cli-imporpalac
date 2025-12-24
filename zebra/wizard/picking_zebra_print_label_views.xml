@@ -8,13 +8,13 @@
             <form string="Print Options">
                 <sheet>
                     <group>
-                        <group string="Select which barcodes to print:">
-                            <field name="print_barcode" />
-                            <field name="print_supplier_barcode" />
+                        <group>
+                            <field name="barcode_type" />
                         </group>
                     </group>
                 </sheet>
                 <footer>
+
                     <button
                         name="action_print_labels"
                         string="Imprimir"

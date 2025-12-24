@@ -1,0 +1,38 @@
+<odoo noupdate="1">
+    <record id="zpl_template_config" model="ir.config_parameter">
+        <field name="key">zebra.zpl.template</field>
+        <field name="value">
+            ^XA
+            ~TA000
+            ~JSN
+            ^LT0
+            ^MNW
+            ^MTT
+            ^PON
+            ^PMN
+            ^LH0,0
+            ^JMA
+            ^PR4,4
+            ~SD25
+            ^JUS
+            ^LRN
+            ^CI27
+            ^PA0,1,1,0
+            ^XZ
+            ^XA
+            ^MMT
+            ^PW831
+            ^LL440
+            ^LS0
+            ^FO69,49^GFA,1677,3570,42,:Z64:eJzdV79v20YUPtFVK3DQxqFAhQgeORAIshROBwqQkJUGeGPmzkEHLxkOWnzQwPwFKQRNxA2aUwqoXASBlyBo/4A0gj2UYIvT0KWAC7nfe6cfdCC7zdKgfbaPj+e7z9+9e+97shDvmdba11opleuWev+XdWu8+uLxvc6rn3748enj5l0LxcHy++vZfHl5+cfq+tndmO++Onny/Pz0ZefNyb1bV7VaLXHwbrW8mv/6bDl7s5yrFtmtmE+vv3l+/umjzus/92Ieet4hLOwezFary/lp9svDb1cPVXjI5h3uO9Hnb8++vn/aefSg8/PJXQcSB7PvFstZNrdXc3ut7lr52f3nZydPzjvnv799/XeYM7V6kH25vLzKLu/E/P+YwlfdUzVP7d3xUSw0ZjRWcIzJfWOUaW09D0NtpZSyGePZkDJpShmnO4+G3ULsM/7YOTnwx4Y9nzwadisBIAPaCYAkkLKXkpeyhyGpYVpTZQvQaVe2nFZ2YUW28aJqWu6INlMhHGbSTGUcEObGC+JmHfMFjj+B44+9/EiFk6K79cKxX+NJuxgziBuJFIy58QJRx2yXQkREpr0YlVZFFyU8v5xqf1JFul3nucNsrjGdJxqpFM1aPP2JMSFtDMHOhGaSg7bJDU6Qh+oGz2MET2wwA9lLRDCQjJkE7q9teFLwCDM6a5d2akeliqwtrc6HGNqLGs+eBJ81ZirlwGGmdAJ5AxM8c8dzhJsOzTAX7vbB07hIr412Ocwm3blELBDG4z2Y7YUQVhPPzI6tmGbgqcC41cowRGoPJs7dcJgIo0NPb2CGiJgRjqcHYqOxCIcgTx6GvZh0K2vMgDFBNtgtFFFlckvlYpXwSmWzKkcYL6yx2QKDrmEir6WsYUq+faouGmqYYYHgFcAsRBe5WvhFXiCMhSl8zBtxC2Yi0i0mMh5DbSUXoQEd1LmfC9RjblqhovLEfH5bS/rXTTuDoza+Vnpr6mPz+w8ZNHJoq7LS7Je+rRSKP3KzxlYZaSjNksKTpLuMl6TqvbUa4+EmYnqNxZEphoV5QTnoIR+RqRNT5JvZAmlVjGl2zF1DslyQ2u/AeJbkX8pjhznVqG6tLXLQq0Y2ykEWGqo1z2qblWAaaagWcnsQC8GYaQOKFwySRkrqEXNJQal6KeuIq26udi/3oKKhIQ0lyUdPEgYyP8lDqnksd7upggiTBXqLSTLfo6IiOZpmC60sVvogONWC5NJqBZ7DsksUL0Ab2kRU+mmPMKFrpKIMlqZBmjJmHwqdUtEaUkrEsAueTtqZIHTfkNzTY0gaqvh4AxJ2Vvtkg+kiS8ShfglrE9Rymlk0IKf2kEyIqVda27aYVTYi1betqWbMft9hxoNkc+h+X/QlRVZ+IgfMk0MGgcuFa5qGGyi/wsk9CiVpqFmHjMRIcKvEhwVcB7/ybVEoSUOBWQqLO/WZJzVNvJ61mbaIbOlRF82q3xBgwpTuXoDJu3HTgx0mjk2Cn6KzIycRMpMTL+qf5giBLPjjCAw6ejSiWdE4Xicjd2NEdJOiyTZxWZdTilw5tXZkucOjBVkb0aslL6NHa5pdWFvxvQQ7zNhhNrZpH68xE7rh8ZanYgWGQNOHJcMPCiXNjj+w5FVtrDt7Fv0j626N/UP+5h+M/FvhZj+AI/3/437Yb639rbfz/wLZqsOR:A4DA
+            ^BY4,2,45^FT359,363^BEN,,Y,N
+            ^FD{barcode}^FS
+            ^FO49,150^A0N,25,25^FB735,4,6,L^FH\^CI28^FD{product_name}^FS^CI27
+            ^FPH,1^FT49,327^A0N,28,43^FH\^CI28^FD{unit}^FS^CI27
+            ^FPH,1^FT0,111^A0N,28,38^FB787,1,7,R^FH\^CI28^FD{barcode}^FS^CI27
+            ^FPH,1^FO49,345^A0N,28,28^FB224,2,7,L^FH\^CI28^FD{ubication}^FS^CI27
+            ^PQ1,,,Y
+            ^XZ
+        </field>
+    </record>
+</odoo>
