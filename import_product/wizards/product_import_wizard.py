@@ -299,11 +299,15 @@ class ImportProductWizard(models.TransientModel):
                     str(cell).strip() if isinstance(cell, str) else cell for cell in row
                 ]
 
-                codigo, nombre, articulo = row[0], row[1], row[2]
-                marca, modelo, anio = row[3] or "", row[4] or "", row[5] or ""
-                procedencia = row[6] or ""
+                codigo, nombre, product_article = row[0], row[1], row[2]
+                product_brand, product_model, product_year = (
+                    row[3] or "",
+                    row[4] or "",
+                    row[5] or "",
+                )
+                product_origin = row[6] or ""
                 adicional = row[7:13]
-                lado = row[13] or ""
+                product_side = row[13] or ""
                 unidad_venta = row[14]
                 unidad_compra = row[15]
                 categoria = row[16]
@@ -347,7 +351,7 @@ class ImportProductWizard(models.TransientModel):
 
                 vals = {
                     "default_code": codigo,
-                    "articulo": articulo,
+                    "product_article": product_article,
                     "name": nombre,
                     "categ_id": categoria_id,
                     "standard_price": costo,
@@ -356,17 +360,17 @@ class ImportProductWizard(models.TransientModel):
                     "type": tipo_producto,
                     "uom_id": uom_id,
                     "uom_po_id": uom_po_id,
-                    "marca": marca,
-                    "modelo": modelo,
-                    "anio": anio,
-                    "procedencia": procedencia,
-                    "adicional_1": adicional[0],
-                    "adicional_2": adicional[1],
-                    "adicional_3": adicional[2],
-                    "adicional_4": adicional[3],
-                    "adicional_5": adicional[4],
-                    "adicional_6": adicional[5],
-                    "lado": lado,
+                    "product_brand": product_brand,
+                    "product_model": product_model,
+                    "product_year": product_year,
+                    "product_origin": product_origin,
+                    "additional_1": adicional[0],
+                    "additional_2": adicional[1],
+                    "additional_3": adicional[2],
+                    "additional_4": adicional[3],
+                    "additional_5": adicional[4],
+                    "additional_6": adicional[5],
+                    "product_side": product_side,
                     "imported_ok": importar,
                     "import_category_id": categoria_importacion,
                     "purchase_method": purchase_method,

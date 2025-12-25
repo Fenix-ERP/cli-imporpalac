@@ -83,10 +83,10 @@ class AccountHomologate(models.Model):
             {"font_color": "#0070C0", "valign": "vcenter", "align": "left", "border": 1}
         )
         headers = [
-            "Codigo Proveedor",
-            "Descripcion Proveedor",
-            "Producto ID",
-            "Descripcion",
+            _("Code Supplier"),
+            _("Description Supplier"),
+            _("Product ID"),
+            _("Description"),
         ]
 
         sheet = workbook.add_worksheet("Plantilla Contacto")

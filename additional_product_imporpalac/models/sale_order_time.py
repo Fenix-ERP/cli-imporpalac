@@ -26,10 +26,10 @@ class SaleOrder(models.Model):
 
     delivery_status = fields.Selection(
         selection_add=[
-            ("waiting", "En Espera"),
+            ("waiting", "Waiting"),
             ("picking", "Picking"),
-            ("to_deliver", "Por Entregar"),
-            ("delivered", "Entregado"),
+            ("to_deliver", "To Deliver"),
+            ("delivered", "Delivered"),
         ],
         compute="_compute_delivery_status",
         store=True,
@@ -91,13 +91,13 @@ class SaleOrder(models.Model):
                 states = order.picking_ids.mapped("state")
                 collection_states = order.picking_ids.mapped("collection_state")
                 if any(s == "waiting" for s in collection_states):
-                    order.delivery_status = "waiting"  # Rojo
+                    order.delivery_status = "waiting"
                 elif any(s == "assigned" for s in collection_states):
-                    order.delivery_status = "picking"  # Amarillo
+                    order.delivery_status = "picking"
                 elif any(s == "assigned" for s in states):
-                    order.delivery_status = "to_deliver"  # Gris
+                    order.delivery_status = "to_deliver"
                 elif all(s == "done" for s in states):
-                    order.delivery_status = "delivered"  # Verde
+                    order.delivery_status = "delivered"
                 else:
                     order.delivery_status = False
 
@@ -107,14 +107,16 @@ class SaleOrder(models.Model):
         seconds = delta.seconds
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
-
+        days_label = _("days")
+        hours_label = _("hours")
+        minutes_label = _("minutes")
         parts = []
         if days > 0:
-            parts.append(f"{days} días")
+            parts.append(f"{days} {days_label}")
         if hours > 0:
-            parts.append(f"{hours} horas")
+            parts.append(f"{hours} {hours_label}")
         if minutes > 0 or not parts:
-            parts.append(f"{minutes} minutos")
+            parts.append(f"{minutes} {minutes_label}")
 
         return ", ".join(parts)
 

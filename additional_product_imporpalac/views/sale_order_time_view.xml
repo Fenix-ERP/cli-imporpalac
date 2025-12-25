@@ -45,7 +45,7 @@
                     decoration-success="delivery_status == 'delivered'"
                 />
                 <field name="elapsed_time" optional="show" widget="badge" />
-                 <field name="picking_elapsed_time" optional="hide" widget="badge" />
+                <field name="picking_elapsed_time" optional="hide" widget="badge" />
                 <field
                     name="dispatcher_id"
                     optional="show"

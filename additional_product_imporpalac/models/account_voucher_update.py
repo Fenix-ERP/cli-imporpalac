@@ -98,15 +98,15 @@ class ElectronicVoucherUpdate(models.Model):
         )
 
         headers = [
-            "Codigo",
-            "Ref",
-            "Descripcion",
-            "Cantidad",
-            "Precio Unitario",
-            "Categoria",
-            "Descuento",
-            "Impuestos",
-            "Total",
+            _("Code"),
+            _("Ref"),
+            _("Description"),
+            _("Quantity"),
+            _("Unit Price"),
+            _("Category"),
+            _("Discount"),
+            _("Taxes"),
+            _("Total"),
         ]
 
         sheet = workbook.add_worksheet("Plantilla Contacto")

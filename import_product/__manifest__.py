@@ -1,7 +1,7 @@
 {
     "name": "Import Product",
     "version": "17.0.1.0.0",
-    "depends": ["base", "import_dashboard"],
+    "depends": ["base", "import_dashboard", "additional_product_imporpalac"],
     "author": "Jorge Armas",
     "category": "Tools",
     "license": "OPL-1",

@@ -5,19 +5,19 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    articulo = fields.Char()
-    marca = fields.Char()
-    modelo = fields.Char()
-    anio = fields.Char(string="Año")
-    lado = fields.Char()
+    product_article = fields.Char()
+    product_brand = fields.Char()
+    product_model = fields.Char()
+    product_year = fields.Char()
+    product_side = fields.Char()
 
-    procedencia = fields.Char()
-    adicional_1 = fields.Char()
-    adicional_2 = fields.Char()
-    adicional_3 = fields.Char()
-    adicional_4 = fields.Char()
-    adicional_5 = fields.Char()
-    adicional_6 = fields.Char()
+    product_origin = fields.Char()
+    additional_1 = fields.Char()
+    additional_2 = fields.Char()
+    additional_3 = fields.Char()
+    additional_4 = fields.Char()
+    additional_5 = fields.Char()
+    additional_6 = fields.Char()
 
     categ_id = fields.Many2one(
         "product.category",

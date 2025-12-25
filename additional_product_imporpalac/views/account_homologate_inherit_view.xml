@@ -9,26 +9,26 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//sheet//group" position="after">
-                    <div
+                <div
                     class="o_form_sheet_bg"
                     style="margin-top: 10px; margin-left: 20px;"
                 >
-                            <label for="file" string="File" />
-                        <div class="o_field_widget o_input_widget">
-                            <field
+                    <label for="file" string="File" />
+                    <div class="o_field_widget o_input_widget">
+                        <field
                             name="file"
                             filename="file_name"
                             widget="binary"
                             options="{'no_open': True}"
                             class="oe_form_field_input"
                         />
-                        </div>
                     </div>
-                    <div
+                </div>
+                <div
                     class="o_form_sheet_pg"
                     style="margin-top: 10px; margin-left: 35px; margin-bottom: 10px;"
                 >
-                            <button
+                    <button
                         name="action_import"
                         type="object"
                         string="Hologate Products"
@@ -41,7 +41,7 @@
                         class="btn btn-sm btn-primary"
                         invisible="1"
                     />
-                    </div>
+                </div>
             </xpath>
 
         </field>

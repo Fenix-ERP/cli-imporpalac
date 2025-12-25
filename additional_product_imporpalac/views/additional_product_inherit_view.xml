@@ -11,21 +11,21 @@
             >
                 <page string="Additional Information">
                     <group>
-                        <group string="Detalle 1">
-                            <field name="articulo" />
-                            <field name="marca" />
-                            <field name="modelo" />
-                            <field name="anio" />
-                            <field name="procedencia" />
-                            <field name="lado" />
+                        <group string="Detail 1">
+                            <field name="product_article" />
+                            <field name="product_brand" />
+                            <field name="product_model" />
+                            <field name="product_year" />
+                            <field name="product_origin" />
+                            <field name="product_side" />
                         </group>
-                        <group string="Detalle 2">
-                            <field name="adicional_1" />
-                            <field name="adicional_2" />
-                            <field name="adicional_3" />
-                            <field name="adicional_4" />
-                            <field name="adicional_5" />
-                            <field name="adicional_6" />
+                        <group string="Detail 2">
+                            <field name="additional_1" />
+                            <field name="additional_2" />
+                            <field name="additional_3" />
+                            <field name="additional_4" />
+                            <field name="additional_5" />
+                            <field name="additional_6" />
                         </group>
                     </group>
                 </page>
@@ -33,7 +33,7 @@
             <xpath expr="//field[@name='categ_id']" position="attributes">
                 <attribute name="modifiers">{
                     "required": [["type", "=", "product"]]
-                }</attribute>
+                    }</attribute>
                 <attribute name="required">type == 'product'</attribute>
             </xpath>
         </field>
