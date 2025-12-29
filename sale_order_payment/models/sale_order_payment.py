@@ -79,7 +79,9 @@ class SaleOrderPayment(models.Model):
         string="Payment lines",
         copy=True,
     )
-
+    pf_branch_id = fields.Many2one(
+        "pf.branch", string="Branch", default=lambda self: self.env.user.pf_branch_id
+    )
     company_id = fields.Many2one(
         "res.company",
         string="Compañía",

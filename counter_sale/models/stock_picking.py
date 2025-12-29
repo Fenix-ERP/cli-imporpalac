@@ -100,7 +100,12 @@ class StockPicking(models.Model):
                         )
 
                     invoice = sale_order._create_invoices()
-                    invoice.write({"payment_method": picking.payment_method.id})
+                    invoice.sudo().write(
+                        {
+                            "payment_method": picking.payment_method.id,
+                            "pf_branch_id": sale_order.pf_branch_id.id,
+                        }
+                    )
                     if sale_order.note:
                         sale_order.invoice_ids.write({"narration": sale_order.note})
                     if sale_order.lines_info_additional:

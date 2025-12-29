@@ -44,6 +44,7 @@
                     decoration-muted="delivery_status == 'to_deliver'"
                     decoration-success="delivery_status == 'delivered'"
                 />
+                <field name="pf_branch_id" optional="hide" />
                 <field name="company_id" optional="hide" />
             </tree>
         </field>

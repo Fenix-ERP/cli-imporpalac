@@ -7,6 +7,7 @@
         "account_card_settlement",
         "devolutions",
         "stock_picking_flow",
+        "pf_branch_base",
     ],
     "category": "Sales",
     "data": [
