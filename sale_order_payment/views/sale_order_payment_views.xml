@@ -65,6 +65,7 @@
                     icon="fa-money"
                     string="Cobrar"
                     invisible="state not in ['draft'] or not difference >= 0.0"
+                    context="{'check_global_reference': True}"
                     class="btn-primary"
                 />
                 <button

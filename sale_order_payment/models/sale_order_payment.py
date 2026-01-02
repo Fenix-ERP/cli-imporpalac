@@ -125,7 +125,6 @@ class SaleOrderPayment(models.Model):
             rec.difference = rec.amount - rec.rectified_amount
 
     def process_payment(self):
-        self = self.with_context(check_global_reference=True)
         for payment in self:
             if payment.order_id and payment.payment_method.code != "cash":
                 for picking in payment.order_id.picking_ids:

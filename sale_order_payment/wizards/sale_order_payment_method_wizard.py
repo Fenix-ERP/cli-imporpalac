@@ -165,7 +165,7 @@ class SaleOrderPaymentMethod(models.TransientModel):
             )
 
         return self.with_context(
-            skip_open_payment_method_wizard=True
+            skip_open_payment_method_wizard=True, check_global_reference=True
         ).sale_order_payment_id.process_payment()
 
 
