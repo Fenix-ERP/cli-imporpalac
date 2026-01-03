@@ -355,8 +355,10 @@ class SaleOrder(models.Model):
 
     def _compute_payment_ids(self):
         for order in self:
-            payments = self.env["sale.order.payment"].search(
-                [("order_id", "=", order.id)]
+            payments = (
+                self.env["sale.order.payment"]
+                .sudo()
+                .search([("order_id", "=", order.id)])
             )
             order.payment_ids = payments
             order.payment_count = len(payments)

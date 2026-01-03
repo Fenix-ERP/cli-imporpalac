@@ -99,8 +99,10 @@ class SaleOrder(models.Model):
         if self.payment_method.code != "credit":
             rectified_amount = 0
             if self.rectified_order_id:
-                sale_order_payment = self.env["sale.order.payment"].search(
-                    [("order_id", "=", self.rectified_order_id.id)]
+                sale_order_payment = (
+                    self.env["sale.order.payment"]
+                    .sudo()
+                    .search([("order_id", "=", self.rectified_order_id.id)])
                 )
                 if sale_order_payment.state == "cancel":
                     rectified_amount = 0
