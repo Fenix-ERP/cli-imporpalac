@@ -238,7 +238,7 @@ class StockPicking(models.Model):
                 subtype_xmlid="mail.mt_comment",
             )
             self.collection_state = "issue"
-            self.env["mail.activity"].create(activity_vals)
+            self.sudo().env["mail.activity"].create(activity_vals)
         return not has_issue
 
     @api.model
