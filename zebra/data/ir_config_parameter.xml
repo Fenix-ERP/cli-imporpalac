@@ -1,4 +1,8 @@
 <odoo noupdate="1">
+    <record id="qz_printer_zebra_name" model="ir.config_parameter">
+        <field name="key">qz.printer.zebra.name</field>
+        <field name="value">Zebra-Printer-Name</field>
+    </record>
     <record id="zpl_template_config" model="ir.config_parameter">
         <field name="key">zebra.zpl.template</field>
         <field name="value">
