@@ -107,24 +107,39 @@ class SaleOrder(models.Model):
             insufficient_products = []
             for line in order.order_line:
                 if line.product_id.type == "product":
-                    # Verificar stock en la ubicación específica de la línea
                     available_qty = 0.0
-
                     if line.internal_location_id:
+                        location = line.internal_location_id
                         quants = (
                             self.sudo()
                             .env["stock.quant"]
                             .search(
                                 [
                                     ("product_id", "=", line.product_id.id),
-                                    ("location_id", "=", line.internal_location_id.id),
-                                    ("quantity", ">", 0),
+                                    ("location_id", "=", location.id),
                                 ]
                             )
                         )
-                        available_qty = sum(quants.mapped("quantity")) - sum(
+                        physical_qty = sum(quants.mapped("quantity")) - sum(
                             quants.mapped("reserved_quantity")
                         )
+                        moves = (
+                            self.sudo()
+                            .env["stock.move"]
+                            .search(
+                                [
+                                    ("product_id", "=", line.product_id.id),
+                                    ("state", "in", ("confirmed", "assigned")),
+                                    ("internal_location_id", "=", location.id),
+                                    ("picking_type_id.code", "=", "outgoing"),
+                                ]
+                            )
+                        )
+                        committed_qty = 0.0
+                        for m in moves:
+                            done_qty = sum(m.move_line_ids.mapped("quantity"))
+                            committed_qty += m.product_uom_qty - done_qty
+                        available_qty = physical_qty - committed_qty
                     else:
                         available_qty = (
                             line.product_id.qty_available - line.product_id.outgoing_qty
