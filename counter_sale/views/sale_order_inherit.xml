@@ -26,6 +26,14 @@
             >
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="before">
+                <field name="product_pricelist_domain" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="domain">
+                    product_pricelist_domain
+                </attribute>
+            </xpath>
             <xpath expr="//sheet//div" position="before">
                 <field name="expired" invisible="1" />
                 <widget

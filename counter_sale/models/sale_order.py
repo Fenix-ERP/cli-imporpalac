@@ -23,6 +23,20 @@ class SaleOrder(models.Model):
     )
     expired = fields.Boolean(readonly=False)
 
+    product_pricelist_domain = fields.Char(
+        compute="_compute_product_pricelist_domain",
+    )
+
+    @api.depends("partner_id")
+    def _compute_product_pricelist_domain(self):
+        allowed_pricelist = self.company_id.product_pricelist_ids_default
+        allowed_ids = allowed_pricelist.ids if allowed_pricelist else []
+        for order in self:
+            if order.partner_id:
+                allowed_ids.append(order.partner_id.property_product_pricelist.id)
+            domain = [("id", "in", allowed_ids)]
+            order.product_pricelist_domain = str(domain)
+
     @api.onchange("pricelist_id")
     def _onchange_pricelist_id_show_update_prices(self):
         self._recompute_prices()
