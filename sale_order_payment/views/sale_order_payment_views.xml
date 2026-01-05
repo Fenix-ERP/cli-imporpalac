@@ -6,24 +6,35 @@
         <field name="arch" type="xml">
             <tree
                 string="Pagos de Orden de Venta"
-                create="false"
                 default_order="date_order desc"
+                editable="bottom"
+                create="false"
             >
-                <field name="client_id" />
-                <field name="order_id" widget="many2one" />
-                <field name="date_order" optional="hide" />
-                <field name="hour_register" />
-                <field name="amount" />
-                <field name="rectified_order_id" />
-                <field name="rectified_date_order" optional="hide" />
-                <field name="rectified_amount" />
-                <field name="difference" />
-                <field name="payment_method" />
-                <field name="payment_method_line_id" readonly="1" optional="show" />
+                <field name="client_id" readonly="1" />
+                <field name="order_id" readonly="1" widget="many2one" />
+                <field name="date_order" readonly="1" optional="hide" />
+                <field name="hour_register" readonly="1" />
+                <field name="amount" readonly="1" />
+                <field name="rectified_order_id" readonly="1" />
+                <field name="rectified_date_order" optional="hide" readonly="1" />
+                <field name="rectified_amount" readonly="1" />
+                <field name="difference" readonly="1" />
+                <field
+                    name="payment_method"
+                    string="Payment Form"
+                    readonly="1"
+                    optional="show"
+                />
+                <field
+                    name="journal_id"
+                    readonly="state!='draft'"
+                    domain="journal_domain"
+                />
+                <field name="payment_method_line_id" readonly="state!='draft'" />
                 <field name="card_id" readonly="1" optional="hide" />
                 <field name="reference" readonly="1" optional="hide" />
                 <field name="available_payment_method_line_ids" column_invisible="1" />
-                <field name="journal_id" optional="hide" />
+                <field name="journal_domain" column_invisible="1" />
                 <field
                     name="is_mixed_payment"
                     readonly="state!='draft'"
@@ -44,8 +55,8 @@
                     decoration-muted="delivery_status == 'to_deliver'"
                     decoration-success="delivery_status == 'delivered'"
                 />
-                <field name="pf_branch_id" optional="hide" />
-                <field name="company_id" optional="hide" />
+                <field name="pf_branch_id" optional="hide" readonly="1" />
+                <field name="company_id" optional="hide" readonly="1" />
             </tree>
         </field>
     </record>

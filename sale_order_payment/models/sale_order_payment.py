@@ -33,7 +33,10 @@ class SaleOrderPayment(models.Model):
 
     difference = fields.Monetary(compute="_compute_difference", store=True)
 
-    journal_id = fields.Many2one("account.journal", string="Payment Journal")
+    journal_id = fields.Many2one(
+        "account.journal", string="Payment Journal", readonly=False
+    )
+    journal_domain = fields.Char(default="('id', 'in', [])")
     payment_method_line_id = fields.Many2one(
         "account.payment.method.line",
         string="Payment Method",

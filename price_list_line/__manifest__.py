@@ -3,7 +3,7 @@
     "category": "Sales/Sales",
     "version": "17.0.1.0.0",
     "author": "Jorge Armas",
-    "summary": "This module allows to add the payment type in the quote",
+    "summary": "This module allow to restrict price lists per product.",
     "depends": ["sale", "account"],
     "data": [
         "views/sale_views_inherit.xml",

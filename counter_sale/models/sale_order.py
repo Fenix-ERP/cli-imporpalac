@@ -112,10 +112,22 @@ class SaleOrder(models.Model):
                         old_move.rectified_product_uom_qty
                     )
                     new_move.rectified_quantity = old_move.rectified_quantity
-        journal_payment_id = self.warehouse_id.payment_method_ids.filtered(
+        journal_payment_ids = self.warehouse_id.payment_method_ids.filtered(
             lambda line: line.payment_type_id.id == self.payment_method.id
-        ).journal_payment_id
-        if not journal_payment_id and self.payment_method.code != "credit":
+        ).journal_payment_ids
+        if not journal_payment_ids:
+            raise ValidationError(
+                _(
+                    "There is no payment journal for %(payment_method)s "
+                    "in warehouse %(warehouse)s, please assign it."
+                )
+                % {
+                    "payment_method": self.payment_method.display_name,
+                    "warehouse": self.warehouse_id.display_name,
+                }
+            )
+        journal_payment_id = journal_payment_ids[0]
+        if not journal_payment_ids and self.payment_method.code != "credit":
             raise ValidationError(
                 _(
                     "There is no payment journal for %(payment_method)s "
@@ -138,6 +150,9 @@ class SaleOrder(models.Model):
                     rectified_amount = 0
                 else:
                     rectified_amount = self.rectified_order_id.amount_total
+            journal_payment_domain = (
+                "[('id', 'in', %s)]" % journal_payment_ids.ids or []
+            )
             self.sudo().env["sale.order.payment"].create(
                 {
                     "client_id": self.partner_id.id,
@@ -148,6 +163,7 @@ class SaleOrder(models.Model):
                     "rectified_date_order": self.rectified_order_id.date_order,
                     "rectified_amount": rectified_amount,
                     "journal_id": journal_payment_id.id,
+                    "journal_domain": journal_payment_domain,
                     "payment_method": self.payment_method.id,
                     "state": "draft",
                     "company_id": self.company_id.id,

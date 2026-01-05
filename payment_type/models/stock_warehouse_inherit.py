@@ -43,6 +43,7 @@ class StockWarehousePaymentMethod(models.Model):
     payment_type_id = fields.Many2one(
         "payment.type", string="Payment Type", required=True
     )
-    journal_payment_id = fields.Many2one(
-        "account.journal", string="Payment Journal", required=True
+    journal_payment_ids = fields.Many2many(
+        "account.journal",
+        string="Payment Journals",
     )
