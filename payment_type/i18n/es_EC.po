@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 01:39+0000\n"
-"PO-Revision-Date: 2025-12-15 01:39+0000\n"
+"POT-Creation-Date: 2026-01-05 05:35+0000\n"
+"PO-Revision-Date: 2026-01-05 05:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -107,11 +107,6 @@ msgid "Image"
 msgstr "Imagen"
 
 #. module: payment_type
-#: model:ir.model,name:payment_type.model_stock_picking
-msgid "Internal Transfer Upload Imporpalac"
-msgstr "Transferir "
-
-#. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_stock_picking__invoice_number
 msgid "Invoice Number"
 msgstr "Factura"
@@ -139,9 +134,9 @@ msgid "New account move model with electronic documents"
 msgstr "Asiento contable"
 
 #. module: payment_type
-#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__journal_payment_id
-msgid "Payment Journal"
-msgstr "Diario de Pago"
+#: model:ir.model.fields,field_description:payment_type.field_stock_warehouse_payment_method__journal_payment_ids
+msgid "Payment Journals"
+msgstr "Diarios de Pago"
 
 #. module: payment_type
 #: model:ir.model.fields,field_description:payment_type.field_stock_warehouse__payment_method_ids
@@ -254,6 +249,11 @@ msgstr "Total por cobrar"
 #: model:ir.model.fields,help:payment_type.field_sale_order__credit
 msgid "Total amount this customer owes you."
 msgstr "Cantidad total que este cliente debe."
+
+#. module: payment_type
+#: model:ir.model,name:payment_type.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
 
 #. module: payment_type
 #: model_terms:ir.ui.view,arch_db:payment_type.payment_type_view_form

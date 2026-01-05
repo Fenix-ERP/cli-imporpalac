@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 20:50+0000\n"
-"PO-Revision-Date: 2025-12-03 20:50+0000\n"
+"POT-Creation-Date: 2026-01-05 05:34+0000\n"
+"PO-Revision-Date: 2026-01-05 05:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,6 +56,11 @@ msgstr "Monto"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_bank_details
 msgid "Bank Info"
 msgstr "Información Bancaria"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__pf_branch_id
+msgid "Branch"
+msgstr "Sucursal"
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
@@ -219,11 +224,6 @@ msgid "ID"
 msgstr ""
 
 #. module: sale_order_payment
-#: model:ir.model,name:sale_order_payment.model_stock_picking
-msgid "Internal Transfer Upload Imporpalac"
-msgstr "Transferir "
-
-#. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__is_pdc
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__is_pdc
 msgid "Is Pdc"
@@ -235,6 +235,11 @@ msgstr "Es Pdc"
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Journal"
 msgstr "Diario"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__journal_domain
+msgid "Journal Domain"
+msgstr "Dominio del diario"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__write_uid
@@ -334,6 +339,11 @@ msgstr "Pago"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_payment_date
 msgid "Payment Date"
 msgstr "Fecha de Pago"
+
+#. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree
+msgid "Payment Form"
+msgstr "Forma de Pago"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__journal_id
@@ -553,6 +563,11 @@ msgstr "Este pago no se puede procesar porque el pedido no ha sido entregado."
 #, python-format
 msgid "This payment cannot be processed because the order have issues."
 msgstr "Este pago no se puede procesar porque el pedido tiene incidencias."
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizard_id

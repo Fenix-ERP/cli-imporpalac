@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 23:16+0000\n"
-"PO-Revision-Date: 2026-01-04 23:16+0000\n"
+"POT-Creation-Date: 2026-01-05 05:36+0000\n"
+"PO-Revision-Date: 2026-01-05 05:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -195,6 +195,7 @@ msgstr "Imprimir Ticket"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__product_pricelist_domain
+#: model:ir.model.fields,field_description:counter_sale.field_sale_order_line__product_pricelist_domain
 msgid "Product Pricelist Domain"
 msgstr "Dominio de lista de precios"
 
@@ -244,6 +245,11 @@ msgid "Sales Order Cancel"
 msgstr "Cancelar orden de venta"
 
 #. module: counter_sale
+#: model:ir.model,name:counter_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de la orden de venta"
+
+#. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_seller
 msgid "Seller"
 msgstr "Vendedor"
@@ -288,6 +294,7 @@ msgstr "Hay incidencias con tu orden: "
 #. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
+#: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
 msgid ""
 "There is no payment journal for %(payment_method)s in warehouse "
@@ -319,6 +326,11 @@ msgid ""
 "This picking has not yet been paid, please request payment at the checkout."
 msgstr ""
 "Este picking aún no ha sido pagado, por favor solicite el pago en la caja."
+
+#. module: counter_sale
+#: model:ir.model,name:counter_sale.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
 
 #. module: counter_sale
 #: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
