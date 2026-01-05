@@ -166,9 +166,8 @@ class SaleOrderPayment(models.Model):
                     }
                     ctx.update({"payment_method": self.payment_method.code})
                     if (
-                        len(method_lines) > 1
-                        or self.payment_method.code
-                        in ["credit_card", "postdated_check"]
+                        self.payment_method.code
+                        in ["credit_card", "postdated_check", "deposit"]
                         or self.is_mixed_payment
                     ):
 
