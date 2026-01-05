@@ -27,7 +27,11 @@ class SaleOrder(models.Model):
         compute="_compute_product_pricelist_domain",
     )
 
-    @api.depends("partner_id")
+    @api.depends(
+        "partner_id",
+        "partner_id.property_product_pricelist",
+        "company_id.product_pricelist_ids_default",
+    )
     def _compute_product_pricelist_domain(self):
         allowed_pricelist = self.company_id.product_pricelist_ids_default
         allowed_ids = allowed_pricelist.ids if allowed_pricelist else []
@@ -36,6 +40,18 @@ class SaleOrder(models.Model):
                 allowed_ids.append(order.partner_id.property_product_pricelist.id)
             domain = [("id", "in", allowed_ids)]
             order.product_pricelist_domain = str(domain)
+
+    @api.onchange(
+        "partner_id",
+        "partner_id.property_product_pricelist",
+        "company_id.product_pricelist_ids_default",
+    )
+    def _onchange_pricelist_id_force_first(self):
+        allowed = self.company_id.product_pricelist_ids_default
+        if self.partner_id and self.partner_id.property_product_pricelist:
+            allowed |= self.partner_id.property_product_pricelist
+        if allowed:
+            self.pricelist_id = allowed.sorted("id")[0]
 
     @api.onchange("pricelist_id")
     def _onchange_pricelist_id_show_update_prices(self):
@@ -164,3 +180,11 @@ class SaleOrder(models.Model):
             ]
         )
         expired_orders.sudo().write({"state": "cancel", "expired": True})
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    product_pricelist_domain = fields.Char(
+        related="order_id.product_pricelist_domain",
+    )

@@ -18,6 +18,7 @@
         "sale_info_additional",
         "base_accounting_kit",
         "sale_stock",
+        "price_list_line",
     ],
     "data": [
         "security/counter_sale_security.xml",
