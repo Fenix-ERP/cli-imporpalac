@@ -115,7 +115,7 @@ class SaleOrder(models.Model):
         journal_payment_ids = self.warehouse_id.payment_method_ids.filtered(
             lambda line: line.payment_type_id.id == self.payment_method.id
         ).journal_payment_ids
-        journal_payment_id = journal_payment_ids[0]
+        journal_payment_id = journal_payment_ids[0] if journal_payment_ids else False
         if not journal_payment_id and self.payment_method.code != "credit":
             raise ValidationError(
                 _(
