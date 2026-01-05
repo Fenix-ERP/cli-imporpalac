@@ -115,19 +115,8 @@ class SaleOrder(models.Model):
         journal_payment_ids = self.warehouse_id.payment_method_ids.filtered(
             lambda line: line.payment_type_id.id == self.payment_method.id
         ).journal_payment_ids
-        if not journal_payment_ids:
-            raise ValidationError(
-                _(
-                    "There is no payment journal for %(payment_method)s "
-                    "in warehouse %(warehouse)s, please assign it."
-                )
-                % {
-                    "payment_method": self.payment_method.display_name,
-                    "warehouse": self.warehouse_id.display_name,
-                }
-            )
         journal_payment_id = journal_payment_ids[0]
-        if not journal_payment_ids and self.payment_method.code != "credit":
+        if not journal_payment_id and self.payment_method.code != "credit":
             raise ValidationError(
                 _(
                     "There is no payment journal for %(payment_method)s "
