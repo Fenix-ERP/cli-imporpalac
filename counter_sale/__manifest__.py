@@ -24,6 +24,7 @@
         "security/counter_sale_security.xml",
         "data/expire_quotation_cron.xml",
         "data/ir_config_parameter.xml",
+        "views/res_partner_inherit.xml",
         "views/sale_order_inherit.xml",
         "views/stock_move_inherit.xml",
         "views/stock_picking_inherit.xml",
