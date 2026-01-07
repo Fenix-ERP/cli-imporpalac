@@ -1,34 +1,72 @@
 /** @odoo-module **/
 
 import {ListController} from "@web/views/list/list_controller";
-import {onWillDestroy} from "@odoo/owl";
+import {onWillDestroy, onWillStart, useEffect} from "@odoo/owl";
 import {patch} from "@web/core/utils/patch";
 
 patch(ListController.prototype, {
     setup() {
         super.setup();
-        const channel = JSON.stringify([
-            this.env.services.bus_service.dbname,
-            "stock.picking",
-            "reload",
-        ]);
-        this.env.services.bus_service.addChannel(channel);
-        const onRefershTreeView = this.onRefershTreeView.bind(this);
-        this.env.services.bus_service.addEventListener(
-            "notification",
-            onRefershTreeView
-        );
-        onWillDestroy(() => {
-            this.env.services.bus_service.removeEventListener(
+        this.allowedModels = [];
+        this.can_refresh = false;
+        this._pendingReload = false;
+        this._onRefreshTreeView = null;
+
+        onWillStart(async () => {
+            const allowedModels = await this.orm.call(
+                "ir.config_parameter",
+                "get_param",
+                ["refresh_tree_view_allowed_models"]
+            );
+            const allowedModelsList = allowedModels
+                ? allowedModels.split(",").map((m) => m.trim())
+                : [];
+            if (!allowedModelsList.includes(this.props.resModel)) {
+                return;
+            }
+            this.env.services.bus_service.addChannel("refresh_tree_view_channel");
+            this._onRefreshTreeView = this.onRefershTreeView.bind(this);
+            this.env.services.bus_service.addEventListener(
                 "notification",
-                onRefershTreeView
+                this._onRefreshTreeView
             );
         });
+        useEffect(
+            (currentEditedRecord) => {
+                if (this._previousEditedRecord && !currentEditedRecord) {
+                    this._processPendingReload();
+                }
+                this._previousEditedRecord = currentEditedRecord;
+            },
+            () => [this.editedRecord]
+        );
+        onWillDestroy(() => {
+            if (this._onRefreshTreeView) {
+                this.env.services.bus_service.removeEventListener(
+                    "notification",
+                    this._onRefreshTreeView
+                );
+            }
+        });
+    },
+    _processPendingReload() {
+        setTimeout(() => {
+            if (this._pendingReload && !this.editedRecord) {
+                this.model.load();
+                this._pendingReload = false;
+            }
+        }, 100);
     },
     onRefershTreeView(ev) {
         const notifications = ev.detail;
         for (const notification of notifications) {
-            if (notification.type === "tree_view_refresh") this.model.load();
+            if (notification.type === "refresh_tree_view.notify") {
+                if (this.editedRecord) {
+                    this._pendingReload = true;
+                    continue;
+                }
+                this.model.load();
+            }
         }
     },
 });

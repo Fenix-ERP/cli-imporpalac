@@ -8,4 +8,9 @@
         <field name="key">qz.printer.dispatch.name</field>
         <field name="value">POS-80C</field>
     </record>
+
+    <record id="refresh_tree_view_allowed_models" model="ir.config_parameter">
+        <field name="key">refresh_tree_view.allowed_models</field>
+        <field name="value" />
+    </record>
 </odoo>

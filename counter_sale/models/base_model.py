@@ -7,21 +7,14 @@ class BaseModel(models.AbstractModel):
     def write(self, vals):
         res = super().write(vals)
         if any(field in vals for field in ("state", "collection_state")):
-            active_users = (
-                self.env["res.users"]
-                .search([("active", "=", True)])
-                .mapped("partner_id")
+            bus_message = {
+                "params": self.env.context.get("params", {}),
+            }
+            channel = "refresh_tree_view_channel"
+            self.env["bus.bus"]._sendone(
+                channel,
+                "refresh_tree_view.notify",
+                bus_message,
             )
-            if active_users:
-                for record in self:
-                    notifications = [
-                        (
-                            partner,
-                            "tree_view_refresh",
-                            {"presence_status": record.state},
-                        )
-                        for partner in active_users
-                    ]
-                    self.env["bus.bus"]._sendmany(notifications)
 
         return res
