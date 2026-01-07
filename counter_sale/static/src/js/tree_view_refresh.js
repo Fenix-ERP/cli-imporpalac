@@ -13,14 +13,8 @@ patch(ListController.prototype, {
         this._onRefreshTreeView = null;
 
         onWillStart(async () => {
-            const allowedModels = await this.orm.call(
-                "ir.config_parameter",
-                "get_param",
-                ["refresh_tree_view_allowed_models"]
-            );
-            const allowedModelsList = allowedModels
-                ? allowedModels.split(",").map((m) => m.trim())
-                : [];
+            const allowedModels = await fetch("/tree_view_refresh/allowed_models");
+            const allowedModelsList = await allowedModels.json();
             if (!allowedModelsList.includes(this.props.resModel)) {
                 return;
             }
