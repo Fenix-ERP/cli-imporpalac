@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-05 05:36+0000\n"
-"PO-Revision-Date: 2026-01-05 05:36+0000\n"
+"POT-Creation-Date: 2026-01-07 20:29+0000\n"
+"PO-Revision-Date: 2026-01-07 20:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,6 +81,11 @@ msgid "Config Settings"
 msgstr "Ajustes de configuración"
 
 #. module: counter_sale
+#: model:ir.model,name:counter_sale.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: counter_sale
 #: model:ir.module.category,name:counter_sale.module_category_counter_sale
 msgid "Counter Sale"
 msgstr "Venta en mostrador"
@@ -97,10 +102,26 @@ msgid "Dispatcher"
 msgstr "Despachador"
 
 #. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/res_partner.py:0
+#, python-format
+msgid ""
+"Editing the customer's ID is not allowed. Are you trying to create a new "
+"customer? Try using the 'New' button."
+msgstr ""
+"No se permite editar la identificación del cliente. ¿Está intentando crear un nuevo "
+"cliente? Intente usar el botón 'Nuevo'."
+
+#. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__expired
 #: model_terms:ir.ui.view,arch_db:counter_sale.view_sale_order_counter_sale
 msgid "Expired"
 msgstr "Expirada"
+
+#. module: counter_sale
+#: model:res.groups,name:counter_sale.group_counter_sale_identifier_editor
+msgid "Identifier/Vat Editor"
+msgstr "Editor de Identificador/NIF"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__internal_location_id
@@ -118,7 +139,7 @@ msgstr "Estado inválido"
 #: model:ir.model.fields,field_description:counter_sale.field_sale_order__is_inter_company
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_inter_company
 msgid "Is Inter Company"
-msgstr ""
+msgstr "Es entre empresas"
 
 #. module: counter_sale
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
@@ -294,7 +315,6 @@ msgstr "Hay incidencias con tu orden: "
 #. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/sale_order.py:0
-#: code:addons/counter_sale/models/sale_order.py:0
 #, python-format
 msgid ""
 "There is no payment journal for %(payment_method)s in warehouse "
@@ -330,7 +350,7 @@ msgstr ""
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_stock_picking
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Transferir "
 
 #. module: counter_sale
 #: model:ir.model.fields,help:counter_sale.field_stock_move__internal_location_id
