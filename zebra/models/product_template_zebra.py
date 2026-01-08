@@ -23,10 +23,8 @@ class ProductTemplateZebra(models.Model):
     def action_print_product_label(
         self, print_barcode=True, print_supplier_barcode=False
     ):
-        """Generar etiqueta ZPL para un producto"""
         product = self
 
-        # Obtener el template del ZPL
         zpl_template = (
             self.env["ir.config_parameter"].sudo().get_param("zebra.zpl.template")
         )
@@ -38,7 +36,6 @@ class ProductTemplateZebra(models.Model):
                 )
             )
 
-        # Validar que solo se seleccione una opción
         if print_barcode and print_supplier_barcode:
             raise UserError(
                 _("You can only select one option: Product code or supplier code.")
@@ -88,7 +85,6 @@ class ProductTemplateZebra(models.Model):
         }
 
     def _split_text_into_lines(self, text, max_chars_per_line=120):
-        """Dividir texto en líneas según máximo de caracteres"""
         if not text:
             return ""
 
