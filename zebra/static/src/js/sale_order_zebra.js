@@ -39,32 +39,6 @@ function configureQzApi() {
         });
     }
 }
-async function getSystemParameter(key) {
-    try {
-        const response = await fetch("/web/dataset/call_kw", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                jsonrpc: "2.0",
-                method: "call",
-                params: {
-                    model: "ir.config_parameter",
-                    method: "get_param",
-                    args: [key],
-                    kwargs: {},
-                },
-            }),
-        });
-
-        const data = await response.json();
-        return data.result;
-    } catch (error) {
-        console.error("Error obteniendo parámetro:", error);
-        return null;
-    }
-}
 async function setupQzSecurity() {
     qz.security.setCertificatePromise((resolve, reject) => {
         fetch(QZ_CERTIFICATE_URL)
@@ -126,7 +100,9 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         configureQzApi();
         await setupQzSecurity();
         if (!qz.websocket.isActive()) await qz.websocket.connect();
-        const printerName = await getSystemParameter("qz.printer.zebra.name");
+        const printerName = await fetch("/print/zebra_printer_name").then((res) =>
+            res.json()
+        );
         const availablePrinters = await qz.printers.find();
         const zebraPrinter = availablePrinters.find(
             (printer) =>
