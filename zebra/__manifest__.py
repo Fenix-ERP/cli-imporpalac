@@ -10,6 +10,7 @@
         "data/ir_config_parameter.xml",
         "security/ir.model.access.csv",
         "views/sale_order_zebra.xml",
+        "views/product_template_zebra.xml",
         "wizard/picking_zebra_print_label_views.xml",
     ],
     "assets": {

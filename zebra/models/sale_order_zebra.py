@@ -37,10 +37,12 @@ class StockPicking(models.Model):
         zpl_codes = []
         for move in moves:
             product = move.product_id
-            zpl_code = self._generate_zpl_for_products(
-                product, print_barcode, print_supplier_barcode
-            )
-            zpl_codes.append(zpl_code)
+            qty = int(move.product_uom_qty)
+            for _ in range(qty):
+                zpl_code = self._generate_zpl_for_products(
+                    product, print_barcode, print_supplier_barcode
+                )
+                zpl_codes.append(zpl_code)
 
         # Unir todos los códigos ZPL
         full_zpl = "".join(zpl_codes)
