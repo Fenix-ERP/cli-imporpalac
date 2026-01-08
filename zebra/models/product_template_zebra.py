@@ -7,7 +7,7 @@ class ProductTemplateZebra(models.Model):
 
     def action_open_print_wizard(self):
         return {
-            "name": "Print Zebra labels",
+            "name": _("Print Zebra labels"),
             "type": "ir.actions.act_window",
             "res_model": "print.label.wizard",
             "view_mode": "form",
