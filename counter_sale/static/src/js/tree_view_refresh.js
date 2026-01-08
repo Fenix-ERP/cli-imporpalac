@@ -11,6 +11,7 @@ patch(ListController.prototype, {
         this.can_refresh = false;
         this._pendingReload = false;
         this._onRefreshTreeView = null;
+        this.isDestroyed = false;
 
         onWillStart(async () => {
             const allowedModels = await fetch("/tree_view_refresh/allowed_models");
@@ -35,6 +36,11 @@ patch(ListController.prototype, {
             () => [this.editedRecord]
         );
         onWillDestroy(() => {
+            this.isDestroyed = true;
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+                this._timeoutId = null;
+            }
             if (this._onRefreshTreeView) {
                 this.env.services.bus_service.removeEventListener(
                     "notification",
@@ -44,14 +50,18 @@ patch(ListController.prototype, {
         });
     },
     _processPendingReload() {
-        setTimeout(() => {
-            if (this._pendingReload && !this.editedRecord) {
+        this._timeoutId = setTimeout(() => {
+            if (!this.isDestroyed && this._pendingReload && !this.editedRecord) {
                 this.model.load();
                 this._pendingReload = false;
             }
+            this._timeoutId = null;
         }, 100);
     },
     onRefershTreeView(ev) {
+        if (this.isDestroyed) {
+            return;
+        }
         const notifications = ev.detail;
         for (const notification of notifications) {
             if (notification.type === "refresh_tree_view.notify") {
