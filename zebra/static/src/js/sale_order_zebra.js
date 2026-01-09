@@ -122,7 +122,6 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         console.log("✅ Impresión enviada correctamente");
     } catch (err) {
         console.error("❌ Error al imprimir:", err);
-        alert("Error al imprimir: " + err.message);
         if (qz.websocket && qz.websocket.isActive()) {
             await qz.websocket.disconnect();
         }

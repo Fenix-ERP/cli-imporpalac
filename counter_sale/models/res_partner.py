@@ -7,7 +7,11 @@ class ResPartner(models.Model):
 
     @api.model
     def write(self, vals):
-        if "identifier" in vals or "vat" in vals:
+        if (
+            "identifier" in vals
+            or "vat" in vals
+            and not self.env.context.get("allow_edit_vat", False)
+        ):
             if not self.env.user.has_group(
                 "counter_sale.group_counter_sale_identifier_editor"
             ):
