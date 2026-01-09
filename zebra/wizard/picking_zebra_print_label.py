@@ -18,12 +18,5 @@ class PrintLabelWizard(models.TransientModel):
         active_model = self.env.context.get("active_model", "stock.picking")
         print_barcode = self.barcode_type == "internal"
         print_supplier_barcode = self.barcode_type == "supplier"
-
-        if active_model == "stock.picking":
-            picking = self.env["stock.picking"].browse(picking_id)
-            picking.action_print_test_label(print_barcode, print_supplier_barcode)
-        elif active_model == "product.template":
-            product = self.env["product.template"].browse(picking_id)
-            product.action_print_product_label(print_barcode, print_supplier_barcode)
-
-        return {"type": "ir.actions.act_window_close"}
+        model = self.env[active_model].browse(picking_id)
+        return model.action_print_test_label(print_barcode, print_supplier_barcode)

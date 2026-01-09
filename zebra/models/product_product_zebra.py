@@ -2,8 +2,8 @@ from odoo import _, models
 from odoo.exceptions import UserError
 
 
-class ProductTemplateZebra(models.Model):
-    _inherit = "product.template"
+class ProductProductZebra(models.Model):
+    _inherit = "product.product"
 
     def action_open_print_wizard(self):
         return {
@@ -15,7 +15,7 @@ class ProductTemplateZebra(models.Model):
             "target": "new",
             "context": dict(
                 self.env.context,
-                active_id=self.id,
+                active_id=self.product_tmpl_id.id,
                 active_model="product.template",
             ),
         }
