@@ -120,6 +120,7 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
         ];
         await qz.print(config, data);
         console.log("✅ Impresión enviada correctamente");
+        return {type: "ir.actions.act_window_close"};
     } catch (err) {
         console.error("❌ Error al imprimir:", err);
         if (qz.websocket && qz.websocket.isActive()) {
