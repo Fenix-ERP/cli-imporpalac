@@ -33,7 +33,7 @@
             ^FD{barcode}^FS
             ^FO49,150^A0N,25,25^FB735,4,6,L^FH\^CI28^FD{product_name}^FS^CI27
             ^FPH,1^FT49,327^A0N,28,43^FH\^CI28^FD{unit}^FS^CI27
-            ^FPH,1^FT0,111^A0N,28,38^FB787,1,7,R^FH\^CI28^FD{barcode}^FS^CI27
+            ^FPH,1^FT0,111^A0N,28,38^FB787,1,7,R^FH\^CI28^FD{default_code}^FS^CI27
             ^FPH,1^FO49,345^A0N,28,28^FB224,2,7,L^FH\^CI28^FD{ubication}^FS^CI27
             ^PQ1,,,Y
             ^XZ
