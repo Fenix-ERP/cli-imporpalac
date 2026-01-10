@@ -20,7 +20,9 @@ class ProductProductZebra(models.Model):
             ),
         }
 
-    def action_print_test_label(self, print_barcode=True, print_supplier_barcode=False):
+    def action_print_test_label(
+        self, print_barcode=True, print_supplier_barcode=False, count=1
+    ):
         product = self
 
         zpl_template = (
@@ -59,9 +61,11 @@ class ProductProductZebra(models.Model):
         product_lines = self._split_text_into_lines(product.name)
         product_code = product.default_code or ""
         unit = product.uom_id.name or ""
+        default_code = product.default_code or ""
 
         try:
             zpl_code = zpl_template.format(
+                default_code=default_code,
                 product_name=product_lines,
                 barcode=barcode,
                 product_code=product_code,
@@ -76,10 +80,12 @@ class ProductProductZebra(models.Model):
                 )
             ) from error
 
+        full_zpl = zpl_code * count
+
         return {
             "type": "ir.actions.client",
             "tag": "zebra_print_action",
-            "params": {"zpl_code": zpl_code},
+            "params": {"zpl_code": full_zpl},
         }
 
     def _split_text_into_lines(self, text, max_chars_per_line=120):

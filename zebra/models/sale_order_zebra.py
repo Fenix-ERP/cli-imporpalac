@@ -16,6 +16,7 @@ class StockPicking(models.Model):
             "context": dict(
                 self.env.context,
                 active_id=self.id,
+                active_model="stock.picking",
             ),
         }
 
@@ -119,6 +120,7 @@ class StockPicking(models.Model):
         product=None,
         print_barcode=True,
         print_supplier_barcode=False,
+        copies=1,
     ):
         """Generar código ZPL para un producto específico"""
         product_lines = self._split_text_into_lines(product.name) if product else ""
@@ -130,17 +132,20 @@ class StockPicking(models.Model):
         )
         unit = product.uom_id.name or ""
         ubication = self.location_dest_id.complete_name or ""
+        default_code = product.default_code or ""
 
         zpl_template = self._get_zpl_template()
 
         try:
 
             zpl_code = zpl_template.format(
+                default_code=default_code,
                 product_name=product_lines,
                 barcode=barcode,
                 product_code=product_code,
                 unit=unit,
                 ubication=ubication,
+                quantity=copies,
             )
         except Exception:
             raise UserError(
