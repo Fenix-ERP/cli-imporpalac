@@ -60,9 +60,11 @@
                 expr="//button[@name='button_validate' and hasclass('oe_highlight')]"
                 position="attributes"
             >
-                <attribute name="invisible">
-                    collection_state not in ('confirmed') or state in ('done', 'cancel')
-                </attribute>
+                <attribute
+                    name="invisible"
+                    add="collection_state not in ('confirmed') and picking_type_code != 'incoming'"
+                    separator=" or "
+                />
             </xpath>
             <xpath
                 expr="//button[@name='button_validate' and hasclass('o_btn_validate')]"

@@ -33,6 +33,7 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet//div" position="before">
                 <field name="payment_state" invisible="1" />
+                <field name="return_id" invisible="1" />
                 <widget
                     name="web_ribbon"
                     title="Not Paid"
