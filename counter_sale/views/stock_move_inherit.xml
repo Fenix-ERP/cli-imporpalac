@@ -8,9 +8,6 @@
             <xpath expr="//field[@name='move_line_ids']" position="attributes">
                 <attribute name="readonly">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='move_line_ids']" position="before">
-                <field name="state" />
-            </xpath>
         </field>
     </record>
 </odoo>
