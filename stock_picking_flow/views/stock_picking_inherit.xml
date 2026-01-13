@@ -62,7 +62,7 @@
             >
                 <attribute
                     name="invisible"
-                    add="collection_state not in ('confirmed') and picking_type_code != 'incoming'"
+                    add="collection_state in ['waiting','assigned','cancel'] or (collection_state in ['issue','done'] and picking_type_code != 'incoming')"
                     separator=" or "
                 />
             </xpath>

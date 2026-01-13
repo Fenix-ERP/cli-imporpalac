@@ -177,7 +177,10 @@ class StockPicking(models.Model):
                     _("Quantity of product %s in Issue must be not negative")
                     % product_name
                 )
-            if float_compare(demand, quant, precision_rounding=precision) > 0:
+            if (
+                not self.picking_type_code == "incoming"
+                and float_compare(demand, quant, precision_rounding=precision) > 0
+            ):
                 if not move.has_issue:
                     raise ValidationError(
                         _(
@@ -261,15 +264,15 @@ class StockPicking(models.Model):
         return confirm_res
 
     def action_confirm_picking(self):
-
+        res = super(StockPicking, self).action_confirm_picking()
         for picking in self:
-            res = picking._check_confirmable()
-            if not res and picking.picking_type_code == "outgoing":
+            confirmable = picking._check_confirmable()
+            if not confirmable and picking.picking_type_code == "outgoing":
                 return self.env.user.notify_warning(
                     message=_("This picking has been reported correctly."),
                     title=_("Issue Reported"),
                 )
-        return super(StockPicking, self).action_confirm_picking()
+        return res
 
 
 class PickingType(models.Model):

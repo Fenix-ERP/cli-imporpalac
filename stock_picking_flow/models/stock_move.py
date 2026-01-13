@@ -5,7 +5,7 @@ from odoo.tools.float_utils import float_compare
 
 class StockMove(models.Model):
     _inherit = "stock.move"
-    has_issue = fields.Boolean(default=False)
+    has_issue = fields.Boolean(default=False, copy=False)
     internal_location_id = fields.Many2one(
         "stock.location",
         string="Internal Location",
@@ -22,9 +22,10 @@ class StockMove(models.Model):
             ("out_of_stock", "Out of Stock"),
         ],
         string="Issue",
+        copy=False,
     )
-    issue_qty = fields.Float("Issue Quantity")
-    issue_notes = fields.Text(help="Here you can write your issues")
+    issue_qty = fields.Float("Issue Quantity", copy=False)
+    issue_notes = fields.Text(help="Here you can write your issues", copy=False)
 
     @api.model
     def get_issue_types(self):
