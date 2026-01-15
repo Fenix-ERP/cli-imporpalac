@@ -85,7 +85,9 @@
             <xpath expr="//field[@name='quantity']" position="attributes">
                 <attribute
                     name="readonly"
-                > parent.collection_state not in ['assigned'] </attribute>
+                    add="parent.collection_state not in ['assigned'] and parent.state in ['assigned','done','cancel']"
+                    separator=" or "
+                />
                 <attribute name="sum">product_uom_qty</attribute>
             </xpath>
             <xpath
