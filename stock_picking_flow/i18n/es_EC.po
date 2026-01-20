@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 23:01+0000\n"
-"PO-Revision-Date: 2025-12-02 23:01+0000\n"
+"POT-Creation-Date: 2026-01-20 18:10+0000\n"
+"PO-Revision-Date: 2026-01-20 18:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow
+msgid "Adjusted Quantity"
+msgstr "Cantidad Corregida"
+
+#. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_picking__collection_state__assigned
 msgid "Assigned"
 msgstr "Asignado"
-
-#. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_product_product__barcodes
-#: model:ir.model.fields,field_description:stock_picking_flow.field_product_template__barcodes
-msgid "Barcodes"
-msgstr "Códigos de barra"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__broken
@@ -161,6 +160,11 @@ msgid "Issues"
 msgstr "Incidencias"
 
 #. module: stock_picking_flow
+#: model:res.groups,name:stock_picking_flow.group_logistics_supervisor
+msgid "Logistics Supervisor"
+msgstr "Supervisor de logística"
+
+#. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__mislabelled
 msgid "Mislabelled"
 msgstr "Mal Etiquetado"
@@ -190,9 +194,9 @@ msgid "Picking not found."
 msgstr "Picking no encontrado"
 
 #. module: stock_picking_flow
-#: model:ir.model,name:stock_picking_flow.model_product_template
-msgid "Product"
-msgstr "Producto"
+#: model:ir.model,name:stock_picking_flow.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de compra"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__purchase_person_id

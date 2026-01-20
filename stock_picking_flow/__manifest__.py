@@ -10,6 +10,7 @@
         "stock",
     ],
     "data": [
+        "security/security.xml",
         "views/stock_picking_inherit.xml",
         "views/stock_move_inherit.xml",
     ],

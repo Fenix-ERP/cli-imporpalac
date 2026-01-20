@@ -90,6 +90,15 @@
                 />
                 <attribute name="sum">product_uom_qty</attribute>
             </xpath>
+            <xpath expr="//field[@name='quantity']" position="after">
+                <field
+                    name="quantity"
+                    string="Adjusted Quantity"
+                    readonly="not is_quantity_done_editable"
+                    column_invisible="parent.state not in ['assigned']"
+                    groups="stock_picking_flow.group_logistics_supervisor"
+                />
+            </xpath>
             <xpath
                 expr="//page[@name='extra']//group[@name='other_infos']//field[@name='user_id']"
                 position="after"
