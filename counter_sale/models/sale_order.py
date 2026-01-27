@@ -156,6 +156,7 @@ class SaleOrder(models.Model):
                     "payment_method": self.payment_method.id,
                     "state": "draft",
                     "company_id": self.company_id.id,
+                    "pf_branch_id": self.pf_branch_id.id,
                 }
             )
         else:
