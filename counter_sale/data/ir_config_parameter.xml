@@ -13,4 +13,9 @@
         <field name="key">refresh_tree_view.allowed_models</field>
         <field name="value" />
     </record>
+
+    <record id="refresh_tree_bus_allowed_models" model="ir.config_parameter">
+        <field name="key">refresh_tree_view.bus_allowed_models</field>
+        <field name="value" />
+    </record>
 </odoo>
