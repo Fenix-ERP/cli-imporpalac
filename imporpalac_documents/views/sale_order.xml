@@ -270,7 +270,7 @@
                         <t t-foreach="lines_to_report" t-as="line">
                             <t
                                 t-set="subtotal"
-                                t-value="subtotal + (line.price_unit * line.product_uom_qty)"
+                                t-value="subtotal + line.price_subtotal"
                             />
                             <t
                                 t-set="discount_total"
@@ -333,7 +333,7 @@
                                 class="text-end"
                             >
                                 <span
-                                    t-esc="subtotal - discount_total + tax_total"
+                                    t-esc="subtotal + tax_total"
                                     t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
                                 />
                             </td>
