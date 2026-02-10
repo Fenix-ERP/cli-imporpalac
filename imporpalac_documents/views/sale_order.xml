@@ -263,20 +263,12 @@
                 >
                     <table class="table table-sm table-borderless">
 
-                        <t t-set="subtotal" t-value="0" />
                         <t t-set="discount_total" t-value="0" />
-                        <t t-set="tax_total" t-value="0" />
-
                         <t t-foreach="lines_to_report" t-as="line">
-                            <t
-                                t-set="subtotal"
-                                t-value="subtotal + line.price_subtotal"
-                            />
                             <t
                                 t-set="discount_total"
                                 t-value="discount_total + ((line.price_unit * line.product_uom_qty) * (line.discount/100))"
                             />
-                            <t t-set="tax_total" t-value="tax_total + line.price_tax" />
                         </t>
 
                         <tr>
@@ -288,7 +280,7 @@
                                 class="text-end"
                             >
                                 <span
-                                    t-esc="subtotal"
+                                    t-field="doc.amount_untaxed"
                                     t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
                                 />
                             </td>
@@ -318,7 +310,7 @@
                                 class="text-end"
                             >
                                 <span
-                                    t-esc="tax_total"
+                                    t-field="doc.amount_tax"
                                     t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
                                 />
                             </td>
@@ -333,7 +325,7 @@
                                 class="text-end"
                             >
                                 <span
-                                    t-esc="subtotal + tax_total"
+                                    t-field="doc.amount_total"
                                     t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
                                 />
                             </td>
