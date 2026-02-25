@@ -41,7 +41,6 @@
                     string="Reserve Picking"
                     class="btn btn-primary"
                     name="action_reserve_picking"
-                    groups="counter_sale.group_counter_sale_picker"
                     invisible="collection_state!='waiting'"
                 />
                 <button
@@ -49,7 +48,6 @@
                     string="Ready"
                     class="btn btn-primary"
                     name="action_confirm_picking"
-                    groups="counter_sale.group_counter_sale_picker"
                     invisible="collection_state!='assigned' or not is_owner_picker_user"
                 />
             </xpath>
@@ -177,5 +175,13 @@
                 />
             </xpath>
         </field>
+    </record>
+    <record id="action_assign_picker_wizard" model="ir.actions.act_window">
+        <field name="name">Assign Picker</field>
+        <field name="res_model">assign.picker.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list</field>
     </record>
 </odoo>

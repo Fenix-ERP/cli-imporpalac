@@ -4,7 +4,6 @@ from odoo.exceptions import ValidationError
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
-    picker_user_id = fields.Many2one("res.users", string="Picker User", readonly=True)
     is_owner_picker_user = fields.Boolean(compute="_compute_is_owner_user")
     collection_state = fields.Selection(
         [
@@ -17,17 +16,27 @@ class StockPicking(models.Model):
         string="Collection Status",
         default="waiting",
         copy=False,
+        tracking=True,
     )
     sale_person_id = fields.Many2one(
         "res.users",
         string="Sale Person",
         compute="_compute_sale_person_id",
+        copy=False,
     )
 
     purchase_person_id = fields.Many2one(
         "res.users",
         string="Purchase Person",
         compute="_compute_purchase_person_id",
+        copy=False,
+    )
+    picker_user_id = fields.Many2one(
+        "res.users",
+        string="Picker User",
+        readonly=True,
+        copy=False,
+        tracking=True,
     )
     confirmed_date = fields.Datetime(
         string="Date confirmed",
@@ -165,6 +174,42 @@ class StockPicking(models.Model):
             "terms_and_conditions": picking.terms_and_conditions,
             "responsible_person_id": picking.sale_person_id.name
             or picking.purchase_person_id.name,
+        }
+
+    def button_validate(self):
+        valid_pickings = self.filtered(lambda p: p.collection_state == "confirmed")
+        if not valid_pickings:
+            raise ValidationError(
+                _(
+                    "Only transfers with collection state set to 'Confirmed' can be validated."
+                )
+            )
+        return super(type(valid_pickings), valid_pickings).button_validate()
+
+    @api.model
+    def action_validate_by_carrier(self, data):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+        picking_id = data.get("picking_id", False)
+        user_id = data.get("user_id")
+        picking = self.browse(picking_id)
+        if not picking.exists():
+            raise ValidationError(_("Picking not found."))
+        user = self.env["res.users"].browse(user_id)
+        if not user:
+            raise ValidationError(_("User not found."))
+        if picking.state != "assigned":
+            raise ValidationError(
+                _(
+                    "Cannot confirm this picking:'%s' is not in assigned state.",
+                    picking.display_name,
+                )
+            )
+        picking.button_validate()
+        return {
+            "picking_id": picking.id,
+            "picking_name": picking.name,
+            "picking_state": picking.state,
+            "collection_state": picking.collection_state,
         }
 
     @api.model

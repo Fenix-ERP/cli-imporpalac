@@ -57,4 +57,31 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="view_stock_picking_flow_inherit">
+        <field name="name">view.stock.picking.flow.inherit</field>
+        <field name="model">stock.picking</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//button[@name='action_reserve_picking']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                > counter_sale.group_counter_sale_picker</attribute>
+            </xpath>
+            <xpath
+                expr="//button[@name='action_confirm_picking']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                > counter_sale.group_counter_sale_picker</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
