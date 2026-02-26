@@ -184,17 +184,17 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         valid_pickings = self.filtered(lambda p: p.collection_state == "confirmed")
-        if not valid_pickings:
-            raise ValidationError(
-                _(
-                    "Only transfers with collection state"
-                    " set to 'Confirmed' can be validated."
-                )
-            )
-        return super(type(valid_pickings), valid_pickings).button_validate()
+        # if not valid_pickings:
+        #     raise ValidationError(
+        #         _(
+        #             "Only transfers with collection state"
+        #             " set to 'Confirmed' can be validated."
+        #         )
+        #     )
+        return super(StockPicking, valid_pickings).button_validate()
 
     @api.model
-    def action_validate_by_carrier(self, data):
+    def action_validate_by_driver(self, data):
         self = self.with_context(lang=self.env.user.lang or "en_US")
         picking_id = data.get("picking_id", False)
         user_id = data.get("user_id")
