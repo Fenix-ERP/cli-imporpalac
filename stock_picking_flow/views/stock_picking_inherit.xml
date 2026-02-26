@@ -178,10 +178,53 @@
     </record>
     <record id="action_assign_picker_wizard" model="ir.actions.act_window">
         <field name="name">Assign Picker</field>
-        <field name="res_model">assign.picker.wizard</field>
+        <field name="res_model">assign.user.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
+        <field name="context">{'assign_type':'picker'}</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_view_types">list</field>
+    </record>
+
+    <record id="action_assign_driver_wizard" model="ir.actions.act_window">
+        <field name="name">Assign Driver</field>
+        <field name="res_model">assign.user.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'assign_type':'driver'}</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list</field>
+    </record>
+    <record model="ir.ui.view" id="view_stock_picking_tree_add_driver_user">
+        <field
+            name="name"
+        >view.stock.picking.tree.inherit.stock.picking.flow.driver</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field
+                    name="driver_user_id"
+                    widget="many2one_avatar_user"
+                    optional="show"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_stock_picking_form_add_driver_user">
+        <field
+            name="name"
+        >view.stock.picking.form.inherit.stock.picking.flow.driver</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field
+                    name="driver_user_id"
+                    widget="many2one_avatar_user"
+                    readonly="state in ['done','cancel']"
+                />
+            </xpath>
+        </field>
     </record>
 </odoo>

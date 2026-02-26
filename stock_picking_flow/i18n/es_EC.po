@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 22:23+0000\n"
-"PO-Revision-Date: 2026-02-25 22:23+0000\n"
+"POT-Creation-Date: 2026-02-26 21:22+0000\n"
+"PO-Revision-Date: 2026-02-26 21:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,31 @@ msgid "Adjusted Quantity"
 msgstr "Cantidad Corregida"
 
 #. module: stock_picking_flow
+#: model:ir.actions.act_window,name:stock_picking_flow.action_assign_driver_wizard
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
+msgid "Assign Driver"
+msgstr "Asignar Conductor"
+
+#. module: stock_picking_flow
 #: model:ir.actions.act_window,name:stock_picking_flow.action_assign_picker_wizard
-#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_picker_wizard
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
 msgid "Assign Picker"
 msgstr "Asignar Recolector"
 
 #. module: stock_picking_flow
-#: model:ir.model,name:stock_picking_flow.model_assign_picker_wizard
-msgid "Assign Picker Wizard"
-msgstr "Asistente de Asignación Recolector"
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__assign_type
+msgid "Assign Type"
+msgstr "Tipo de asignación"
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
+msgid "Assign User"
+msgstr "Asignar Usuario"
+
+#. module: stock_picking_flow
+#: model:ir.model,name:stock_picking_flow.model_assign_user_wizard
+msgid "Assign User Wizard"
+msgstr "Asistente de asignación de usuario"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_picking__collection_state__assigned
@@ -42,7 +58,7 @@ msgid "Broken"
 msgstr "Roto"
 
 #. module: stock_picking_flow
-#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_picker_wizard
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -104,14 +120,14 @@ msgid "Confirmed"
 msgstr "Confirmado"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__create_date
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr ""
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__confirmed_date
@@ -124,9 +140,19 @@ msgid "Defective"
 msgstr "Defectuoso"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__display_name
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__display_name
 msgid "Display Name"
 msgstr "Nombre"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__assign_user_wizard__assign_type__driver
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_stock_picking__driver_user_id
+msgid "Driver User"
+msgstr "Conductor"
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,field_description:stock_picking_flow.field_stock_move__has_issue
@@ -139,7 +165,7 @@ msgid "Here you can write your issues"
 msgstr "Aquí puede escribir las incidencias"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__id
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__id
 msgid "ID"
 msgstr ""
 
@@ -192,12 +218,12 @@ msgid "Issues"
 msgstr "Incidencias"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__write_date
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -223,7 +249,8 @@ msgstr "No Calza"
 msgid ""
 "Only transfers with collection state set to 'Confirmed' can be validated."
 msgstr ""
-"Solo se pueden validar las transferencias con el estado de recolección en 'Confirmado'."
+"Solo se pueden validar las transferencias con el estado de recolección en "
+"'Confirmado'."
 
 #. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__out_of_stock
@@ -231,7 +258,7 @@ msgid "Out of Stock"
 msgstr "Sin Stock"
 
 #. module: stock_picking_flow
-#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_picker_wizard__picker_id
+#: model:ir.model.fields.selection,name:stock_picking_flow.selection__assign_user_wizard__assign_type__picker
 msgid "Picker"
 msgstr "Recolector"
 
@@ -281,7 +308,14 @@ msgid "Sale Person"
 msgstr "Vendedor"
 
 #. module: stock_picking_flow
-#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_picker_wizard
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
+msgid ""
+"Select the user who will be assigned as driver to the selected transfers."
+msgstr ""
+"Selecciona el usuario que será asignado como conductor de las transferencias seleccionadas."
+
+#. module: stock_picking_flow
+#: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
 msgid ""
 "Select the user who will be assigned as picker to the selected transfers."
 msgstr ""
@@ -330,7 +364,7 @@ msgstr "Este picking está asignado a %s, no puede ser confirmardo"
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_picking
 msgid "Transfer"
-msgstr "transferencia"
+msgstr "Transferencia"
 
 #. module: stock_picking_flow
 #. odoo-python
@@ -338,6 +372,12 @@ msgstr "transferencia"
 #, python-format
 msgid "Unknown Product"
 msgstr "Producto Desconocido"
+
+#. module: stock_picking_flow
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__driver_id
+#: model:ir.model.fields,field_description:stock_picking_flow.field_assign_user_wizard__picker_id
+msgid "User"
+msgstr "Usuario"
 
 #. module: stock_picking_flow
 #. odoo-python

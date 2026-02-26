@@ -1,1 +1,1 @@
-from . import assign_picker_wizard
+from . import assign_user_wizard

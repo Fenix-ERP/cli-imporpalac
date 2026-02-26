@@ -12,7 +12,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/security.xml",
-        "wizard/assign_picker_wizard.xml",
+        "wizard/assign_user_wizard.xml",
         "views/stock_picking_inherit.xml",
         "views/stock_move_inherit.xml",
     ],
