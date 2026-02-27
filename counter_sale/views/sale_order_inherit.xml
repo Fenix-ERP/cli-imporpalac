@@ -135,4 +135,17 @@
         >action = env['sale.order'].action_print_ticket(record.id)</field>
     </record>
 
+    <record id="hide_total_for_seller_tree_real" model="ir.ui.view">
+        <field name="name">hide.total.for.seller.tree.real</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree" />
+        <field name="priority" eval="100" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_allow_view_amount_total</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
