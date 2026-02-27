@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hide_total_signed_for_seller_tree" model="ir.ui.view">
+        <field name="name">hide.amount_total_signed.for.seller.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="priority" eval="100" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total_signed']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_allow_view_amount_total_account</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -25,6 +25,7 @@
         "data/expire_quotation_cron.xml",
         "data/ir_config_parameter.xml",
         "views/sale_order_inherit.xml",
+        "views/account_move_inherit.xml",
         "views/stock_move_inherit.xml",
         "views/stock_picking_inherit.xml",
         "views/stock_picking_multicomp_view.xml",
