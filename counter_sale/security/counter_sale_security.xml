@@ -35,11 +35,11 @@
         <field name="users" eval="[(4, ref('base.user_admin'))]" />
     </record>
     <record id="group_counter_sale_allow_view_amount_total" model="res.groups">
-        <field name="name">Can View Amount Total</field>
+        <field name="name">Can view the fields hidden in sales</field>
         <field name="category_id" ref="module_category_counter_sale" />
     </record>
     <record id="group_counter_sale_allow_view_amount_total_account" model="res.groups">
-        <field name="name">Can View Amount Total Account</field>
+        <field name="name">Can view amount total account</field>
         <field name="category_id" ref="module_category_counter_sale" />
     </record>
 </odoo>

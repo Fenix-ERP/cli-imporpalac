@@ -146,6 +146,16 @@
                     name="groups"
                 >counter_sale.group_counter_sale_allow_view_amount_total</attribute>
             </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_allow_view_amount_total</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_tax']" position="attributes">
+                <attribute
+                    name="groups"
+                >counter_sale.group_counter_sale_allow_view_amount_total</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
