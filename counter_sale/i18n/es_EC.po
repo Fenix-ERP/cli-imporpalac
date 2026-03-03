@@ -81,6 +81,12 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: counter_sale
+#: model:ir.ui.menu,name:counter_sale.menu_imports_catalog
+#: model:ir.ui.menu,name:counter_sale.menu_imports_open_catalog
+msgid "Catalog"
+msgstr "Catálogo"
+
+#. module: counter_sale
 #: model:ir.model,name:counter_sale.model_res_company
 msgid "Companies"
 msgstr "Empresas"
@@ -137,11 +143,6 @@ msgstr "Editor de Identificador/NIF"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__internal_location_id
 msgid "Internal Location"
 msgstr "Ubicación interna"
-
-#. module: counter_sale
-#: model:ir.model,name:counter_sale.model_stock_picking
-msgid "Internal Transfer Upload Imporpalac"
-msgstr "Transferir "
 
 #. module: counter_sale
 #. odoo-python

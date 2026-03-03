@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+     <menuitem
+        id="menu_imports_catalog"
+        name="Catalog"
+        parent="l10n_ec_imports.imports_root"
+        groups="bi_so_po_catalog_view.group_catalog_user"
+        sequence="5"
+    />
+    <menuitem
+        id="menu_imports_open_catalog"
+        name="Catalog"
+        parent="counter_sale.menu_imports_catalog"
+        action="bi_so_po_catalog_view.action_open_product_catalog"
+        groups="bi_so_po_catalog_view.group_catalog_user"
+        sequence="1"
+    />
+</odoo>

@@ -165,12 +165,20 @@ class StockPicking(models.Model):
                     "internalLocationId": move.internal_location_id.display_name,
                 }
             )
+        if picking.picking_type_code == "outgoing":
+            location = picking.location_id
+        elif picking.picking_type_code in ["incoming", "internal"]:
+            location = picking.location_dest_id
+        else:
+            location = False
         return {
             "id": picking.id,
             "origin": picking.origin,
             "name": picking.name,
             "partner_id": picking.partner_id.name,
             "scheduled_date": picking.scheduled_date,
+            "location_id": location.id if location else None,
+            "location_name": location.display_name if location else None,
             "state": picking.state,
             "collection_state": picking.collection_state,
             "picker_user_id": picking.picker_user_id.name,

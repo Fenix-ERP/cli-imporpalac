@@ -32,11 +32,19 @@ def generate_ean(barcode_type):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    barcode_supp = fields.Char("Supplier Barcode", compute="_compute_supp_barcode")
+    barcode_supp = fields.Char(
+        "Supplier Barcode",
+        compute="_compute_supp_barcode",
+        inverse="_inverse_barcode_supp",
+        store=True,
+    )
 
     @api.depends("product_variant_ids.barcode_supp")
     def _compute_supp_barcode(self):
         self._compute_template_field_from_variant_field("barcode_supp")
+
+    def _inverse_barcode_supp(self):
+        self._set_product_variant_field("barcode_supp")
 
     sh_product_barcode_img_supp = fields.Binary(
         string="Supplier Barcode Image", readonly=True

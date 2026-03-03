@@ -19,6 +19,7 @@
         "base_accounting_kit",
         "sale_stock",
         "price_list_line",
+        "l10n_ec_imports",
     ],
     "data": [
         "security/counter_sale_security.xml",
@@ -31,6 +32,7 @@
         "views/stock_picking_multicomp_view.xml",
         "views/account_payment_inherit.xml",
         "views/view_res_config_setting.xml",
+        "views/imports_inherit.xml",
         "wizards/sale_order_cancel_wizard_view.xml",
     ],
     "assets": {
