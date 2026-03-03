@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 20:50+0000\n"
-"PO-Revision-Date: 2026-02-27 20:50+0000\n"
+"POT-Creation-Date: 2026-03-02 14:40+0000\n"
+"PO-Revision-Date: 2026-03-02 14:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,14 +66,14 @@ msgid "Base"
 msgstr ""
 
 #. module: counter_sale
-#: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total
-msgid "Can View Amount Total"
-msgstr "Puede ver en ventas el total"
+#: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total_account
+msgid "Can view amount total account"
+msgstr "Puede ver en facturación el total"
 
 #. module: counter_sale
-#: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total_account
-msgid "Can View Amount Total Account"
-msgstr "Puede ver en facturación el total"
+#: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total
+msgid "Can view the fields hidden in sales"
+msgstr "Puedo ver los campos ocultos en ventas"
 
 #. module: counter_sale
 #: model_terms:ir.ui.view,arch_db:counter_sale.view_sale_order_counter_sale
