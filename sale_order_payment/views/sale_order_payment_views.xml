@@ -14,11 +14,20 @@
                 <field name="order_id" readonly="1" widget="many2one" />
                 <field name="date_order" readonly="1" optional="hide" />
                 <field name="hour_register" readonly="1" />
-                <field name="amount" readonly="1" />
+                <field
+                    name="amount"
+                    readonly="1"
+                    invisible="not user_can_view_amounts"
+                />
                 <field name="rectified_order_id" readonly="1" />
                 <field name="rectified_date_order" optional="hide" readonly="1" />
-                <field name="rectified_amount" readonly="1" />
+                <field
+                    name="rectified_amount"
+                    readonly="1"
+                    invisible="not user_can_view_amounts"
+                />
                 <field name="difference" readonly="1" />
+                <field name="user_can_view_amounts" column_invisible="1" />
                 <field
                     name="payment_method"
                     string="Payment Form"
