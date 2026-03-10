@@ -10,4 +10,14 @@
             </xpath>
         </field>
     </record>
+    <record model="ir.ui.view" id="view_account_payment_register">
+        <field name="name">view.account.payment.register</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='global_reference']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
