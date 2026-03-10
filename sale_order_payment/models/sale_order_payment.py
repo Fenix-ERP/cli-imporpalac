@@ -99,6 +99,11 @@ class SaleOrderPayment(models.Model):
         related="order_id.delivery_status",
     )
 
+    user_can_view_amounts = fields.Boolean(
+        compute="_compute_user_can_view_amounts",
+        help="Check if current user can view amount fields",
+    )
+
     @api.depends("journal_id")
     def _compute_payment_method_line_fields(self):
         for rec in self:
@@ -121,6 +126,68 @@ class SaleOrderPayment(models.Model):
     def _compute_amount(self):
         for rec in self:
             rec.amount = rec.order_id.amount_total
+
+    @api.depends_context("group_by")
+    def _compute_user_can_view_amounts(self):
+        group = self.env.ref("sale_order_payment.group_sale_order_payment_view_amount")
+        user_in_group = self.env.user in group.users
+        group_by = self.env.context.get("group_by")
+
+        for rec in self:
+            rec.user_can_view_amounts = user_in_group if group_by else True
+
+    def read_group(
+        self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True
+    ):
+        """Override read_group to restrict field access on grouped searches"""
+        group = self.env.ref("sale_order_payment.group_sale_order_payment_view_amount")
+        user_in_group = self.env.user in group.users
+
+        if not user_in_group and groupby:
+            fields = [
+                f
+                for f in fields
+                if f
+                not in [
+                    "amount",
+                    "rectified_amount",
+                    "difference",
+                    "user_can_view_amounts",
+                ]
+            ]
+
+        result = super().read_group(
+            domain=domain,
+            fields=fields,
+            groupby=groupby,
+            offset=offset,
+            limit=limit,
+            orderby=orderby,
+            lazy=lazy,
+        )
+
+        return result
+
+    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+        """Override search_read to handle grouped searches"""
+        group_by = self.env.context.get("group_by")
+
+        group = self.env.ref("sale_order_payment.group_sale_order_payment_view_amount")
+        user_in_group = self.env.user in group.users
+
+        result = super().search_read(
+            domain=domain, fields=fields, offset=offset, limit=limit, order=order
+        )
+
+        if group_by and not user_in_group:
+            for record in result:
+                if isinstance(record, dict):
+                    record["amount"] = False
+                    record["rectified_amount"] = False
+                    record["difference"] = False
+                    record["user_can_view_amounts"] = False
+
+        return result
 
     @api.depends("amount", "rectified_amount", "state")
     def _compute_difference(self):

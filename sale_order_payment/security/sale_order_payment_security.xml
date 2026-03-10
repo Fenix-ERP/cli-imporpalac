@@ -1,4 +1,15 @@
 <odoo>
+    <record id="module_category_sale_order_payment" model="ir.module.category">
+        <field name="name">Sale Order Payment</field>
+        <field name="description">Access groups for sale order payment</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_sale_order_payment_view_amount" model="res.groups">
+        <field name="name">Can view payment amount fields</field>
+        <field name="category_id" ref="module_category_sale_order_payment" />
+    </record>
+
     <record id="sale_order_payment_company_rule" model="ir.rule">
         <field name="name">Filtrar pagos por empresa</field>
         <field name="model_id" ref="model_sale_order_payment" />
