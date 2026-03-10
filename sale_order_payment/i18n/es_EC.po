@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-05 05:34+0000\n"
-"PO-Revision-Date: 2026-01-05 05:34+0000\n"
+"POT-Creation-Date: 2026-03-10 14:47+0000\n"
+"PO-Revision-Date: 2026-03-10 14:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,11 @@ msgstr ""
 #, python-format
 msgid " with the card: '%(card)s'."
 msgstr " con la tarjeta '%(card)s'."
+
+#. module: sale_order_payment
+#: model:ir.module.category,description:sale_order_payment.module_category_sale_order_payment
+msgid "Access groups for sale order payment"
+msgstr "Acceder a grupos para pago de orden de venta"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_line__chq_agent
@@ -68,6 +73,11 @@ msgid "Buscar Pagos"
 msgstr ""
 
 #. module: sale_order_payment
+#: model:res.groups,name:sale_order_payment.group_sale_order_payment_view_amount
+msgid "Can view payment amount fields"
+msgstr "Puede ver los campos en pago de venta"
+
+#. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.sale_order_payment_method_view_form
 msgid "Cancel"
 msgstr "Cancelar"
@@ -101,6 +111,11 @@ msgstr "Es requerida una tarjeta para este tipo de diario"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__user_id
 msgid "Cashier"
 msgstr "Cajero"
+
+#. module: sale_order_payment
+#: model:ir.model.fields,help:sale_order_payment.field_sale_order_payment__user_can_view_amounts
+msgid "Check if current user can view amount fields"
+msgstr "Compruebe si el usuario actual puede ver los campos de importe"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__client_id
@@ -222,6 +237,11 @@ msgstr "Agrupado por"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__id
 msgid "ID"
 msgstr ""
+
+#. module: sale_order_payment
+#: model:ir.model,name:sale_order_payment.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferir "
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__is_pdc
@@ -478,6 +498,7 @@ msgstr "Orden de venta"
 #. module: sale_order_payment
 #: model:ir.model,name:sale_order_payment.model_sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__sale_order_payment_id
+#: model:ir.module.category,name:sale_order_payment.module_category_sale_order_payment
 msgid "Sale Order Payment"
 msgstr "Pago de orden de venta"
 
@@ -565,9 +586,9 @@ msgid "This payment cannot be processed because the order have issues."
 msgstr "Este pago no se puede procesar porque el pedido tiene incidencias."
 
 #. module: sale_order_payment
-#: model:ir.model,name:sale_order_payment.model_stock_picking
-msgid "Transfer"
-msgstr "Transferencia"
+#: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__user_can_view_amounts
+msgid "User Can View Amounts"
+msgstr "El usuario puede ver los campos"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_line_wizard__wizard_id
