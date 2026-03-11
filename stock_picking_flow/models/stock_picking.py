@@ -171,7 +171,11 @@ class StockPicking(models.Model):
             location = picking.location_dest_id
         else:
             location = False
-        return {
+        config_param = self.env["ir.config_parameter"].sudo()
+        filter_location = bool(
+            config_param.get_param("stock_picking_flow.filter_location", default=False)
+        )
+        data = {
             "id": picking.id,
             "origin": picking.origin,
             "name": picking.name,
@@ -189,6 +193,9 @@ class StockPicking(models.Model):
             "responsible_person_id": picking.sale_person_id.name
             or picking.purchase_person_id.name,
         }
+        if filter_location:
+            data["filter_location"] = filter_location
+        return data
 
     def button_validate(self):
         valid_pickings = self.filtered(lambda p: p.collection_state == "confirmed")
@@ -215,7 +222,8 @@ class StockPicking(models.Model):
         if not picking.driver_user_id:
             raise ValidationError(
                 _(
-                    "This picking has no driver assigned. Please assign a driver before validating it."
+                    "This picking has no driver assigned. "
+                    "Please assign a driver before validating it."
                 )
             )
         if picking.driver_user_id.id != user_id:
