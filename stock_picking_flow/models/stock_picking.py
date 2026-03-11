@@ -212,7 +212,7 @@ class StockPicking(models.Model):
         user = self.env["res.users"].browse(user_id)
         if not user:
             raise ValidationError(_("User not found."))
-        if picking.driver_user_id and picking.driver_user_id.id != user_id:
+        if picking.driver_user_id.id != user_id:
             raise ValidationError(
                 _(
                     "The driver assigned to this pikcing is %s, you cannot validate it",
