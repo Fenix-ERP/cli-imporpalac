@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 21:22+0000\n"
-"PO-Revision-Date: 2026-02-26 21:22+0000\n"
+"POT-Creation-Date: 2026-03-11 17:43+0000\n"
+"PO-Revision-Date: 2026-03-11 17:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -243,16 +243,6 @@ msgid "Not Fitting"
 msgstr "No Calza"
 
 #. module: stock_picking_flow
-#. odoo-python
-#: code:addons/stock_picking_flow/models/stock_picking.py:0
-#, python-format
-msgid ""
-"Only transfers with collection state set to 'Confirmed' can be validated."
-msgstr ""
-"Solo se pueden validar las transferencias con el estado de recolección en "
-"'Confirmado'."
-
-#. module: stock_picking_flow
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__out_of_stock
 msgid "Out of Stock"
 msgstr "Sin Stock"
@@ -312,14 +302,16 @@ msgstr "Vendedor"
 msgid ""
 "Select the user who will be assigned as driver to the selected transfers."
 msgstr ""
-"Selecciona el usuario que será asignado como conductor de las transferencias seleccionadas."
+"Selecciona el usuario que será asignado como conductor de las transferencias"
+" seleccionadas."
 
 #. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_assign_user_wizard
 msgid ""
 "Select the user who will be assigned as picker to the selected transfers."
 msgstr ""
-"Seleccione el usuario que será asignado como recolector de las transferencias seleccionadas."
+"Seleccione el usuario que será asignado como recolector de las "
+"transferencias seleccionadas."
 
 #. module: stock_picking_flow
 #: model:ir.model.fields,help:stock_picking_flow.field_stock_move__internal_location_id
@@ -346,6 +338,13 @@ msgstr "Línea de movimiento de stock no encontrada."
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_move__issue_type__struck
 msgid "Struck"
 msgstr "Golpeado"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "The driver assigned to this pikcing is %s, you cannot validate it"
+msgstr "El conductor asignado a este pikcing es %s, no puedes validarlo"
 
 #. module: stock_picking_flow
 #. odoo-python
