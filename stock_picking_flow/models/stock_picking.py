@@ -34,7 +34,6 @@ class StockPicking(models.Model):
     picker_user_id = fields.Many2one(
         "res.users",
         string="Picker User",
-        readonly=True,
         copy=False,
         tracking=True,
     )
@@ -139,7 +138,7 @@ class StockPicking(models.Model):
 
     def action_reserve_picking(self):
         for picking in self:
-            picking.picker_user_id = self.env.user.id
+            picking.picker_user_id = picking.picker_user_id or self.env.user.id
             picking.collection_state = "assigned"
 
     @api.model
@@ -312,7 +311,6 @@ class StockPicking(models.Model):
 
     def action_confirm_picking(self):
         for picking in self:
-            picking.picker_user_id = self.env.user.id
             picking.sudo().collection_state = "confirmed"
 
     @api.model_create_multi
