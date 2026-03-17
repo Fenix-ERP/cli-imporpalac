@@ -98,6 +98,9 @@
                     context="{'force_dissable_locked': True,}"
                 />
             </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </xpath>
         </field>
     </record>
 
