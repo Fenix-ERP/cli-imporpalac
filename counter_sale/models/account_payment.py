@@ -7,6 +7,7 @@ class AccountPayment(models.Model):
 
     @api.constrains("payment_method_line_id", "global_reference", "journal_id")
     def _check_unique_global_reference(self):
+        self.ensure_one()
         context_params = self.env.context.get("params") or {}
         if context_params.get("model") == "account.card.settlement":
             return
@@ -58,7 +59,7 @@ class AccountPayment(models.Model):
             GROUP BY sopl.id, sopl.reference
             HAVING COUNT(*) >= 1
         """.format(
-            filter_card_sale="AND sopl.card_id = %s" if self.payment_card_id else ""
+            filter_card_sale="AND sopl.card_id != %s" if self.payment_card_id else ""
         )
         params = [tuple(account_id.ids), self.global_reference]
         if self.payment_card_id:
