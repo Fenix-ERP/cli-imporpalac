@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class StockMove(models.Model):
@@ -21,3 +22,23 @@ class StockMove(models.Model):
         related="sale_line_id.internal_location_id",
         readonly=True,
     )
+
+    @api.constrains("quantity", "product_uom_qty")
+    def _check_overdelivery_quantity(self):
+        for move in self:
+            if not move.picking_id:
+                continue
+
+            if move.quantity > move.product_uom_qty:
+                raise ValidationError(
+                    _(
+                        "You cannot enter a quantity greater than the "
+                        "requested amount for product %(product)s. "
+                        "Requested: %(requested)s, Entered: %(entered)s"
+                    )
+                    % {
+                        "product": move.product_id.display_name,
+                        "requested": move.product_uom_qty,
+                        "entered": move.quantity,
+                    }
+                )
