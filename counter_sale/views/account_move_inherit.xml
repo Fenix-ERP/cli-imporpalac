@@ -36,4 +36,31 @@
             </xpath>
         </field>
     </record>
+
+    <record id="hide_sum_amount_on_groupby_tree" model="ir.ui.view">
+        <field name="name">hide.sum.amount.on.groupby.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="priority" eval="101" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total_signed']" position="attributes">
+                <attribute
+                    name="invisible"
+                >not user_can_view_amount_on_groupby</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed_signed']" position="attributes">
+                <attribute
+                    name="invisible"
+                >not user_can_view_amount_on_groupby</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_tax_signed']" position="attributes">
+                <attribute
+                    name="invisible"
+                >not user_can_view_amount_on_groupby</attribute>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <field name="user_can_view_amount_on_groupby" column_invisible="1" />
+            </xpath>
+        </field>
+    </record>
 </odoo>

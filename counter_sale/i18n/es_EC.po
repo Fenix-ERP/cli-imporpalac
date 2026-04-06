@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 23:01+0000\n"
-"PO-Revision-Date: 2026-04-01 23:01+0000\n"
+"POT-Creation-Date: 2026-04-06 19:55+0000\n"
+"PO-Revision-Date: 2026-04-06 19:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "Puede ver en facturación el total"
 #. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total
 msgid "Can view the fields hidden in sales"
-msgstr "Puedo ver los campos ocultos en ventas"
+msgstr "Puede ver en ventas el total"
 
 #. module: counter_sale
 #: model_terms:ir.ui.view,arch_db:counter_sale.view_sale_order_counter_sale
@@ -85,6 +85,15 @@ msgstr "Cancelar"
 #: model:ir.ui.menu,name:counter_sale.menu_imports_open_catalog
 msgid "Catalog"
 msgstr "Catálogo"
+
+#. module: counter_sale
+#: model:ir.model.fields,help:counter_sale.field_account_bank_statement_line__user_can_view_amount_on_groupby
+#: model:ir.model.fields,help:counter_sale.field_account_move__user_can_view_amount_on_groupby
+#: model:ir.model.fields,help:counter_sale.field_account_payment__user_can_view_amount_on_groupby
+msgid "Check if current user can view amount fields when groupby is applied"
+msgstr ""
+"Compruebe si el usuario actual puede ver los campos de cantidad cuando se "
+"aplica agrupación"
 
 #. module: counter_sale
 #: model:ir.model,name:counter_sale.model_res_company
@@ -135,6 +144,11 @@ msgid "Expired"
 msgstr "Expirada"
 
 #. module: counter_sale
+#: model:res.groups,name:counter_sale.group_counter_sale_hide_amount_on_groupby
+msgid "Hide amount fields on groupby"
+msgstr "Ocultar los campos en facturación cuando se agrupa"
+
+#. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_identifier_editor
 msgid "Identifier/Vat Editor"
 msgstr "Editor de Identificador/NIF"
@@ -143,6 +157,11 @@ msgstr "Editor de Identificador/NIF"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_move__internal_location_id
 msgid "Internal Location"
 msgstr "Ubicación interna"
+
+#. module: counter_sale
+#: model:ir.model,name:counter_sale.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferir "
 
 #. module: counter_sale
 #. odoo-python
@@ -378,6 +397,13 @@ msgid "Unknown Product"
 msgstr "Producto Desconocido"
 
 #. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_account_bank_statement_line__user_can_view_amount_on_groupby
+#: model:ir.model.fields,field_description:counter_sale.field_account_move__user_can_view_amount_on_groupby
+#: model:ir.model.fields,field_description:counter_sale.field_account_payment__user_can_view_amount_on_groupby
+msgid "User Can View Amount On Groupby"
+msgstr "El usuario puede ver la cantidad cuando se agrupa"
+
+#. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/stock_move.py:0
 #, python-format
@@ -385,5 +411,5 @@ msgid ""
 "You cannot enter a quantity greater than the requested amount for product "
 "%(product)s. Requested: %(requested)s, Entered: %(entered)s"
 msgstr ""
-"No puede ingresar una cantidad mayor que la cantidad solicitada para el producto "
-"%(product)s. Solicitado: %(requested)s, Ingresado: %(entered)s"
+"No puede ingresar una cantidad mayor que la cantidad solicitada para el "
+"producto %(product)s. Solicitado: %(requested)s, Ingresado: %(entered)s"
