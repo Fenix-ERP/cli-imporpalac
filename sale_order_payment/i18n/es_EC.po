@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 14:47+0000\n"
-"PO-Revision-Date: 2026-03-10 14:47+0000\n"
+"POT-Creation-Date: 2026-04-06 16:27+0000\n"
+"PO-Revision-Date: 2026-04-06 16:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,7 @@ msgstr "Cancelar"
 
 #. module: sale_order_payment
 #: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__cancel
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Cancelled"
 msgstr "Cancelado"
 
@@ -147,8 +148,8 @@ msgstr "Confirmar el método de pago"
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
-msgid "Contacto"
-msgstr ""
+msgid "Contact"
+msgstr "Contacto"
 
 #. module: sale_order_payment
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment__create_uid
@@ -219,11 +220,6 @@ msgstr "Nombre"
 #: model:ir.model.fields,field_description:sale_order_payment.field_sale_order_payment_method_wizard__chq_due_date
 msgid "Due Date"
 msgstr "Fecha de vencimiento"
-
-#. module: sale_order_payment
-#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
-msgid "Fecha"
-msgstr ""
 
 #. module: sale_order_payment
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
@@ -335,11 +331,6 @@ msgid "PDC Payment Date"
 msgstr "Fecha de Pago PDC"
 
 #. module: sale_order_payment
-#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree
-msgid "Pagos de Orden de Venta"
-msgstr ""
-
-#. module: sale_order_payment
 #: model:ir.model.fields.selection,name:sale_order_payment.selection__stock_picking__payment_state__paid
 #: model_terms:ir.ui.view,arch_db:sale_order_payment.view_stock_picking_form_inherit_payment
 msgid "Paid"
@@ -436,6 +427,7 @@ msgstr "Los pagos no pueden ser eliminados."
 
 #. module: sale_order_payment
 #: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__draft
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Pending"
 msgstr "Pendiente"
 
@@ -458,6 +450,7 @@ msgstr "Info. Cheque Postfechado"
 
 #. module: sale_order_payment
 #: model:ir.model.fields.selection,name:sale_order_payment.selection__sale_order_payment__state__processed
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
 msgid "Processed"
 msgstr "Procesado"
 
@@ -518,8 +511,17 @@ msgid "Sale Order Payment Method Wizard"
 msgstr "Métodos de pago"
 
 #. module: sale_order_payment
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_search
+msgid "Sale Payment"
+msgstr "Pago de venta"
+
+#. module: sale_order_payment
+#. odoo-python
+#: code:addons/sale_order_payment/models/sale_order_payment.py:0
 #: model:ir.actions.act_window,name:sale_order_payment.sale_order_payment_action
+#: model_terms:ir.ui.view,arch_db:sale_order_payment.view_sale_order_payment_tree
 #: model:ir.ui.menu,name:sale_order_payment.menu_sale_order_payment_root
+#, python-format
 msgid "Sale Payments"
 msgstr "Pagos de venta"
 

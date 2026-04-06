@@ -4,12 +4,7 @@
         <field name="name">sale.order.payment.tree</field>
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
-            <tree
-                string="Pagos de Orden de Venta"
-                default_order="date_order desc"
-                editable="bottom"
-                create="false"
-            >
+            <tree string="Sale Payments" default_order="date_order desc" create="false">
                 <field name="client_id" readonly="1" />
                 <field name="order_id" readonly="1" widget="many2one" />
                 <field name="date_order" readonly="1" optional="hide" />
@@ -105,9 +100,30 @@
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
             <search string="Buscar Pagos">
-                <field name="client_id" string="Contacto" />
-                <field name="date_order" string="Fecha" />
+                <field
+                    name="name"
+                    string="Sale Payment"
+                    filter_domain="['|',('client_id', 'ilike', self),('order_id', 'ilike', self)]"
+                />
+                <field name="order_id" />
+                <field name="client_id" string="Contact" />
+                <field name="date_order" string="Date" />
                 <filter name="date_order" string="Date" date="date_order" />
+                <filter
+                    name="state"
+                    string="Pending"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter
+                    name="state"
+                    string="Processed"
+                    domain="[('state', '=', 'processed')]"
+                />
+                <filter
+                    name="state"
+                    string="Cancelled"
+                    domain="[('state', '=', 'cancel')]"
+                />
                 <group name="groupby" string="Group by">
                     <filter
                         name="client_groupby"

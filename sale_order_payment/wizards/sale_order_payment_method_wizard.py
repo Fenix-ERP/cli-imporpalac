@@ -237,3 +237,12 @@ class SaleOrderPaymentMethodLine(models.TransientModel):
                 raise ValidationError(
                     _("Card Used is required for this type of journal")
                 )
+
+    @api.onchange("journal_id")
+    def _onchange_journal_id(self):
+        for record in self:
+            if (
+                record.payment_method_line_id
+                and record.payment_method_line_id.journal_id != record.journal_id
+            ):
+                record.payment_method_line_id = False

@@ -436,7 +436,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
-            "name": "Sale Payments",
+            "name": _("Sale Payments"),
             "res_model": "sale.order.payment",
             "view_mode": "tree",
             "domain": [("order_id", "=", self.id)],
