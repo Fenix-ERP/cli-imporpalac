@@ -4,7 +4,12 @@
         <field name="name">sale.order.payment.tree</field>
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
-            <tree string="Sale Payments" default_order="date_order desc" create="false">
+            <tree string="Sale Payments"
+                default_order="date_order desc"
+                editable="bottom"
+                create="false"
+                delete="false"
+            >
                 <field name="client_id" readonly="1" />
                 <field name="order_id" readonly="1" widget="many2one" />
                 <field name="date_order" readonly="1" optional="hide" />
