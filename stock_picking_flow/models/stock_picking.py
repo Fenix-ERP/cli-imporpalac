@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class StockPicking(models.Model):
@@ -319,6 +319,47 @@ class StockPicking(models.Model):
             if vals.get("acc_number"):
                 vals["picker_user_id"] = self.env.user.id
         return super(StockPicking, self).create(vals_list)
+
+    def action_unassign_picker(self):
+        allowed_states = [
+            "waiting",
+            "assigned",
+        ]
+
+        for picking in self:
+            if picking.collection_state not in allowed_states:
+                raise UserError(
+                    _("You cannot unassign a picker user in state '%s'.")
+                    % self.get_state_label("collection_state", picking.collection_state)
+                )
+
+            picking.sudo().write(
+                {
+                    "picker_user_id": False,
+                    "collection_state": "waiting",
+                }
+            )
+            picking.move_line_ids.sudo().write(
+                {
+                    "quantity": 0,
+                }
+            )
+
+    def action_unassign_driver(self):
+        not_allowed_states = ["done", "cancel"]
+
+        for picking in self:
+            if picking.state in not_allowed_states:
+                raise UserError(
+                    _("You cannot unassign a driver user in state '%s'.")
+                    % self.get_state_label("state", picking.state)
+                )
+
+            picking.sudo().write(
+                {
+                    "driver_user_id": False,
+                }
+            )
 
 
 class ReturnPicking(models.TransientModel):

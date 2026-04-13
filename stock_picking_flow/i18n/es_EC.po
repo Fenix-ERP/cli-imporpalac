@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 20:29+0000\n"
-"PO-Revision-Date: 2026-03-11 20:29+0000\n"
+"POT-Creation-Date: 2026-04-12 01:11+0000\n"
+"PO-Revision-Date: 2026-04-12 01:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -354,8 +354,8 @@ msgid ""
 "This picking has no driver assigned. Please assign a driver before "
 "validating it."
 msgstr ""
-"Este picking no tiene ningún conductor asignado. Por favor asigne "
-"un conductor antes de validarlo."
+"Este picking no tiene ningún conductor asignado. Por favor asigne un "
+"conductor antes de validarlo."
 
 #. module: stock_picking_flow
 #. odoo-python
@@ -374,7 +374,17 @@ msgstr "Este picking está asignado a %s, no puede ser confirmardo"
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_picking
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Trasladar"
+
+#. module: stock_picking_flow
+#: model:ir.actions.server,name:stock_picking_flow.action_unassign_driver
+msgid "Unassign Driver"
+msgstr "Desasignar Conductor"
+
+#. module: stock_picking_flow
+#: model:ir.actions.server,name:stock_picking_flow.action_unassign_picker
+msgid "Unassign Picker"
+msgstr "Desasignar Recolector"
 
 #. module: stock_picking_flow
 #. odoo-python
@@ -405,6 +415,20 @@ msgstr "En espera"
 #: model:ir.model.fields.selection,name:stock_picking_flow.selection__stock_picking__collection_state__issue
 msgid "With Issue"
 msgstr "Incidencia"
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "You cannot unassign a driver user in state '%s'."
+msgstr "No se puede desasignar el conductor con el picking en estado '%s'."
+
+#. module: stock_picking_flow
+#. odoo-python
+#: code:addons/stock_picking_flow/models/stock_picking.py:0
+#, python-format
+msgid "You cannot unassign a picker user in state '%s'."
+msgstr "No se puede desasignar el recolector con el picking en estado '%s'."
 
 #. module: stock_picking_flow
 #: model_terms:ir.ui.view,arch_db:stock_picking_flow.view_stock_picking_form_inherit_stock_picking_flow

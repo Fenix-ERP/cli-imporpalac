@@ -4,7 +4,8 @@
         <field name="name">sale.order.payment.tree</field>
         <field name="model">sale.order.payment</field>
         <field name="arch" type="xml">
-            <tree string="Sale Payments"
+            <tree
+                string="Sale Payments"
                 default_order="date_order desc"
                 editable="bottom"
                 create="false"

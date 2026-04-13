@@ -189,6 +189,10 @@
         <field name="context">{'assign_type':'picker'}</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_view_types">list</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_picking_flow.group_logistics_supervisor'))]"
+        />
     </record>
 
     <record id="action_assign_driver_wizard" model="ir.actions.act_window">
@@ -199,7 +203,41 @@
         <field name="context">{'assign_type':'driver'}</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_view_types">list</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_picking_flow.group_logistics_supervisor'))]"
+        />
     </record>
+    <record id="action_unassign_picker" model="ir.actions.server">
+        <field name="name">Unassign Picker</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list,form</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_picking_flow.group_logistics_supervisor'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">
+            records.action_unassign_picker()
+        </field>
+    </record>
+    <record id="action_unassign_driver" model="ir.actions.server">
+        <field name="name">Unassign Driver</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list,form</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_picking_flow.group_logistics_supervisor'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">
+            records.action_unassign_driver()
+        </field>
+    </record>
+
+
     <record model="ir.ui.view" id="view_stock_picking_tree_add_driver_user">
         <field
             name="name"
@@ -209,9 +247,14 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="after">
                 <field
+                    name="picker_user_id"
+                    widget="many2one_avatar_user"
+                    optional="hide"
+                />
+                <field
                     name="driver_user_id"
                     widget="many2one_avatar_user"
-                    optional="show"
+                    optional="hide"
                 />
             </xpath>
         </field>
