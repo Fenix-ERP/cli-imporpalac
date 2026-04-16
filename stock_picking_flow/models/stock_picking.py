@@ -196,6 +196,48 @@ class StockPicking(models.Model):
             data["filter_location"] = filter_location
         return data
 
+    @api.model
+    def get_stock_moves(self, picking_id, limit=80, page=1):
+        self = self.with_context(lang=self.env.user.lang or "en_US")
+
+        picking = self.browse(picking_id)
+        if not picking.exists():
+            raise ValidationError(_("Stock Picking not found."))
+
+        limit = int(limit or 20)
+        page = int(page or 1)
+        offset = (page - 1) * limit
+
+        Move = self.env["stock.move"]
+
+        moves = Move.search(
+            [
+                ("picking_id", "=", picking.id),
+                ("state", "!=", "cancel"),
+            ],
+            limit=limit,
+            offset=offset,
+        )
+
+        result = []
+        for move in moves:
+            result.append(
+                {
+                    "id": move.id,
+                    "productId": {
+                        "id": move.product_id.product_tmpl_id.id,
+                        "qtyAvailable": move.product_id.qty_available,
+                        "barcodes": move.product_id.product_tmpl_id.barcodes,
+                        "name": move.product_id.product_tmpl_id.display_name,
+                    },
+                    "productUomQty": move.product_uom_qty,
+                    "quantity": 0,
+                    "internalLocationId": move.internal_location_id.display_name,
+                }
+            )
+
+        return result
+
     def button_validate(self):
         valid_pickings = self.filtered(lambda p: p.collection_state == "confirmed")
         # if not valid_pickings:
