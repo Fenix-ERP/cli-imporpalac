@@ -20,6 +20,8 @@ class SaleOrderLine(models.Model):
     )
     def _onchange_line_pricelist_id(self):
         for line in self:
+            if line.product_id.type != "product":
+                continue
             pricelist = line.line_pricelist_id or line.order_id.pricelist_id
             if line.product_id and pricelist:
                 self.env.cr.execute(

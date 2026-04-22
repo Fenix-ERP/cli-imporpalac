@@ -44,7 +44,8 @@ class SaleOrder(models.Model):
                 continue
             for line in order.order_line:
                 product = line.product_id
-
+                if product.type != "product":
+                    continue
                 qty = line.product_uom_qty or 1
                 result = wholesale._compute_price_rule(product, qty)
                 price, rule_id = result.get(product.id, (0.0, False))
