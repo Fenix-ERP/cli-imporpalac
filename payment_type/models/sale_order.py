@@ -50,25 +50,15 @@ class SaleOrder(models.Model):
 
             if self.payment_method and self.payment_method != cash_payment:
                 self.payment_method = cash_payment
-                return {
-                    "warning": {
-                        "title": _("Payment method not allowed"),
-                        "message": _(
-                            "For end consumers, only cash payment is allowed."
-                        ),
-                    }
-                }
+                raise ValidationError(
+                    _("For end consumers, only cash payment is allowed.")
+                )
 
             if self.pricelist_id and self.pricelist_id != cash_pricelist:
                 self.pricelist_id = cash_pricelist
-                return {
-                    "warning": {
-                        "title": _("Price list not allowed"),
-                        "message": _(
-                            "For end consumers, only the cash price list is allowed."
-                        ),
-                    }
-                }
+                raise ValidationError(
+                    _("For end consumers, only cash payment is allowed.")
+                )
 
     def action_confirm(self):
 
