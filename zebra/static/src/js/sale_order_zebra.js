@@ -1,13 +1,12 @@
 /** @odoo-module **/
 /* global qz */
 import {registry} from "@web/core/registry";
-
+import {_t} from "@web/core/l10n/translation";
 const RSVP_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/rsvp/4.8.5/rsvp.min.js";
 const QZ_TRAY_CDN_URL = "https://cdn.jsdelivr.net/npm/qz-tray@2.1.0/qz-tray.js";
 const QZ_CERTIFICATE_URL = "/qz/certificate";
 const QZ_SIGNATURE_URL = "/qz/sign";
 
-// Cargar librería si no existe
 async function loadScriptIfNeeded(url, globalVar) {
     if (window[globalVar]) return;
     return new Promise((resolve, reject) => {
@@ -20,13 +19,9 @@ async function loadScriptIfNeeded(url, globalVar) {
 }
 function configureQzApi() {
     if (!qz.api) return;
-
-    // Forzar uso de Promises de JavaScript
     if (qz.api.setPromiseType) {
         qz.api.setPromiseType((resolver) => new Promise(resolver));
     }
-
-    // Definir SHA-256 para QZ
     if (qz.api.setSha256Type) {
         qz.api.setSha256Type(async (data) => {
             const hashBuffer = await crypto.subtle.digest(
@@ -89,12 +84,13 @@ const actionRegistry = registry.category("actions");
 actionRegistry.add("zebra_print_action", async (env, action) => {
     const zplCode = action.params.zpl_code;
     if (!zplCode) {
-        alert("No hay ZPL para imprimir");
+        this.env.services.notification.add(_t("No ZPL available for printing"), {
+            type: "warning",
+        });
         return;
     }
 
     try {
-        // Cargar RSVP y QZ Tray
         await loadScriptIfNeeded(RSVP_CDN_URL, "RSVP");
         await loadScriptIfNeeded(QZ_TRAY_CDN_URL, "qz");
         configureQzApi();
@@ -119,10 +115,10 @@ actionRegistry.add("zebra_print_action", async (env, action) => {
             },
         ];
         await qz.print(config, data);
-        console.log("✅ Impresión enviada correctamente");
+        console.log(_("✅ Print sent successfully"));
         return {type: "ir.actions.act_window_close"};
     } catch (err) {
-        console.error("❌ Error al imprimir:", err);
+        console.error(_("❌ Error to printing:"), err);
         if (qz.websocket && qz.websocket.isActive()) {
             await qz.websocket.disconnect();
         }

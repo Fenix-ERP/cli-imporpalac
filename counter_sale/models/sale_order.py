@@ -165,7 +165,8 @@ class SaleOrder(models.Model):
 
     def action_cancel(self):
         self.ensure_one()
-        if self.invoice_count > 0:
+        active_invoices = self.invoice_ids.filtered(lambda inv: inv.state == "posted")
+        if active_invoices:
             raise UserError(
                 _("This order already has an invoice assigned and cannot be cancelled.")
             )
