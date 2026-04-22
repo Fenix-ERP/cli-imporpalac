@@ -10,6 +10,57 @@ class SaleOrder(models.Model):
         compute="_compute_is_inter_company_sale", store=False
     )
 
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        if "partner_id" in fields_list:
+            res["partner_id"] = 7
+        return res
+
+    @api.model
+    def create(self, vals):
+        """Override create to validate prices and pricelist"""
+        order = super().create(vals)
+        order._validate_prices_and_pricelist()
+        return order
+
+    def write(self, vals):
+        """Override write to validate prices and pricelist"""
+        result = super().write(vals)
+        if "order_line" in vals or "pricelist_id" in vals:
+            self._validate_prices_and_pricelist()
+        return result
+
+    def _validate_prices_and_pricelist(self):
+        wholesale = self.env.ref(
+            "counter_sale.pricelist_wholesale", raise_if_not_found=False
+        )
+        special = self.env.ref(
+            "counter_sale.pricelist_special", raise_if_not_found=False
+        )
+        if not wholesale or not special:
+            return
+        for order in self:
+            if order.partner_id.property_product_pricelist != wholesale:
+                continue
+            for line in order.order_line:
+                product = line.product_id
+
+                qty = line.product_uom_qty or 1
+                result = wholesale._compute_price_rule(product, qty)
+                price, rule_id = result.get(product.id, (0.0, False))
+                if not rule_id:
+                    result = special._compute_price_rule(product, qty)
+                    price, rule_id = result.get(product.id, (0.0, False))
+                    line.price_unit = price
+                    line.line_pricelist_id = special
+                else:
+                    line.line_pricelist_id = wholesale
+
+    @api.onchange("order_line", "pricelist_id")
+    def _onchange_order_lines_pricelist(self):
+        """Real-time validation when order lines or pricelist change"""
+        self._validate_prices_and_pricelist()
+
     @api.depends("partner_id")
     def _compute_is_inter_company_sale(self):
         internal_partners = (

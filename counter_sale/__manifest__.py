@@ -24,6 +24,7 @@
     "data": [
         "security/counter_sale_security.xml",
         "data/expire_quotation_cron.xml",
+        "data/pricelist_items.xml",
         "data/ir_config_parameter.xml",
         "views/sale_order_inherit.xml",
         "views/account_move_inherit.xml",

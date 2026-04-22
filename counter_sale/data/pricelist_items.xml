@@ -1,0 +1,8 @@
+<odoo>
+    <record id="pricelist_wholesale" model="product.pricelist" noupdate="1">
+        <field name="name">Wholesale Pricelist</field>
+    </record>
+    <record id="pricelist_special" model="product.pricelist" noupdate="1">
+        <field name="name">Special Pricelist</field>
+    </record>
+</odoo>

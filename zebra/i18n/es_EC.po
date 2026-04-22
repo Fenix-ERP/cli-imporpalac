@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-10 15:34+0000\n"
-"PO-Revision-Date: 2026-01-10 15:34+0000\n"
+"POT-Creation-Date: 2026-04-22 17:04+0000\n"
+"PO-Revision-Date: 2026-04-22 17:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,11 @@ msgid "Internal Barcode"
 msgstr "Código de barras interno"
 
 #. module: zebra
+#: model:ir.model,name:zebra.model_stock_picking
+msgid "Internal Transfer Upload Imporpalac"
+msgstr "Transferir "
+
+#. module: zebra
 #: model:ir.model.fields,field_description:zebra.field_print_label_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -69,6 +74,13 @@ msgstr "Última actualización en"
 #, python-format
 msgid "Negative or zero values are not allowed."
 msgstr "No se permiten valores negativos ni cero."
+
+#. module: zebra
+#. odoo-javascript
+#: code:addons/zebra/static/src/js/sale_order_zebra.js:0
+#, python-format
+msgid "No ZPL available for printing"
+msgstr "No hay ZPL disponible para imprimir"
 
 #. module: zebra
 #: model:ir.model.fields,field_description:zebra.field_print_label_wizard__count
@@ -149,11 +161,6 @@ msgstr "El producto %s no tiene un código de barras de producto configurado"
 #, python-format
 msgid "The product %s does not have a configured supplier barcode"
 msgstr "El producto %s no tiene un código de barras de proveedor configurado"
-
-#. module: zebra
-#: model:ir.model,name:zebra.model_stock_picking
-msgid "Transfer"
-msgstr "Transferir "
 
 #. module: zebra
 #: model:ir.model,name:zebra.model_print_label_wizard
