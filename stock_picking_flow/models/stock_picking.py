@@ -161,6 +161,7 @@ class StockPicking(models.Model):
                     },
                     "productUomQty": move.product_uom_qty,
                     "quantity": 0,
+                    "picked": False,
                     "internalLocationId": move.internal_location_id.display_name,
                 }
             )
@@ -232,6 +233,7 @@ class StockPicking(models.Model):
                     },
                     "productUomQty": move.product_uom_qty,
                     "quantity": 0,
+                    "picked": False,
                     "internalLocationId": move.internal_location_id.display_name,
                 }
             )
