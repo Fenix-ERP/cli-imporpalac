@@ -18,7 +18,7 @@
         "sale_info_additional",
         "base_accounting_kit",
         "sale_stock",
-        "price_list_line",
+        "sale_order_discount_approval",
         "l10n_ec_imports",
     ],
     "data": [

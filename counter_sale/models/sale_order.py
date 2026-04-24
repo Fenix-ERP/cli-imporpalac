@@ -40,27 +40,38 @@ class SaleOrder(models.Model):
         if not wholesale or not special:
             return
         for order in self:
-            if order.partner_id.property_product_pricelist != wholesale:
+            if order.pricelist_id != wholesale:
+                order.order_line.line_pricelist_id = order.pricelist_id
                 continue
-            for line in order.order_line:
-                product = line.product_id
-                if product.type != "product":
-                    continue
-                qty = line.product_uom_qty or 1
-                result = wholesale._compute_price_rule(product, qty)
-                price, rule_id = result.get(product.id, (0.0, False))
-                if not rule_id:
-                    result = special._compute_price_rule(product, qty)
-                    price, rule_id = result.get(product.id, (0.0, False))
-                    line.price_unit = price
-                    line.line_pricelist_id = special
-                else:
-                    line.line_pricelist_id = wholesale
+            if order.partner_id.property_product_pricelist != wholesale:
+                order.order_line.line_pricelist_id = (
+                    order.partner_id.property_product_pricelist
+                )
+                continue
+            order.order_line.line_pricelist_id = special
+            order.order_line.validate_pricelist()
 
-    @api.onchange("order_line", "pricelist_id")
-    def _onchange_order_lines_pricelist(self):
-        """Real-time validation when order lines or pricelist change"""
-        self._validate_prices_and_pricelist()
+    @api.depends("order_line")
+    def _compute_pending_approval(self):
+        res = super()._compute_pending_approval()
+        wholesale = self.env.ref(
+            "counter_sale.pricelist_wholesale", raise_if_not_found=False
+        )
+        special = self.env.ref(
+            "counter_sale.pricelist_special", raise_if_not_found=False
+        )
+        if not wholesale or not special:
+            return res
+        for order in self:
+            to_approve = False
+            lines_with_wholesale = order.order_line.filtered(
+                lambda line: line.line_pricelist_id in [wholesale, special]
+                and line.discount > 0
+            )
+            if lines_with_wholesale:
+                to_approve = True
+            order.pending_approval = to_approve
+        return res
 
     @api.depends("partner_id")
     def _compute_is_inter_company_sale(self):
@@ -100,16 +111,17 @@ class SaleOrder(models.Model):
     )
     def _onchange_pricelist_id_force_first(self):
         allowed = self.company_id.product_pricelist_ids_default
-        if self.partner_id and self.partner_id.property_product_pricelist:
-            allowed |= self.partner_id.property_product_pricelist
-        if allowed:
-            self.pricelist_id = allowed.sorted("id")[0]
+        partner_pricelist = self.partner_id.property_product_pricelist
+        if partner_pricelist:
+            allowed = partner_pricelist + (allowed - partner_pricelist)
+        self.pricelist_id = allowed[:1]
 
     @api.onchange("pricelist_id")
     def _onchange_pricelist_id_show_update_prices(self):
         self._recompute_prices()
         res = super()._onchange_pricelist_id_show_update_prices()
         self.show_update_pricelist = False
+        self._validate_prices_and_pricelist()
         return res
 
     @api.model
@@ -247,3 +259,43 @@ class SaleOrderLine(models.Model):
     product_pricelist_domain = fields.Char(
         related="order_id.product_pricelist_domain",
     )
+    line_pricelist_id = fields.Many2one("product.pricelist")
+
+    @api.onchange("product_id")
+    def _onchange_product_id_set_pricelist(self):
+        for line in self:
+            if not line.line_pricelist_id and line.order_id:
+                line.line_pricelist_id = line.order_id.pricelist_id
+
+    @api.onchange("line_pricelist_id")
+    def _onchange_line_pricelist_id(self):
+        self.validate_pricelist()
+
+    def validate_pricelist(self):
+        wholesale = self.env.ref(
+            "counter_sale.pricelist_wholesale", raise_if_not_found=False
+        )
+        special = self.env.ref(
+            "counter_sale.pricelist_special", raise_if_not_found=False
+        )
+        if not wholesale or not special:
+            return
+        for line in self:
+            product = line.product_id
+            if product.type != "product":
+                continue
+            qty = line.product_uom_qty or 1
+            if self.line_pricelist_id != wholesale:
+                result = line.line_pricelist_id._compute_price_rule(product, qty)
+                price, rule_id = result.get(product.id, (0.0, False))
+                line.price_unit = price
+                continue
+            result = wholesale._compute_price_rule(product, qty)
+            price, rule_id = result.get(product.id, (0.0, False))
+            if not rule_id:
+                result = special._compute_price_rule(product, qty)
+                price, rule_id = result.get(product.id, (0.0, False))
+                line.price_unit = price
+                line.line_pricelist_id = special
+            else:
+                line.line_pricelist_id = wholesale

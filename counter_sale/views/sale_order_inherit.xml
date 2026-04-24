@@ -101,30 +101,20 @@
             <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute name="readonly">state != 'draft'</attribute>
             </xpath>
-        </field>
-    </record>
-
-    <record id="view_order_form_inherit_pricelist_line_inherit" model="ir.ui.view">
-        <field name="name">sale.order.form.pricelist.line.inherit</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
-        <field name="arch" type="xml">
             <xpath
                 expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
                 position="after"
             >
                 <field name="product_pricelist_domain" column_invisible="1" />
-            </xpath>
-            <xpath
-                expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='line_pricelist_id']"
-                position="attributes"
-            >
-                <attribute name="domain">
-                    product_pricelist_domain
-                </attribute>
+                <field
+                    name="line_pricelist_id"
+                    domain="product_pricelist_domain"
+                    options="{'no_create': True, 'no_open': True}"
+                />
             </xpath>
         </field>
     </record>
+
 
     <record id="action_print_ticket_server" model="ir.actions.server">
         <field name="name">Print Ticket</field>
