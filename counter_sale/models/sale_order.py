@@ -23,13 +23,6 @@ class SaleOrder(models.Model):
         order._validate_prices_and_pricelist()
         return order
 
-    def write(self, vals):
-        """Override write to validate prices and pricelist"""
-        result = super().write(vals)
-        if "order_line" in vals or "pricelist_id" in vals:
-            self._validate_prices_and_pricelist()
-        return result
-
     def _validate_prices_and_pricelist(self):
         for order in self:
             order.order_line.line_pricelist_id = order.pricelist_id
