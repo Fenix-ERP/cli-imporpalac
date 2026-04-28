@@ -269,7 +269,7 @@ class SaleOrderLine(models.Model):
             if product.type != "product":
                 continue
             qty = line.product_uom_qty or 1
-            if self.line_pricelist_id != wholesale:
+            if line.line_pricelist_id != wholesale:
                 result = line.line_pricelist_id._compute_price_rule(product, qty)
                 price, rule_id = result.get(product.id, (0.0, False))
                 line.price_unit = price
