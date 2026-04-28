@@ -16,10 +16,10 @@ class SaleOrder(models.Model):
             res["partner_id"] = 7
         return res
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Override create to validate prices and pricelist"""
-        order = super().create(vals)
+        order = super().create(vals_list)
         order._validate_prices_and_pricelist()
         return order
 
@@ -31,24 +31,8 @@ class SaleOrder(models.Model):
         return result
 
     def _validate_prices_and_pricelist(self):
-        wholesale = self.env.ref(
-            "counter_sale.pricelist_wholesale", raise_if_not_found=False
-        )
-        special = self.env.ref(
-            "counter_sale.pricelist_special", raise_if_not_found=False
-        )
-        if not wholesale or not special:
-            return
         for order in self:
-            if order.pricelist_id != wholesale:
-                order.order_line.line_pricelist_id = order.pricelist_id
-                continue
-            if order.partner_id.property_product_pricelist != wholesale:
-                order.order_line.line_pricelist_id = (
-                    order.partner_id.property_product_pricelist
-                )
-                continue
-            order.order_line.line_pricelist_id = special
+            order.order_line.line_pricelist_id = order.pricelist_id
             order.order_line.validate_pricelist()
 
     @api.depends("order_line")
@@ -267,7 +251,7 @@ class SaleOrderLine(models.Model):
             if not line.line_pricelist_id and line.order_id:
                 line.line_pricelist_id = line.order_id.pricelist_id
 
-    @api.onchange("line_pricelist_id")
+    @api.onchange("line_pricelist_id", "product_id")
     def _onchange_line_pricelist_id(self):
         self.validate_pricelist()
 
