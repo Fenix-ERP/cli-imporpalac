@@ -1,7 +1,7 @@
 import base64
 
 from odoo import models
-from odoo.modules.module import get_module_resource
+from odoo.tools.misc import file_path
 
 
 class ReportTicketDispatch(models.AbstractModel):
@@ -10,7 +10,7 @@ class ReportTicketDispatch(models.AbstractModel):
 
     def _get_logo(self):
         """Cargar logo fijo desde el módulo y convertir a base64"""
-        path = get_module_resource("sale_order_ticket", "static/src/img/logo.png")
+        path = file_path("sale_order_ticket/static/src/img/logo.png")
         try:
             with open(path, "rb") as f:
                 return base64.b64encode(f.read()).decode("utf-8")

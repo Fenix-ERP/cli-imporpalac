@@ -40,7 +40,7 @@ class SaleOrder(models.Model):
         if not wholesale or not special:
             return res
         for order in self:
-            to_approve = False
+            to_approve = order.pending_approval
             lines_with_wholesale = order.order_line.filtered(
                 lambda line: line.line_pricelist_id in [wholesale, special]
                 and line.discount > 0
