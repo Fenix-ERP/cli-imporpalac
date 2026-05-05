@@ -27,6 +27,7 @@ class SaleOrder(models.Model):
         for order in self:
             order.order_line.line_pricelist_id = order.pricelist_id
             order.order_line.validate_pricelist()
+            order.order_line._compute_is_special_pricelist()
 
     @api.depends("order_line")
     def _compute_pending_approval(self):
@@ -37,12 +38,13 @@ class SaleOrder(models.Model):
         special = self.env.ref(
             "counter_sale.pricelist_special", raise_if_not_found=False
         )
-        if not wholesale or not special:
+        card = self.env.ref("counter_sale.pricelist_card", raise_if_not_found=False)
+        if not wholesale or not special or not card:
             return res
         for order in self:
             to_approve = order.pending_approval
             lines_with_wholesale = order.order_line.filtered(
-                lambda line: line.line_pricelist_id in [wholesale, special]
+                lambda line: line.line_pricelist_id in [wholesale, special, card]
                 and line.discount > 0
             )
             if lines_with_wholesale:
@@ -238,6 +240,47 @@ class SaleOrderLine(models.Model):
     )
     line_pricelist_id = fields.Many2one("product.pricelist")
 
+    is_special_pricelist = fields.Boolean(compute="_compute_is_special_pricelist")
+
+    def _compute_is_special_pricelist(self):
+        refs = [
+            "counter_sale.pricelist_wholesale",
+            "counter_sale.pricelist_special",
+            "counter_sale.pricelist_card",
+        ]
+        pricelist_ids = [
+            self.env.ref(r).id
+            for r in refs
+            if self.env.ref(r, raise_if_not_found=False)
+        ]
+        for rec in self:
+            rec.is_special_pricelist = rec.line_pricelist_id.id in pricelist_ids
+
+    @api.constrains("price_unit")
+    def _check_price_unit_amount(self):
+        for line in self:
+            if not line.product_id or line.is_special_pricelist:
+                continue
+
+            cost = line.product_id.standard_price
+            taxes = line.tax_id.compute_all(
+                cost,
+                currency=line.currency_id,
+                quantity=1.0,
+                product=line.product_id,
+                partner=line.order_id.partner_id if line.order_id else None,
+            )
+
+            total_cost_with_tax = taxes["total_included"]
+            if line.price_unit < total_cost_with_tax:
+                raise ValidationError(
+                    _(
+                        "The unit price cannot be less than the cost price"
+                        " with taxes for product %s."
+                    )
+                    % line.product_id.display_name
+                )
+
     @api.onchange("product_id")
     def _onchange_product_id_set_pricelist(self):
         for line in self:
@@ -247,6 +290,7 @@ class SaleOrderLine(models.Model):
     @api.onchange("line_pricelist_id", "product_id")
     def _onchange_line_pricelist_id(self):
         self.validate_pricelist()
+        self._compute_is_special_pricelist()
 
     def validate_pricelist(self):
         wholesale = self.env.ref(
@@ -255,7 +299,8 @@ class SaleOrderLine(models.Model):
         special = self.env.ref(
             "counter_sale.pricelist_special", raise_if_not_found=False
         )
-        if not wholesale or not special:
+        card = self.env.ref("counter_sale.pricelist_card", raise_if_not_found=False)
+        if not wholesale or not special or not card:
             return
         for line in self:
             product = line.product_id

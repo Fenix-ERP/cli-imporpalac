@@ -106,10 +106,21 @@
                 position="after"
             >
                 <field name="product_pricelist_domain" column_invisible="1" />
+                <field name="is_special_pricelist" column_invisible="1" />
                 <field
                     name="line_pricelist_id"
                     domain="product_pricelist_domain"
                     options="{'no_create': True, 'no_open': True}"
+                />
+            </xpath>
+            <xpath
+                expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
+                position="attributes"
+            >
+                <attribute
+                    name="readonly"
+                    add="is_special_pricelist"
+                    separator=" or "
                 />
             </xpath>
         </field>

@@ -5,4 +5,7 @@
     <record id="pricelist_special" model="product.pricelist">
         <field name="name">Special Pricelist</field>
     </record>
+    <record id="pricelist_card" model="product.pricelist">
+        <field name="name">Card Pricelist</field>
+    </record>
 </odoo>

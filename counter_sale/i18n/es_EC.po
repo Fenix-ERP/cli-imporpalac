@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 16:42+0000\n"
-"PO-Revision-Date: 2026-04-24 16:42+0000\n"
+"POT-Creation-Date: 2026-05-04 22:43+0000\n"
+"PO-Revision-Date: 2026-05-04 22:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,8 @@ msgstr ""
 #. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total_account
 msgid "Can view amount total account"
-msgstr "Puede ver en facturación el total"
+msgstr ""
+"Puede ver en facturación (total, total en divisa, sin impuesto, impuesto)"
 
 #. module: counter_sale
 #: model:res.groups,name:counter_sale.group_counter_sale_allow_view_amount_total
@@ -185,6 +186,11 @@ msgstr "Es entre empresas"
 #: model:ir.model.fields,field_description:counter_sale.field_stock_picking__is_rectified
 msgid "Is Rectified"
 msgstr "Recificada"
+
+#. module: counter_sale
+#: model:ir.model.fields,field_description:counter_sale.field_sale_order_line__is_special_pricelist
+msgid "Is Special Pricelist"
+msgstr "Es lista de precios especial"
 
 #. module: counter_sale
 #. odoo-python
@@ -336,6 +342,11 @@ msgid "Stock Move"
 msgstr "Movimiento de stock"
 
 #. module: counter_sale
+#: model:product.pricelist,name:counter_sale.pricelist_card
+msgid "Card Pricelist"
+msgstr "Lista de precios Tarjeta"
+
+#. module: counter_sale
 #. odoo-python
 #: code:addons/counter_sale/models/stock_picking.py:0
 #, python-format
@@ -359,6 +370,15 @@ msgstr ""
 #, python-format
 msgid "The order must be in Confirmed state to print."
 msgstr "La orden debe estar Confirmada para ser impresa"
+
+#. module: counter_sale
+#. odoo-python
+#: code:addons/counter_sale/models/sale_order.py:0
+#, python-format
+msgid ""
+"The unit price cannot be less than the cost price with taxes for product %s."
+msgstr ""
+"El precio unitario no puede ser menor que el costo con impuestos para el producto %s."
 
 #. module: counter_sale
 #. odoo-python
