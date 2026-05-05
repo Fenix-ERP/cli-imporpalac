@@ -256,31 +256,7 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.is_special_pricelist = rec.line_pricelist_id.id in pricelist_ids
 
-    @api.constrains("price_unit")
-    def _check_price_unit_amount(self):
-        for line in self:
-            if not line.product_id or line.is_special_pricelist:
-                continue
-
-            cost = line.product_id.standard_price
-            taxes = line.tax_id.compute_all(
-                cost,
-                currency=line.currency_id,
-                quantity=1.0,
-                product=line.product_id,
-                partner=line.order_id.partner_id if line.order_id else None,
-            )
-
-            total_cost_with_tax = taxes["total_included"]
-            if line.price_unit < total_cost_with_tax:
-                raise ValidationError(
-                    _(
-                        "The unit price cannot be less than the cost price"
-                        " with taxes for product %s."
-                    )
-                    % line.product_id.display_name
-                )
-
+     
     @api.onchange("product_id")
     def _onchange_product_id_set_pricelist(self):
         for line in self:
