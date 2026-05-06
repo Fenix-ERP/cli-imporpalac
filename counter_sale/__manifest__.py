@@ -5,6 +5,7 @@
     "author": "Santiago Illapa / FenixERP",
     "summary": "This module is used for the sales flow at the counter",
     "depends": [
+        "product",
         "sale_management",
         "account",
         "stock",
