@@ -288,6 +288,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange("line_pricelist_id", "product_id")
     def _onchange_line_pricelist_id(self):
+        self.validate_pricelist()
         self._compute_is_special_pricelist()
 
     @api.depends("product_id", "product_uom", "product_uom_qty", "line_pricelist_id")

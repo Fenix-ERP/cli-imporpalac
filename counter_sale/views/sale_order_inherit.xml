@@ -110,6 +110,7 @@
                 <field
                     name="line_pricelist_id"
                     domain="product_pricelist_domain"
+                    required="1"
                     options="{'no_create': True, 'no_open': True}"
                 />
             </xpath>
