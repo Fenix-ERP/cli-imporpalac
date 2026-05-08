@@ -289,6 +289,17 @@ class SaleOrderLine(models.Model):
         self.validate_pricelist()
         self._recompute_prices()
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        for line in lines:
+            if line.line_pricelist_id:
+                continue
+            line.line_pricelist_id = line.order_id.pricelist_id
+            line.validate_pricelist()
+            line._recompute_prices()
+        return lines
+
     def write(self, vals):
         res = super().write(vals)
         if set(vals.keys()) == {"line_pricelist_id"}:
