@@ -291,7 +291,7 @@ class SaleOrderLine(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if "line_pricelist_id" in vals and "price_unit" not in vals:
+        if set(vals.keys()) == {"line_pricelist_id"}:
             self._recompute_prices()
         return res
 
@@ -326,3 +326,16 @@ class SaleOrderLine(models.Model):
             )
             price, rule_id = result.get(line.product_id.id, (0.0, False))
             line.price_unit = price
+
+    @api.depends("product_id", "product_uom", "product_uom_qty", "line_pricelist_id")
+    def _compute_price_unit(self):
+        last_prices = {}
+        for line in self:
+            last_prices[line.id] = line.price_unit
+        res = super()._compute_price_unit()
+        for line in self:
+            if line.is_special_pricelist:
+                line._recompute_prices()
+            else:
+                line.price_unit = last_prices.get(line.id, line.price_unit)
+        return res
