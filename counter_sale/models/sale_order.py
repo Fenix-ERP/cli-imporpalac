@@ -23,11 +23,12 @@ class SaleOrder(models.Model):
         order._validate_prices_and_pricelist()
         return order
 
+    @api.onchange("pricelist_id")
     def _validate_prices_and_pricelist(self):
         for order in self:
             order.order_line.line_pricelist_id = order.pricelist_id
             order.order_line.validate_pricelist()
-            order.order_line._compute_is_special_pricelist()
+            order.order_line._recompute_prices()
 
     @api.depends("order_line")
     def _compute_pending_approval(self):
@@ -83,11 +84,7 @@ class SaleOrder(models.Model):
             domain = [("id", "in", allowed_ids)]
             order.product_pricelist_domain = str(domain)
 
-    @api.onchange(
-        "partner_id",
-        "partner_id.property_product_pricelist",
-        "company_id.product_pricelist_ids_default",
-    )
+    @api.onchange("partner_id", "company_id")
     def _onchange_pricelist_id_force_first(self):
         allowed = self.company_id.product_pricelist_ids_default
         partner_pricelist = self.partner_id.property_product_pricelist
@@ -242,6 +239,7 @@ class SaleOrderLine(models.Model):
 
     is_special_pricelist = fields.Boolean(compute="_compute_is_special_pricelist")
 
+    @api.depends("line_pricelist_id")
     def _compute_is_special_pricelist(self):
         refs = [
             "counter_sale.pricelist_wholesale",
@@ -283,18 +281,18 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_id")
     def _onchange_product_id_set_pricelist(self):
         for line in self:
-            if not line.line_pricelist_id and line.order_id:
+            if not line.line_pricelist_id and line.product_id and line.order_id:
                 line.line_pricelist_id = line.order_id.pricelist_id
 
-    @api.onchange("line_pricelist_id", "product_id")
+    @api.onchange("line_pricelist_id")
     def _onchange_line_pricelist_id(self):
         self.validate_pricelist()
-        self._compute_is_special_pricelist()
+        self._recompute_prices()
 
-    @api.depends("product_id", "product_uom", "product_uom_qty", "line_pricelist_id")
-    def _compute_price_unit(self):
-        res = super()._compute_price_unit()
-        self.validate_pricelist()
+    def write(self, vals):
+        res = super().write(vals)
+        if "line_pricelist_id" in vals and "price_unit" not in vals:
+            self._recompute_prices()
         return res
 
     def validate_pricelist(self):
@@ -312,17 +310,19 @@ class SaleOrderLine(models.Model):
             if product.type != "product":
                 continue
             qty = line.product_uom_qty or 1
-            if line.line_pricelist_id != wholesale:
-                result = line.line_pricelist_id._compute_price_rule(product, qty)
-                price, rule_id = result.get(product.id, (0.0, False))
-                line.price_unit = price
+            if line.line_pricelist_id.id != wholesale.id:
                 continue
             result = wholesale._compute_price_rule(product, qty)
             price, rule_id = result.get(product.id, (0.0, False))
             if not rule_id:
-                result = special._compute_price_rule(product, qty)
-                price, rule_id = result.get(product.id, (0.0, False))
-                line.price_unit = price
                 line.line_pricelist_id = special
             else:
                 line.line_pricelist_id = wholesale
+
+    def _recompute_prices(self):
+        for line in self:
+            result = line.line_pricelist_id._compute_price_rule(
+                line.product_id, line.product_uom_qty
+            )
+            price, rule_id = result.get(line.product_id.id, (0.0, False))
+            line.price_unit = price
