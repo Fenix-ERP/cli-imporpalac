@@ -325,7 +325,7 @@ class SaleOrderLine(models.Model):
                 continue
             result = wholesale._compute_price_rule(product, qty)
             price, rule_id = result.get(product.id, (0.0, False))
-            if not rule_id:
+            if not rule_id or not price > 0:
                 line.line_pricelist_id = special
             else:
                 line.line_pricelist_id = wholesale
