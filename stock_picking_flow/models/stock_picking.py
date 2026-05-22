@@ -251,10 +251,43 @@ class StockPicking(models.Model):
         #     )
         return super(StockPicking, valid_pickings).button_validate()
 
+    def _update_moves_with_issues(self, picking, picking_moves):
+        for line_data in picking_moves:
+            line_id = line_data.get("id", False)
+            move_line = picking.move_ids_without_package.filtered(
+                lambda ml: ml.id == line_id
+            )
+            if not move_line:
+                raise ValidationError(_("Stock Move Line not found."))
+            qty = line_data.get("quantity", 0)
+            issue = line_data.get("issue", False)
+            has_issue = False
+            issue_qty = 0
+            issue_type = False
+            issue_notes = False
+            if issue:
+                has_issue = True
+                issue_qty = issue.get("quantity", 0)
+                issue_type = issue.get("type", False)
+                issue_notes = issue.get("notes", [])
+                issue_notes = "\n".join(issue_notes)
+
+            move_line.sudo().write(
+                {
+                    "quantity": qty,
+                    "has_issue": has_issue,
+                    "issue_qty": issue_qty,
+                    "issue_type": issue_type,
+                    "issue_notes": issue_notes,
+                }
+            )
+
     @api.model
     def action_validate_by_driver(self, data):
         self = self.with_context(lang=self.env.user.lang or "en_US")
-        picking_id = data.get("picking_id", False)
+        picking_data = data.get("picking_data")
+        picking_id = picking_data.get("pickingId", False)
+        picking_moves = picking_data.get("moveLines", [])
         user_id = data.get("user_id")
         picking = self.browse(picking_id)
         if not picking.exists():
@@ -283,6 +316,7 @@ class StockPicking(models.Model):
                     picking.display_name,
                 )
             )
+        self._update_moves_with_issues(picking, picking_moves)
         picking.button_validate()
         return {
             "picking_id": picking.id,
@@ -314,35 +348,7 @@ class StockPicking(models.Model):
                     picking.display_name,
                 )
             )
-        for line_data in picking_moves:
-            line_id = line_data.get("id", False)
-            move_line = picking.move_ids_without_package.filtered(
-                lambda ml: ml.id == line_id
-            )
-            if not move_line:
-                raise ValidationError(_("Stock Move Line not found."))
-            qty = line_data.get("quantity", 0)
-            issue = line_data.get("issue", False)
-            has_issue = False
-            issue_qty = 0
-            issue_type = False
-            issue_notes = False
-            if issue:
-                has_issue = True
-                issue_qty = issue.get("quantity", 0)
-                issue_type = issue.get("type", False)
-                issue_notes = issue.get("notes", [])
-                issue_notes = "\n".join(issue_notes)
-
-            move_line.sudo().write(
-                {
-                    "quantity": qty,
-                    "has_issue": has_issue,
-                    "issue_qty": issue_qty,
-                    "issue_type": issue_type,
-                    "issue_notes": issue_notes,
-                }
-            )
+        self._update_moves_with_issues(picking, picking_moves)
         picking.picker_user_id = user_id
         picking.sudo().collection_state = "confirmed"
         return {
