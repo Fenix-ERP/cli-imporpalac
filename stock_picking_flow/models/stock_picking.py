@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.float_utils import float_is_zero
 
 
 class StockPicking(models.Model):
@@ -295,6 +296,13 @@ class StockPicking(models.Model):
         user = self.env["res.users"].browse(user_id)
         if not user:
             raise ValidationError(_("User not found."))
+        if picking.state != "assigned":
+            raise ValidationError(
+                _(
+                    "Cannot confirm this picking:'%s' is not in assigned state.",
+                    picking.display_name,
+                )
+            )
         if not picking.driver_user_id:
             raise ValidationError(
                 _(
@@ -309,15 +317,22 @@ class StockPicking(models.Model):
                     picking.driver_user_id.name,
                 )
             )
-        if picking.state != "assigned":
-            raise ValidationError(
-                _(
-                    "Cannot confirm this picking:'%s' is not in assigned state.",
-                    picking.display_name,
-                )
-            )
         self._update_moves_with_issues(picking, picking_moves)
-        picking.button_validate()
+        precision_digits = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        moves = picking.move_ids.filtered(lambda m: m.state not in ("done", "cancel"))
+        moves_without_issue = moves.filtered(lambda m: m.has_issue)
+        zero_moves = moves_without_issue.filtered(
+            lambda m: float_is_zero(m.quantity, precision_digits=precision_digits)
+        )
+        all_zero = len(moves_without_issue) > 0 and len(zero_moves) == len(
+            moves_without_issue
+        )
+        if all_zero:
+            picking.sudo().write({"collection_state": "issue"})
+        else:
+            picking.button_validate()
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
