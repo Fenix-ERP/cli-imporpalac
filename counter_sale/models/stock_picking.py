@@ -150,7 +150,7 @@ class StockPicking(models.Model):
                                         invoice.js_assign_outstanding_line(line.id)
                                         break
 
-                    invoice.with_delay().send_electronic_document()
+                    invoice.with_delay().action_send_electronic_document()
                     invoice.info_message = "En cola de autorización"
                     invoice.state_send_document = "in_process"
                     picking.invoice_number = invoice.name
