@@ -369,7 +369,7 @@ msgstr "Esta picking ya está asignado a %s"
 #: code:addons/stock_picking_flow/models/stock_picking.py:0
 #, python-format
 msgid "This picking is assigned to %s, you cannot confirm it"
-msgstr "Este picking está asignado a %s, no puede ser confirmardo"
+msgstr "Este picking está asignado a %s, no puede ser confirmado"
 
 #. module: stock_picking_flow
 #: model:ir.model,name:stock_picking_flow.model_stock_picking

@@ -8,6 +8,7 @@
         "sale_management",
         "account",
         "stock",
+        "purchase",
     ],
     "data": [
         "security/ir.model.access.csv",
