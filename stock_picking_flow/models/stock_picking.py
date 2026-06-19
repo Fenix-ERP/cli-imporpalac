@@ -322,17 +322,16 @@ class StockPicking(models.Model):
             "Product Unit of Measure"
         )
         moves = picking.move_ids.filtered(lambda m: m.state not in ("done", "cancel"))
-        moves_without_issue = moves.filtered(lambda m: m.has_issue)
-        zero_moves = moves_without_issue.filtered(
+        moves_with_issue = moves.filtered(lambda m: m.has_issue)
+        zero_moves = moves_with_issue.filtered(
             lambda m: float_is_zero(m.quantity, precision_digits=precision_digits)
         )
-        all_zero = len(moves_without_issue) > 0 and len(zero_moves) == len(
-            moves_without_issue
+        all_zero = len(moves_with_issue) > 0 and len(zero_moves) == len(
+            moves_with_issue
         )
         if all_zero:
             picking.sudo().write({"collection_state": "issue"})
-        else:
-            picking.button_validate()
+        picking.button_validate()
         return {
             "picking_id": picking.id,
             "picking_name": picking.name,
