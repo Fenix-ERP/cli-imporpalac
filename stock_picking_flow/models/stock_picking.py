@@ -199,7 +199,7 @@ class StockPicking(models.Model):
         return data
 
     @api.model
-    def get_stock_moves(self, picking_id, limit=80, page=1):
+    def get_stock_moves(self, picking_id, limit=80, page=1, search=None):
         self = self.with_context(lang=self.env.user.lang or "en_US")
 
         picking = self.browse(picking_id)
@@ -212,11 +212,17 @@ class StockPicking(models.Model):
 
         Move = self.env["stock.move"]
 
+        domain = [
+            ("picking_id", "=", picking.id),
+            ("state", "!=", "cancel"),
+        ]
+        if search:
+            Product = self.env["product.product"]
+            products = Product.search_by_any_code(search)
+            domain += [("product_id", "in", products.ids)]
+
         moves = Move.search(
-            [
-                ("picking_id", "=", picking.id),
-                ("state", "!=", "cancel"),
-            ],
+            domain,
             limit=limit,
             offset=offset,
         )
