@@ -706,6 +706,7 @@ class FnxInventoryAdjustmentLine(models.Model):
                     "location_dest_id": dest_loc.id,
                     "company_id": adj.company_id.id,
                     "pf_branch_id": dest_loc.pf_branch_id.id,
+                    "origin": line.adjustment_id.name,
                     "move_ids_without_package": [
                         (
                             0,
