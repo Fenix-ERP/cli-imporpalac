@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="seq_qty_fnx_inventory_adjustment" model="ir.sequence">
+        <field name="name">Fnx QTY Inventory Adjustment Sequence</field>
+        <field name="code">fnx.qty.inventory.adjustment.sequence</field>
+        <field name="prefix">INVAJ/QTY/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" ref="base.main_company" />
+    </record>
+
+    <record id="seq_cost_fnx_inventory_adjustment" model="ir.sequence">
+        <field name="name">Fnx COST Inventory Adjustment Sequence</field>
+        <field name="code">fnx.cost.inventory.adjustment.sequence</field>
+        <field name="prefix">INVAJ/COST/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" ref="base.main_company" />
+    </record>
+
+    <record id="seq_qty_cost_fnx_inventory_adjustment" model="ir.sequence">
+        <field name="name">Fnx QTY COST Inventory Adjustment Sequence</field>
+        <field name="code">fnx.qty.cost.inventory.adjustment.sequence</field>
+        <field name="prefix">INVAJ/QTY/COST/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" ref="base.main_company" />
+    </record>
+</odoo>
