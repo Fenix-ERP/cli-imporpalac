@@ -5,6 +5,7 @@
     "author": "FenixERP",
     "category": "Inventory",
     "license": "GPL-3",
+    "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "data": [
         "data/sequence.xml",
         "security/ir.model.access.csv",
