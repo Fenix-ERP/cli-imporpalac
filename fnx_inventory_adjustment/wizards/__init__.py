@@ -1,0 +1,1 @@
+from . import fnx_inventory_adjustment_report_wizard
