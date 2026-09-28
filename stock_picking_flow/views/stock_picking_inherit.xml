@@ -43,7 +43,7 @@
                     string="Reserve Picking"
                     class="btn btn-primary"
                     name="action_reserve_picking"
-                    invisible="collection_state!='waiting'"
+                    invisible="collection_state!='waiting' or state == 'draft'"
                 />
                 <button
                     type="object"
