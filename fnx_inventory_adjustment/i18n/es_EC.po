@@ -1,0 +1,638 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* fnx_inventory_adjustment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-21 21:27+0000\n"
+"PO-Revision-Date: 2026-09-21 21:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_EC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "<span class=\"o_stat_text\">Open Pickings</span>"
+msgstr "<span class=\"o_stat_text\">Abrir Albaranes</span>"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "ACtual Cost (Dont Fill)"
+msgstr "Costo Actual (No Llenar)"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__account_id
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__account_move_ids
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__account_move_ids
+msgid "Accounting Entries"
+msgstr "Asientos Contables"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Accounting Entry"
+msgstr "Asiento Contable"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__adjustment_type__cost
+msgid "Adjust Global Cost"
+msgstr "Ajustar Costo Global"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__adjustment_type__qty
+msgid "Adjust Quantity"
+msgstr "Ajustar Cantidad"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__adjustment_type__cost_qty
+msgid "Adjust Quantity and Cost"
+msgstr "Ajustar Cantidad y Costo"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__adjustment_id
+msgid "Adjustment"
+msgstr "Ajuste"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Adjustment Pickings"
+msgstr "Ajuste de Albaranes"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__adjustment_type
+#, python-format
+msgid "Adjustment Type"
+msgstr "Tipo de Ajuste"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "All Cost Updated"
+msgstr "Todos los Costos Actualizados"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Approved By"
+msgstr "Aprobado Por"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__state__cancel
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_report_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__system_cost
+#, python-format
+msgid "Cost"
+msgstr "Costo"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__create_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__create_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__create_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__create_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__create_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__create_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__date
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__date_from
+msgid "Date From"
+msgstr "Fecha Desde"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Date From:"
+msgstr "Fecha Desde:"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__date_to
+msgid "Date To"
+msgstr "Fecha Hasta"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Date To:"
+msgstr "Fecha Hasta:"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__product_uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "Unidad de medida predeterminada utilizada para todas las operaciones de stock."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Description"
+msgstr "Descripción"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__display_name
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__display_name
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__display_name
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre para Mostrar"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__state__done
+msgid "Done"
+msgstr "Hecho"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields.selection,name:fnx_inventory_adjustment.selection__fnx_inventory_adjustment__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Error reading Excel file: %s"
+msgstr "Error al leer el archivo Excel: %s"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Error: %s"
+msgstr "Error: %s"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__excel_file
+msgid "Excel File"
+msgstr "Archivo Excel"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__excel_filename
+msgid "Excel Filename"
+msgstr "Nombre del Archivo Excel"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_report_wizard_form
+msgid "Export Excel"
+msgstr "Exportar Excel"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "Export Template"
+msgstr "Exportar Plantilla"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.actions.act_window,name:fnx_inventory_adjustment.action_fnx_inventory_adjustment
+#: model:ir.ui.menu,name:fnx_inventory_adjustment.menu_fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "Fenix Inventory Adjustment"
+msgstr "Ajuste de Inventario Fenix"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "File required"
+msgstr "Archivo requerido"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.sequence,name:fnx_inventory_adjustment.seq_cost_fnx_inventory_adjustment
+msgid "Fnx COST Inventory Adjustment Sequence"
+msgstr "Secuencia de Ajuste de Inventario COSTO Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_tree
+msgid "Fnx Inventory Adjustment"
+msgstr "Ajuste de Inventario Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.sequence,name:fnx_inventory_adjustment.seq_fnx_inventory_adjustment
+msgid "Fnx Inventory Adjustment Sequence"
+msgstr "Secuencia de Ajuste de Inventario Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.sequence,name:fnx_inventory_adjustment.seq_qty_cost_fnx_inventory_adjustment
+msgid "Fnx QTY COST Inventory Adjustment Sequence"
+msgstr "Secuencia de Ajuste de Inventario QTY COSTO Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.sequence,name:fnx_inventory_adjustment.seq_qty_fnx_inventory_adjustment
+msgid "Fnx QTY Inventory Adjustment Sequence"
+msgstr "Secuencia de Ajuste de Inventario QTY Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model,name:fnx_inventory_adjustment.model_fnx_adjustment_reason
+msgid "FnxAdjustmentReason"
+msgstr "Motivo de Ajuste Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model,name:fnx_inventory_adjustment.model_fnx_inventory_adjustment
+msgid "FnxInventoryAdjustment"
+msgstr "Ajuste de Inventario Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model,name:fnx_inventory_adjustment.model_fnx_inventory_adjustment_line
+msgid "FnxInventoryAdjustmentLine"
+msgstr "Línea de Ajuste de Inventario Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model,name:fnx_inventory_adjustment.model_fnx_inventory_adjustment_report_wizard
+msgid "FnxInventoryAdjustmentReportWizard"
+msgstr "Asistente de Reporte de Ajuste de Inventario Fnx"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__id
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__id
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__id
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "Import Template"
+msgstr "Importar Plantilla"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Inventory Adjustment %(adjustment)s - %(line)s"
+msgstr "Ajuste de Inventario %(adjustment)s - %(line)s"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.actions.act_window,name:fnx_inventory_adjustment.action_fnx_inventory_adjustment_report_wizard
+#: model:ir.ui.menu,name:fnx_inventory_adjustment.menu_fnx_inventory_adjustment_report
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_report_wizard_form
+msgid "Inventory Adjustment Report"
+msgstr "Reporte de Ajuste de Inventario"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Inventory Adjustments"
+msgstr "Ajustes de Inventario"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__write_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__write_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__write_uid
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__write_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__write_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__write_date
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__line_ids
+msgid "Line"
+msgstr "Línea"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Lines imported successfully."
+msgstr "Líneas importadas correctamente."
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_adjustment_reason__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "New Cost"
+msgstr "Costo Nuevo"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__new_qty
+#, python-format
+msgid "New Qty"
+msgstr "Cantidad Nueva"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "No Data"
+msgstr "Sin Datos"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid ""
+"No incoming operation type with a source location could be found for "
+"location '%s' (branch '%s'). Check the warehouse configuration."
+msgstr ""
+"No se pudo encontrar un tipo de operación de entrada con una ubicación de "
+"origen para la ubicación '%s' (sucursal '%s'). Verifique la configuración "
+"del almacén."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "No matching products found to update or create."
+msgstr "No se encontraron productos coincidentes para actualizar o crear."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "No valid value"
+msgstr "Sin valor válido"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__notes
+msgid "Notes"
+msgstr "Notas"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__origin_location_id
+msgid "Origin Location"
+msgstr "Ubicación de Origen"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__picking_ids
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Please upload an Excel file first in the 'Excel File' field."
+msgstr "Por favor, cargue primero un archivo Excel en el campo 'Archivo Excel'."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Prepared By"
+msgstr "Preparado Por"
+
+#. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
+msgid "Process"
+msgstr "Procesar"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Product Code"
+msgstr "Código de Producto"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__qty_var
+msgid "Qty Var"
+msgstr "Variación Cant."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Read Error"
+msgstr "Error de Lectura"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__real_cost
+msgid "Real Cost"
+msgstr "Costo Real"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__reason_id
+#, python-format
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__name
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__user_id
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Reviewed By"
+msgstr "Revisado Por"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Select an option"
+msgstr "Seleccione una opción"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Select an option in the list %s"
+msgstr "Seleccione una opción de la lista %s"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__state
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__parent_state
+msgid "State"
+msgstr "Estado"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__stock_move_ids
+msgid "Stock Moves"
+msgstr "Movimientos de Stock"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__stock_quant_id
+msgid "Stock Quant"
+msgstr "Existencia"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "Success"
+msgstr "Éxito"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__system_qty
+msgid "System Qty"
+msgstr "Cantidad del Sistema"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "System Qty (Dont Fill)"
+msgstr "Cantidad del Sistema (No Llenar)"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__terms_and_conditions
+msgid "Terms And Conditions"
+msgstr "Términos y Condiciones"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Terms and Conditions"
+msgstr "Términos y Condiciones"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid ""
+"The operation type '%s' has no default source location and the 'Vendors' "
+"location is missing."
+msgstr ""
+"El tipo de operación '%s' no tiene una ubicación de origen predeterminada y "
+"falta la ubicación 'Vendedores'."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "The start date must be before the end date."
+msgstr "La fecha de inicio debe ser anterior a la fecha de fin."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Time"
+msgstr "Hora"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__product_uom_id
+msgid "Unit of Measure"
+msgstr "Unidad de Medida"
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "User"
+msgstr "Usuario"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__system_cost
+msgid ""
+"Value of the product (automatically computed in AVCO).\n"
+"        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).\n"
+"        Used to compute margins on sale orders."
+msgstr ""
+"Valor del producto (calculado automáticamente en AVCO).\n"
+"        Se utiliza para valorar el producto cuando no se conoce el costo de compra (por ejemplo, ajuste de inventario).\n"
+"        Se utiliza para calcular los márgenes en las órdenes de venta."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/wizards/fnx_inventory_adjustment_report_wizard.py:0
+#, python-format
+msgid "Warehouse"
+msgstr "Almacén"
