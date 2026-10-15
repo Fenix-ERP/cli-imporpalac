@@ -43,14 +43,14 @@
                     string="Reserve Picking"
                     class="btn btn-primary"
                     name="action_reserve_picking"
-                    invisible="collection_state!='waiting' or state == 'draft'"
+                    invisible="collection_state!='waiting' or state != 'assigned'"
                 />
                 <button
                     type="object"
                     string="Ready"
                     class="btn btn-primary"
                     name="action_confirm_picking"
-                    invisible="collection_state!='assigned' or not is_owner_picker_user"
+                    invisible="collection_state!='assigned' or state != 'assigned' or not is_owner_picker_user"
                 />
             </xpath>
             <xpath expr="//field[@name='origin']" position="after">

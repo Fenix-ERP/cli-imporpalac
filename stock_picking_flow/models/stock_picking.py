@@ -139,6 +139,13 @@ class StockPicking(models.Model):
 
     def action_reserve_picking(self):
         for picking in self:
+            if picking.collection_state != "waiting" or picking.state != "assigned":
+                raise ValidationError(
+                    _(
+                        "Cannot reserve this picking:'%s' is not in waiting state.",
+                        picking.display_name,
+                    )
+                )
             picking.picker_user_id = picking.picker_user_id or self.env.user.id
             picking.collection_state = "assigned"
 
@@ -381,6 +388,13 @@ class StockPicking(models.Model):
 
     def action_confirm_picking(self):
         for picking in self:
+            if picking.collection_state != "assigned" or picking.state != "assigned":
+                raise ValidationError(
+                    _(
+                        "Cannot confirm this picking:'%s' is not in assigned state.",
+                        picking.display_name,
+                    )
+                )
             picking.sudo().collection_state = "confirmed"
 
     @api.model_create_multi
