@@ -149,12 +149,22 @@
                                         widget="many2many_tags"
                                     />
 
+                                    <button
+                                        type="object"
+                                        name="action_view_account_moves"
+                                        string="View Moves"
+                                    />
 
                                 </tree>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>
