@@ -55,10 +55,26 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
                 "bg_color": "#D9E1F2",
             }
         )
-        text_format = workbook.add_format({"border": 1, "valign": "top"})
-        number_format = workbook.add_format(
-            {"border": 1, "num_format": "#,##0.00", "valign": "top"}
-        )
+        base_formats = {
+            "text": {"border": 1, "valign": "vcenter", "text_wrap": True},
+            "number": {
+                "border": 1,
+                "valign": "vcenter",
+                "num_format": "#,##0.00;[Red]-#,##0.00",
+            },
+            "date": {
+                "border": 1,
+                "valign": "vcenter",
+                "align": "center",
+                "num_format": "dd/mm/yyyy",
+            },
+        }
+        formats = {}
+        for kind, base in base_formats.items():
+            formats[kind] = workbook.add_format(base)
+            formats[kind + "_band"] = workbook.add_format(
+                dict(base, bg_color="#F2F2F2")
+            )
         headers = [
             _("Date"),
             _("Time"),
@@ -69,19 +85,37 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
             _("Warehouse"),
             _("Operation Type"),
             _("Reason"),
-            _("User"),
+            _("Responsible"),
+            _("Created By"),
             _("Accounting Entry"),
             _("Terms and Conditions"),
         ]
 
+        column_kinds = [
+            "date",
+            "text",
+            "text",
+            "text",
+            "number",
+            "number",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+        ]
         num_cols = len(headers)
         title_format = workbook.add_format(
             {
                 "bold": True,
-                "font_size": 12,
+                "font_size": 14,
+                "font_color": "#1F4E78",
                 "align": "center",
                 "valign": "vcenter",
                 "border": 1,
+                "bg_color": "#DDEBF7",
             }
         )
         label_format = workbook.add_format(
@@ -92,7 +126,8 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
         signature_line_format = workbook.add_format({"bottom": 1})
 
         # Row 0: merged title. Rows 2-3: report period. Row 5: table header.
-        worksheet.set_row(0, 24)
+        worksheet.hide_gridlines(2)
+        worksheet.set_row(0, 30)
         worksheet.merge_range(
             0, 0, 0, num_cols - 1, _("Inventory Adjustments"), title_format
         )
@@ -102,6 +137,7 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
         worksheet.write(3, 1, fields.Date.to_string(self.date_to), value_format)
 
         header_row = 5
+        worksheet.set_row(header_row, 30)
         for column, header in enumerate(headers):
             worksheet.write(header_row, column, header, header_format)
 
@@ -123,7 +159,7 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
                     line.mapped("account_move_ids").mapped("name")
                 )
                 values = [
-                    fields.Date.to_string(adjustment.date),
+                    adjustment.date or "",
                     time_value,
                     line.product_id.default_code or "",
                     line.product_id.name or "SN",
@@ -133,11 +169,13 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
                     operation_types.get(adjustment.adjustment_type, ""),
                     adjustment.reason_id.name or "",
                     adjustment.user_id.name or "",
+                    adjustment.create_uid.name or "",
                     account_entry,
                     adjustment.terms_and_conditions or "",
                 ]
+                suffix = "_band" if (row - header_row) % 2 == 0 else ""
                 for column, value in enumerate(values):
-                    format_ = number_format if column in (4, 5) else text_format
+                    format_ = formats[column_kinds[column] + suffix]
                     worksheet.write(row, column, value, format_)
                 row += 1
 
@@ -165,6 +203,12 @@ class FnxInventoryAdjustmentReportWizard(models.TransientModel):
         worksheet.set_column(3, 4, 14)
         worksheet.set_column(5, 9, 24)
         worksheet.set_column(10, 10, 45)
+        worksheet.set_landscape()
+        worksheet.set_paper(9)
+        worksheet.fit_to_pages(1, 0)
+        worksheet.repeat_rows(header_row)
+        worksheet.set_margins(left=0.4, right=0.4, top=0.6, bottom=0.6)
+        worksheet.set_footer("&L&D&R" + _("Page") + " &P / &N")
         workbook.close()
 
         attachment = self.env["ir.attachment"].create(
