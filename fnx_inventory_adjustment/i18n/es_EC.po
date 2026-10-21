@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 21:27+0000\n"
-"PO-Revision-Date: 2026-09-21 21:27+0000\n"
+"POT-Creation-Date: 2026-10-14 22:30+0000\n"
+"PO-Revision-Date: 2026-10-14 22:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: es_EC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: fnx_inventory_adjustment
 #: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
@@ -182,7 +181,9 @@ msgstr "Fecha Hasta:"
 #. module: fnx_inventory_adjustment
 #: model:ir.model.fields,help:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr "Unidad de medida predeterminada utilizada para todas las operaciones de stock."
+msgstr ""
+"Unidad de medida predeterminada utilizada para todas las operaciones de "
+"stock."
 
 #. module: fnx_inventory_adjustment
 #. odoo-python
@@ -221,7 +222,7 @@ msgstr "Error al leer el archivo Excel: %s"
 #: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
 #, python-format
 msgid "Error: %s"
-msgstr "Error: %s"
+msgstr ""
 
 #. module: fnx_inventory_adjustment
 #: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment__excel_file
@@ -244,6 +245,13 @@ msgid "Export Template"
 msgstr "Exportar Plantilla"
 
 #. module: fnx_inventory_adjustment
+#: model:ir.actions.act_window,name:fnx_inventory_adjustment.action_fnx_adjustment_reason
+#: model:ir.ui.menu,name:fnx_inventory_adjustment.menu_fnx_adjustment_reason
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_adjustment_reason_form
+msgid "Fenix Adjustment Reason"
+msgstr "Motivo de ajuste"
+
+#. module: fnx_inventory_adjustment
 #: model:ir.actions.act_window,name:fnx_inventory_adjustment.action_fnx_inventory_adjustment
 #: model:ir.ui.menu,name:fnx_inventory_adjustment.menu_fnx_inventory_adjustment
 #: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
@@ -263,14 +271,10 @@ msgid "Fnx COST Inventory Adjustment Sequence"
 msgstr "Secuencia de Ajuste de Inventario COSTO Fnx"
 
 #. module: fnx_inventory_adjustment
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_adjustment_reason_tree
 #: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_tree
 msgid "Fnx Inventory Adjustment"
 msgstr "Ajuste de Inventario Fnx"
-
-#. module: fnx_inventory_adjustment
-#: model:ir.sequence,name:fnx_inventory_adjustment.seq_fnx_inventory_adjustment
-msgid "Fnx Inventory Adjustment Sequence"
-msgstr "Secuencia de Ajuste de Inventario Fnx"
 
 #. module: fnx_inventory_adjustment
 #: model:ir.sequence,name:fnx_inventory_adjustment.seq_qty_cost_fnx_inventory_adjustment
@@ -308,7 +312,7 @@ msgstr "Asistente de Reporte de Ajuste de Inventario Fnx"
 #: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_line__id
 #: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_fnx_inventory_adjustment_report_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: fnx_inventory_adjustment
 #: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.view_fnx_inventory_adjustment_form
@@ -319,8 +323,8 @@ msgstr "Importar Plantilla"
 #. odoo-python
 #: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
 #, python-format
-msgid "Inventory Adjustment %(adjustment)s - %(line)s"
-msgstr "Ajuste de Inventario %(adjustment)s - %(line)s"
+msgid "Inventory Adjustment %(adjustment)s - %(line)s - REASON: %(reason)s"
+msgstr "Ajuste de inventraio %(adjustment)s - %(line)s - MOTIVO: %(reason)s"
 
 #. module: fnx_inventory_adjustment
 #: model:ir.actions.act_window,name:fnx_inventory_adjustment.action_fnx_inventory_adjustment_report_wizard
@@ -397,11 +401,11 @@ msgstr "Sin Datos"
 #, python-format
 msgid ""
 "No incoming operation type with a source location could be found for "
-"location '%s' (branch '%s'). Check the warehouse configuration."
+"location '%(dest_loc)s' (branch '%(dest_loc_branch)s'). Check the warehouse "
+"configuration."
 msgstr ""
-"No se pudo encontrar un tipo de operación de entrada con una ubicación de "
-"origen para la ubicación '%s' (sucursal '%s'). Verifique la configuración "
-"del almacén."
+"No se pudo encontrar ningún tipo de operación entrante con una ubicación de origen para"
+"ubicación '%(dest_loc)s' (sucursal '%(dest_loc_branch)s'). Revisa la configuración del almacén "
 
 #. module: fnx_inventory_adjustment
 #. odoo-python
@@ -444,7 +448,8 @@ msgstr "Albarán"
 #: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
 #, python-format
 msgid "Please upload an Excel file first in the 'Excel File' field."
-msgstr "Por favor, cargue primero un archivo Excel en el campo 'Archivo Excel'."
+msgstr ""
+"Por favor, cargue primero un archivo Excel en el campo 'Archivo Excel'."
 
 #. module: fnx_inventory_adjustment
 #. odoo-python

@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 class FnxInventoryAdjustment(models.Model):
     _name = "fnx.inventory.adjustment"
     _description = "FnxInventoryAdjustment"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char(
         string="Reference",
@@ -19,6 +20,7 @@ class FnxInventoryAdjustment(models.Model):
         copy=False,
         readonly=True,
         default="/",
+        tracking=True,
     )
 
     company_id = fields.Many2one(
@@ -29,6 +31,7 @@ class FnxInventoryAdjustment(models.Model):
     date = fields.Date(
         default=lambda self: fields.Date.context_today(self),
         required=True,
+        tracking=True,
     )
 
     excel_file = fields.Binary(
@@ -45,6 +48,7 @@ class FnxInventoryAdjustment(models.Model):
             ("cancel", "Cancel"),
         ],
         default="draft",
+        tracking=True,
     )
 
     adjustment_type = fields.Selection(
@@ -55,16 +59,19 @@ class FnxInventoryAdjustment(models.Model):
         ],
         default="cost",
         required=True,
+        tracking=True,
     )
 
     reason_id = fields.Many2one(
         "fnx.adjustment.reason",
         required=True,
+        tracking=True,
     )
 
     origin_location_id = fields.Many2one(
         "stock.location",
         required=True,
+        tracking=True,
         domain=[
             (
                 "usage",
@@ -76,6 +83,11 @@ class FnxInventoryAdjustment(models.Model):
         ],
     )
 
+    warehouse_id = fields.Many2one(
+        "stock.warehouse",
+        related="origin_location_id.warehouse_id",
+    )
+
     notes = fields.Text()
     terms_and_conditions = fields.Text()
 
@@ -84,6 +96,7 @@ class FnxInventoryAdjustment(models.Model):
         default=lambda self: self.env.user.id,
         string="Responsible",
         required=True,
+        tracking=True,
     )
 
     line_ids = fields.One2many(
@@ -94,6 +107,7 @@ class FnxInventoryAdjustment(models.Model):
     # account_id of "stock.valuation.layer.revaluation"
     account_id = fields.Many2one(
         "account.account",
+        tracking=True,
     )
 
     # pickings for cost_qty adjustment_type
@@ -511,9 +525,14 @@ class FnxInventoryAdjustmentLine(models.Model):
     def _process_qty(self):
         for line in self:
             inventory_name = _(
-                "Inventory Adjustment %(adjustment)s - %(line)s",
+                "Inventory Adjustment %(adjustment)s - %(line)s - REASON: %(reason)s",
                 adjustment=line.adjustment_id.name,
-                line=line.id,
+                line=line.new_qty,
+                reason=(
+                    line.adjustment_id.reason_id.name
+                    if line.adjustment_id.reason_id
+                    else ""
+                ),
             )
             StockQuant = self.env["stock.quant"].with_context(
                 inventory_mode=True,
@@ -612,38 +631,6 @@ class FnxInventoryAdjustmentLine(models.Model):
             if res:
                 line.env.user.notify_success(_("All Cost Updated"))
 
-    @api.model
-    def _get_adjustment_src_location(self, picking_type, account_id=False):
-        """Location used as source of the adjustment receipt.
-
-        If a counterpart account is set on the adjustment, use (or create) a
-        child location of the picking type default source with that account as
-        'valuation_out_account_id', so the journal entry credits it instead of
-        the category's stock input account.
-        """
-        default_src = picking_type.default_location_src_id
-        if not default_src:
-            default_src = self.env.ref("stock.stock_location_suppliers", False)
-        if not default_src or not account_id:
-            return default_src
-        loc = self.env["stock.location"].search(
-            [
-                ("name", "=", "Ajustes de Inventario"),
-                ("location_id", "=", default_src.id),
-            ],
-            limit=1,
-        )
-        if not loc:
-            loc = self.env["stock.location"].create(
-                {
-                    "name": "Ajustes de Inventario",
-                    "location_id": default_src.id,
-                }
-            )
-        if loc.valuation_out_account_id != account_id:
-            loc.valuation_out_account_id = account_id.id
-        return loc
-
     def _process_qty_cost(self):
         for line in self:
             adj = line.adjustment_id
@@ -652,26 +639,7 @@ class FnxInventoryAdjustmentLine(models.Model):
             if qty_to_receive <= 0:
                 continue
 
-            # Warehouse whose stock hierarchy contains the destination location
-            warehouse = self.env["stock.warehouse"].search(
-                [
-                    ("lot_stock_id", "parent_of", dest_loc.id),
-                    ("company_id", "=", adj.company_id.id),
-                ],
-                limit=1,
-            )
-            in_type = (
-                warehouse.in_type_id
-                if warehouse
-                else self.env["stock.picking.type"].search(
-                    [
-                        ("code", "=", "incoming"),
-                        ("default_location_src_id", "!=", False),
-                        ("warehouse_id.pf_branch_id", "=", dest_loc.pf_branch_id.id),
-                    ],
-                    limit=1,
-                )
-            )
+            in_type = adj.warehouse_id.in_type_id
             if not in_type or not (
                 in_type.default_location_src_id
                 or self.env.ref("stock.stock_location_suppliers", False)
@@ -679,24 +647,33 @@ class FnxInventoryAdjustmentLine(models.Model):
                 raise UserError(
                     _(
                         "No incoming operation type with a source location could be "
-                        "found for location '%(dest_loc)s' "
-                        "(branch '%(dest_loc_branch)s'). Check the warehouse "
+                        "found for warehouse '%(warehouse)s'. Check the warehouse "
                         "configuration."
                     )
-                    % {
-                        "dest_loc": dest_loc.complete_name,
-                        "dest_loc_branch": dest_loc.pf_branch_id.name or "",
-                    }
+                    % {"warehouse": adj.warehouse_id.display_name or ""}
                 )
 
-            src_loc = self._get_adjustment_src_location(in_type, adj.account_id)
+            src_loc = self.env["stock.location"].search(
+                [
+                    ("usage", "=", "inventory"),
+                    ("scrap_location", "=", False),
+                    ("company_id", "in", [adj.company_id.id, False]),
+                    ("valuation_out_account_id", "!=", False),
+                ],
+                limit=1,
+            )
             if not src_loc:
                 raise UserError(
+                    _("No inventory adjustment location found for company '%s'.")
+                    % adj.company_id.name
+                )
+            if not src_loc.valuation_out_account_id:
+                raise UserError(
                     _(
-                        "The operation type '%s' has no default source location "
-                        "and the 'Vendors' location is missing."
+                        "The inventory adjustment location '%s' has no 'Stock Valuation "
+                        "Account (Outgoing)'. Set it before processing the adjustment."
                     )
-                    % in_type.name
+                    % src_loc.complete_name
                 )
 
             picking = self.env["stock.picking"].create(
@@ -748,3 +725,14 @@ class FnxInventoryAdjustmentLine(models.Model):
                     Command.link(move.id) for move in account_moves
                 ]
                 adj.account_move_ids = [Command.link(move.id) for move in account_moves]
+
+    def action_view_account_moves(self):
+        self.ensure_one()
+        action = {
+            "name": _("Adjustment Moves"),
+            "view_mode": "list,form",
+            "res_model": "account.move",
+            "type": "ir.actions.act_window",
+            "domain": [("id", "in", self.account_move_ids.ids)],
+        }
+        return action
