@@ -211,7 +211,7 @@ msgid ""
 "exceed demand (%(product_uom_qty)s)."
 msgstr ""
 "La cantidad reportada (%(qty)s + %(issue_qty)s) del producto '%(product)s' "
-"no puede exeder la demanda (%(product_uom_qty)s)."
+"no puede exceder la demanda (%(product_uom_qty)s)."
 
 #. module: stock_picking_flow
 #. odoo-python
