@@ -5,7 +5,7 @@
     "summary": "Imporpalac Print Label Zebra",
     "author": "Anthony Simbaña / FenixERP",
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
-    "depends": ["base", "sale"],
+    "depends": ["base", "sale", "stock", "supplier_barcode"],
     "data": [
         "data/ir_config_parameter.xml",
         "security/ir.model.access.csv",
