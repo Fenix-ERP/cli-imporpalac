@@ -6,7 +6,7 @@ import openpyxl
 import xlsxwriter
 
 from odoo import Command, _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class FnxInventoryAdjustment(models.Model):
@@ -70,7 +70,6 @@ class FnxInventoryAdjustment(models.Model):
 
     origin_location_id = fields.Many2one(
         "stock.location",
-        required=True,
         tracking=True,
         domain=[
             (
@@ -104,7 +103,8 @@ class FnxInventoryAdjustment(models.Model):
         "adjustment_id",
     )
 
-    # account_id of "stock.valuation.layer.revaluation"
+    # Kept for backward compatibility. Quantity and cost adjustments now use
+    # the account configured on the company.
     account_id = fields.Many2one(
         "account.account",
         tracking=True,
@@ -134,6 +134,17 @@ class FnxInventoryAdjustment(models.Model):
     def create(self, vals_list):
 
         return super().create(vals_list)
+
+    @api.constrains("adjustment_type", "origin_location_id")
+    def _check_origin_location_id(self):
+        for record in self:
+            if (
+                record.adjustment_type in ("qty", "cost_qty")
+                and not record.origin_location_id
+            ):
+                raise ValidationError(
+                    _("The origin location is required for quantity adjustments.")
+                )
 
     def export_template(self):
         option_map = {
@@ -524,6 +535,14 @@ class FnxInventoryAdjustmentLine(models.Model):
 
     def _process_qty(self):
         for line in self:
+            company = line.adjustment_id.company_id
+            qty_var = line.new_qty - line.system_qty
+            account = False
+            if qty_var > 0:
+                account = company._get_inventory_adjustment_account(is_gain=True)
+            elif qty_var < 0:
+                account = company._get_inventory_adjustment_account(is_gain=False)
+
             inventory_name = _(
                 "Inventory Adjustment %(adjustment)s - %(line)s - REASON: %(reason)s",
                 adjustment=line.adjustment_id.name,
@@ -534,10 +553,15 @@ class FnxInventoryAdjustmentLine(models.Model):
                     else ""
                 ),
             )
-            StockQuant = self.env["stock.quant"].with_context(
-                inventory_mode=True,
-                inventory_name=inventory_name,
-            )
+            quant_context = {
+                "inventory_mode": True,
+                "inventory_name": inventory_name,
+            }
+            if account:
+                quant_context[
+                    "fnx_inventory_adjustment_counterpart_account_id"
+                ] = account.id
+            StockQuant = self.env["stock.quant"].with_context(**quant_context)
 
             quant = StockQuant.search(
                 [
@@ -590,6 +614,9 @@ class FnxInventoryAdjustmentLine(models.Model):
             if qty_svl <= 0:
                 continue
             diff = (qty_svl * line.real_cost) - product.value_svl
+            account = line.adjustment_id.company_id._get_inventory_adjustment_account(
+                is_gain=diff > 0
+            )
             valuation_layer_model = self.env["stock.valuation.layer"].sudo()
             previous_layer_ids = valuation_layer_model.search(
                 [
@@ -604,7 +631,7 @@ class FnxInventoryAdjustmentLine(models.Model):
                     "product_id": product.id,
                     "added_value": diff,
                     "reason": line.adjustment_id.reason_id.name,
-                    "account_id": line.adjustment_id.account_id.id,
+                    "account_id": account.id,
                     "date": line.adjustment_id.date,
                     "company_id": line.adjustment_id.company_id.id,
                 }
@@ -635,30 +662,18 @@ class FnxInventoryAdjustmentLine(models.Model):
         for line in self:
             adj = line.adjustment_id
             dest_loc = adj.origin_location_id
-            qty_to_receive = line.new_qty
-            if qty_to_receive <= 0:
+            qty_to_process = line.new_qty
+            if qty_to_process == 0:
                 continue
 
-            in_type = adj.warehouse_id.in_type_id
-            if not in_type or not (
-                in_type.default_location_src_id
-                or self.env.ref("stock.stock_location_suppliers", False)
-            ):
-                raise UserError(
-                    _(
-                        "No incoming operation type with a source location could be "
-                        "found for warehouse '%(warehouse)s'. Check the warehouse "
-                        "configuration."
-                    )
-                    % {"warehouse": adj.warehouse_id.display_name or ""}
-                )
+            is_gain = qty_to_process > 0
+            account = adj.company_id._get_inventory_adjustment_account(is_gain=is_gain)
 
             src_loc = self.env["stock.location"].search(
                 [
                     ("usage", "=", "inventory"),
                     ("scrap_location", "=", False),
                     ("company_id", "in", [adj.company_id.id, False]),
-                    ("valuation_out_account_id", "!=", False),
                 ],
                 limit=1,
             )
@@ -667,49 +682,68 @@ class FnxInventoryAdjustmentLine(models.Model):
                     _("No inventory adjustment location found for company '%s'.")
                     % adj.company_id.name
                 )
-            if not src_loc.valuation_out_account_id:
+
+            if is_gain:
+                picking_type = adj.warehouse_id.in_type_id
+                location_id = src_loc
+                location_dest_id = dest_loc
+            else:
+                picking_type = adj.warehouse_id.out_type_id
+                location_id = dest_loc
+                location_dest_id = src_loc
+
+            if not picking_type:
                 raise UserError(
                     _(
-                        "The inventory adjustment location '%s' has no 'Stock Valuation "
-                        "Account (Outgoing)'. Set it before processing the adjustment."
+                        "No operation type found for warehouse '%(warehouse)s'. "
+                        "Check the warehouse configuration."
                     )
-                    % src_loc.complete_name
+                    % {"warehouse": adj.warehouse_id.display_name or ""}
                 )
 
-            picking = self.env["stock.picking"].create(
-                {
-                    "picking_type_id": in_type.id,
-                    "location_id": src_loc.id,
-                    "location_dest_id": dest_loc.id,
-                    "company_id": adj.company_id.id,
-                    "pf_branch_id": dest_loc.pf_branch_id.id,
-                    "origin": line.adjustment_id.name,
-                    "move_ids_without_package": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": line.product_id.display_name,
-                                "product_id": line.product_id.id,
-                                "product_uom": line.product_uom_id.id,
-                                "product_uom_qty": qty_to_receive,
-                                "location_id": src_loc.id,
-                                "location_dest_id": dest_loc.id,
-                                "price_unit": line.real_cost,
-                            },
-                        )
-                    ],
-                }
+            qty_to_process = abs(qty_to_process)
+            picking = (
+                self.env["stock.picking"]
+                .with_context(
+                    fnx_inventory_adjustment_counterpart_account_id=account.id,
+                )
+                .create(
+                    {
+                        "picking_type_id": picking_type.id,
+                        "location_id": location_id.id,
+                        "location_dest_id": location_dest_id.id,
+                        "company_id": adj.company_id.id,
+                        "pf_branch_id": dest_loc.pf_branch_id.id,
+                        "origin": line.adjustment_id.name,
+                        "move_ids_without_package": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "name": line.product_id.display_name,
+                                    "product_id": line.product_id.id,
+                                    "product_uom": line.product_uom_id.id,
+                                    "product_uom_qty": qty_to_process,
+                                    "location_id": location_id.id,
+                                    "location_dest_id": location_dest_id.id,
+                                    "price_unit": line.real_cost,
+                                },
+                            )
+                        ],
+                    }
+                )
             )
 
             line.adjustment_id.picking_ids = [Command.link(picking.id)]
 
             if hasattr(picking, "action_reserve_picking"):
+                picking.action_confirm()
                 picking.action_reserve_picking()
                 picking.action_confirm_picking()
+            else:
+                picking.action_confirm()
 
-            picking.action_confirm()
-            picking.move_ids_without_package._set_quantity_done(qty_to_receive)
+            picking.move_ids_without_package._set_quantity_done(qty_to_process)
             picking.button_validate()
 
             account_moves = picking.move_ids_without_package.mapped(

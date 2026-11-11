@@ -70,13 +70,7 @@
                             <field
                                 name="origin_location_id"
                                 domain='[("usage","in",["internal",],)]'
-                                readonly="state in ['done', 'confirmed']"
-                            />
-                            <field
-                                name="account_id"
-                                domain="[('account_type','not in',['view'])]"
-                                required="adjustment_type == 'cost'"
-                                invisible="adjustment_type != 'cost'"
+                                required="adjustment_type in ['qty', 'cost_qty']"
                                 readonly="state in ['done', 'confirmed']"
                             />
                         </group>
