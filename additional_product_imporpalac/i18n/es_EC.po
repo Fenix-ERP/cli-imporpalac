@@ -398,6 +398,17 @@ msgstr "No se puede crear un producto almacenable con la categoría «Todos»."
 #. odoo-python
 #: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
 #, python-format
+msgid ""
+"You cannot register this document. The XML contains storable products and "
+"must be linked to a Purchase Order."
+msgstr ""
+"No puede registrar este documento. El XML contiene productos almacenables "
+"y es obligatorio vincularlo a una Orden de Compra."
+
+#. module: additional_product_imporpalac
+#. odoo-python
+#: code:addons/additional_product_imporpalac/models/account_voucher_update.py:0
+#, python-format
 msgid "You have already validated the receipt of a purchase order."
 msgstr "Ya tiene validado la recepción de una orden de compra."
 
