@@ -152,3 +152,17 @@ class ElectronicVoucherUpdate(models.Model):
             "url": f"/web/content/{attachment.id}?download=true",
             "target": "self",
         }
+
+    def action_create_bill(self):
+        for voucher in self:
+            if not voucher.purchase_order_id:
+                for line in voucher.lines_ride:
+                    if line.product_id and line.product_id.detailed_type == "product":
+                        raise UserError(
+                            _(
+                                "You cannot register this document. The XML contains "
+                                "storable products and must "
+                                "be linked to a Purchase Order."
+                            )
+                        )
+        return super().action_create_bill()
