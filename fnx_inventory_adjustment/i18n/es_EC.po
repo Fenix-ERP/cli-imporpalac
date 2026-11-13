@@ -641,3 +641,82 @@ msgstr ""
 #, python-format
 msgid "Warehouse"
 msgstr "Almacén"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_res_company__fnx_inventory_adjustment_gain_account_id
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_res_config_settings__fnx_inventory_adjustment_gain_account_id
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.res_config_settings_view_form
+msgid "Inventory Adjustment Gain Account"
+msgstr "Cuenta de Ganancia por Ajuste de Inventario"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_res_company__fnx_inventory_adjustment_loss_account_id
+#: model:ir.model.fields,field_description:fnx_inventory_adjustment.field_res_config_settings__fnx_inventory_adjustment_loss_account_id
+#: model_terms:ir.ui.view,arch_db:fnx_inventory_adjustment.res_config_settings_view_form
+msgid "Inventory Adjustment Loss Account"
+msgstr "Cuenta de Pérdida por Ajuste de Inventario"
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_res_company__fnx_inventory_adjustment_gain_account_id
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_res_config_settings__fnx_inventory_adjustment_gain_account_id
+msgid ""
+"Counterpart account used when an inventory adjustment increases the stock "
+"quantity or value."
+msgstr ""
+"Cuenta de contrapartida utilizada cuando un ajuste de inventario incrementa "
+"la cantidad o el valor del stock."
+
+#. module: fnx_inventory_adjustment
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_res_company__fnx_inventory_adjustment_loss_account_id
+#: model:ir.model.fields,help:fnx_inventory_adjustment.field_res_config_settings__fnx_inventory_adjustment_loss_account_id
+msgid ""
+"Counterpart account used when an inventory adjustment decreases the stock "
+"quantity or value."
+msgstr ""
+"Cuenta de contrapartida utilizada cuando un ajuste de inventario disminuye "
+"la cantidad o el valor del stock."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/res_company.py:0
+#, python-format
+msgid ""
+"Configure the '%(account)s' in the company settings before processing the "
+"adjustment."
+msgstr ""
+"Configure la '%(account)s' en la configuración de la compañía antes de "
+"procesar el ajuste."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/res_company.py:0
+#, python-format
+msgid ""
+"The '%(account)s' must belong to the same company as the adjustment."
+msgstr ""
+"La '%(account)s' debe pertenecer a la misma compañía del ajuste."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "The origin location is required for quantity adjustments."
+msgstr "La ubicación de origen es obligatoria para los ajustes de cantidad."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid ""
+"No operation type found for warehouse '%(warehouse)s'. Check the warehouse "
+"configuration."
+msgstr ""
+"No se encontró un tipo de operación para el almacén '%(warehouse)s'. Revise "
+"la configuración del almacén."
+
+#. module: fnx_inventory_adjustment
+#. odoo-python
+#: code:addons/fnx_inventory_adjustment/models/fnx_inventory_adjustment.py:0
+#, python-format
+msgid "No inventory adjustment location found for company '%s'."
+msgstr "No se encontró una ubicación de ajuste de inventario para la compañía '%s'."

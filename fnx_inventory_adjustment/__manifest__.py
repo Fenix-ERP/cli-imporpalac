@@ -1,6 +1,6 @@
 {
     "name": "Fénix Inventory Adjustment",
-    "version": "17.0.0.0.1",
+    "version": "17.0.0.0.3",
     "depends": ["devolutions", "stock_account", "web_notify", "pf_branch_base", "mail"],
     "author": "FenixERP",
     "category": "Inventory",
@@ -12,6 +12,7 @@
         "views/fnx_inventory_adjustment_views.xml",
         "views/fnx_adjustment_reason_views.xml",
         "views/fnx_inventory_adjustment_report_wizard_views.xml",
+        "views/res_config_settings_views.xml",
     ],
     "external_dependencies": {
         "python": [

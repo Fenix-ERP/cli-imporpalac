@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.fnx.inventory.adjustment</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock_account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@name='valuation_setting_container']"
+                position="inside"
+            >
+                <setting
+                    id="fnx_inventory_adjustment_gain_account_setting"
+                    string="Inventory Adjustment Gain Account"
+                    help="Counterpart account used when an inventory adjustment increases the stock quantity or value."
+                >
+                    <field
+                        name="fnx_inventory_adjustment_gain_account_id"
+                        options="{'no_create': True}"
+                    />
+                </setting>
+                <setting
+                    id="fnx_inventory_adjustment_loss_account_setting"
+                    string="Inventory Adjustment Loss Account"
+                    help="Counterpart account used when an inventory adjustment decreases the stock quantity or value."
+                >
+                    <field
+                        name="fnx_inventory_adjustment_loss_account_id"
+                        options="{'no_create': True}"
+                    />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
