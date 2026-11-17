@@ -58,13 +58,30 @@ class StockPicking(models.Model):
     def _create_payment(self, partner_id, payment_line):
         cashier_env = self.env(user=payment_line.payment_id.user_id)
         payment_obj = cashier_env["account.payment"]
+        payment_method_line = payment_line.payment_method_line_id
+        if (
+            not payment_method_line
+            or payment_method_line.journal_id != payment_line.journal_id
+        ):
+            payment_method_line = (
+                payment_line.journal_id._get_available_payment_method_lines("inbound")[
+                    :1
+                ]._origin
+            )
+        if not payment_method_line:
+            raise ValidationError(
+                _(
+                    "There is no payment method available for journal %s.",
+                    payment_line.journal_id.display_name,
+                )
+            )
         payment = payment_obj.sudo().create(
             {
                 "payment_type": "inbound",
                 "partner_type": "customer",
                 "partner_id": partner_id.id,
                 "amount": payment_line.amount,
-                "payment_method_line_id": payment_line.payment_method_line_id.id,
+                "payment_method_line_id": payment_method_line.id,
                 "journal_id": payment_line.journal_id.id,
                 "payment_card_id": payment_line.card_id.id,
                 "global_reference": payment_line.reference,
@@ -79,81 +96,115 @@ class StockPicking(models.Model):
         payment.action_post()
         return payment
 
+    def _get_picking_invoice(self, sale_order, invoices_by_order):
+        invoice = invoices_by_order.get(sale_order.id)
+        if invoice is not None:
+            return invoice
+        invoice = sale_order.with_context(
+            raise_if_nothing_to_invoice=False
+        )._create_invoices()
+        if not invoice:
+            invoice = sale_order.invoice_ids.filtered(
+                lambda move: move.state == "draft"
+            ).sorted("id")[-1:]
+        if not invoice:
+            invoice = sale_order.invoice_ids.filtered(
+                lambda move: move.state == "posted"
+            ).sorted("id")[-1:]
+        invoices_by_order[sale_order.id] = invoice
+        return invoice
+
+    def _prepare_draft_invoices(self, invoice, picking, sale_order):
+        draft_invoices = invoice.filtered(lambda move: move.state == "draft")
+        if not draft_invoices:
+            return draft_invoices
+        draft_invoices.sudo().write(
+            {
+                "payment_method": picking.payment_method.id,
+                "pf_branch_id": sale_order.pf_branch_id.id,
+            }
+        )
+        if sale_order.note:
+            draft_invoices.write({"narration": sale_order.note})
+        if sale_order.lines_info_additional:
+            draft_invoices.write(
+                {
+                    "lines_info_additional": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": info.name,
+                                "description": info.description,
+                            },
+                        )
+                        for info in sale_order.lines_info_additional
+                    ]
+                }
+            )
+        draft_invoices.action_post()
+        return draft_invoices
+
+    def _register_invoice_payment(self, invoice, payment_line):
+        skip_ctx = self.with_context(skip_check_global_reference=True)
+        if payment_line.chq_refr:
+            skip_ctx._create_pdc_payment(invoice, payment_line)
+            return
+        payment = skip_ctx._create_payment(invoice.partner_id, payment_line)
+        payment.sudo().write({"ref": invoice.name})
+        invoice_receivable_accounts = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        ).mapped("account_id")
+        for line in payment.move_id.line_ids:
+            if line.account_id in invoice_receivable_accounts and line.balance < 0:
+                invoice.js_assign_outstanding_line(line.id)
+                break
+
+    def _process_invoice_payments(self, invoice, sale_order):
+        sale_payment = sale_order.payment_ids
+        first_payment = sale_payment[0] if sale_payment else False
+        if not first_payment or invoice.currency_id.is_zero(invoice.amount_residual):
+            return
+        for payment_line in first_payment.payment_line_ids:
+            self._register_invoice_payment(invoice, payment_line)
+
+    def _queue_invoice_electronic_document(self, draft_invoices):
+        if not draft_invoices:
+            return
+        draft_invoices.with_delay().action_send_electronic_document()
+        draft_invoices.info_message = "En cola de autorización"
+        draft_invoices.state_send_document = "in_process"
+
+    def _process_picking_invoice(self, picking, invoices_by_order):
+        if picking.state != "done" and picking.picking_type_code == "outgoing":
+            raise ValidationError(_("The delivery has not been completed."))
+        sale_order = picking.sudo().sale_id
+        picking.user_id = self.env.user
+        if picking.is_inter_company or not sale_order or picking.return_id:
+            return
+        if picking.payment_state == "not_paid":
+            raise ValidationError(
+                _(
+                    "This picking has not yet been paid, "
+                    "please request payment at the checkout."
+                )
+            )
+        invoice = self._get_picking_invoice(sale_order, invoices_by_order)
+        if not invoice:
+            return
+        draft_invoices = self._prepare_draft_invoices(invoice, picking, sale_order)
+        self._process_invoice_payments(invoice, sale_order)
+        self._queue_invoice_electronic_document(draft_invoices)
+        picking.invoice_number = invoice.name
+
     def button_validate(self):
         self = self.sudo()
         res = super(StockPicking, self).button_validate()
-        if res:
-            for picking in self:
-                if picking.state != "done" and picking.picking_type_code == "outgoing":
-                    raise ValidationError(_("The delivery has not been completed."))
-                sale_order = picking.sudo().sale_id
-                picking.user_id = self.env.user
-                if picking.is_inter_company:
-                    continue
-                if sale_order and not picking.return_id:
-                    if picking.payment_state == "not_paid":
-                        raise ValidationError(
-                            _(
-                                "This picking has not yet been paid, "
-                                "please request payment at the checkout."
-                            )
-                        )
-
-                    invoice = sale_order._create_invoices()
-                    invoice.sudo().write(
-                        {
-                            "payment_method": picking.payment_method.id,
-                            "pf_branch_id": sale_order.pf_branch_id.id,
-                        }
-                    )
-                    if sale_order.note:
-                        sale_order.invoice_ids.write({"narration": sale_order.note})
-                    if sale_order.lines_info_additional:
-                        sale_order.invoice_ids.write(
-                            {
-                                "lines_info_additional": [
-                                    (
-                                        0,
-                                        0,
-                                        {
-                                            "name": info.name,
-                                            "description": info.description,
-                                        },
-                                    )
-                                    for info in sale_order.lines_info_additional
-                                ]
-                            }
-                        )
-                    invoice.action_post()
-                    sale_payment = sale_order.payment_ids
-                    first_payment = sale_payment[0] if sale_payment else False
-                    if first_payment:
-                        for payment_line in first_payment.payment_line_ids:
-                            if payment_line.chq_refr:
-                                self.with_context(
-                                    skip_check_global_reference=True
-                                )._create_pdc_payment(invoice, payment_line)
-                            else:
-                                payment = self.with_context(
-                                    skip_check_global_reference=True
-                                )._create_payment(invoice.partner_id, payment_line)
-                                payment.sudo().write({"ref": invoice.name})
-                                invoice_receivable_accounts = invoice.line_ids.filtered(
-                                    lambda line: line.account_id.account_type
-                                    == "asset_receivable"
-                                ).mapped("account_id")
-                                for line in payment.move_id.line_ids:
-                                    if (
-                                        line.account_id in invoice_receivable_accounts
-                                        and line.balance < 0
-                                    ):
-                                        invoice.js_assign_outstanding_line(line.id)
-                                        break
-
-                    invoice.with_delay().action_send_electronic_document()
-                    invoice.info_message = "En cola de autorización"
-                    invoice.state_send_document = "in_process"
-                    picking.invoice_number = invoice.name
+        if not res:
+            return res
+        invoices_by_order = {}
+        for picking in self:
+            self._process_picking_invoice(picking, invoices_by_order)
         return res
 
     def _check_confirmable(self):
