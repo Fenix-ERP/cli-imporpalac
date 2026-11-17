@@ -251,11 +251,21 @@ class SaleOrderPayment(models.Model):
                             "context": ctx,
                         }
             if not self.is_mixed_payment and not self.is_pdc:
+                payment_method_line = self.payment_method_line_id
+                if (
+                    not payment_method_line
+                    or payment_method_line.journal_id != self.journal_id
+                ):
+                    payment_method_line = (
+                        self.journal_id._get_available_payment_method_lines("inbound")[
+                            :1
+                        ]._origin
+                    )
                 self.env["sale.order.payment.line"].create(
                     {
                         "payment_id": self.id,
                         "journal_id": self.journal_id.id,
-                        "payment_method_line_id": self.payment_method_line_id.id,
+                        "payment_method_line_id": payment_method_line.id,
                         "amount": self.amount,
                         "card_id": self.card_id.id,
                         "reference": self.reference,
@@ -310,6 +320,51 @@ class SaleOrderPaymentLine(models.Model):
     card_id = fields.Many2one("account.card", string="Card Used")
     amount = fields.Monetary(required=True, default=0)
     currency_id = fields.Many2one("res.currency", string="Currency")
+
+    def _get_valid_payment_method_line(self):
+        """Return a payment method line that belongs to the line journal."""
+        self.ensure_one()
+        available = self.journal_id._get_available_payment_method_lines("inbound")
+        if self.payment_method_line_id in available:
+            return self.payment_method_line_id
+        return available[:1]._origin
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            journal_id = vals.get("journal_id")
+            method_id = vals.get("payment_method_line_id")
+            if not journal_id or not method_id:
+                continue
+            journal = self.env["account.journal"].browse(journal_id)
+            method_line = self.env["account.payment.method.line"].browse(method_id)
+            if method_line.journal_id != journal:
+                available = journal._get_available_payment_method_lines("inbound")
+                vals["payment_method_line_id"] = available[:1]._origin.id or False
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if len(self) == 1 and (
+            "journal_id" in vals or "payment_method_line_id" in vals
+        ):
+            journal = self.env["account.journal"].browse(
+                vals.get("journal_id", self.journal_id.id)
+            )
+            method_line = self.env["account.payment.method.line"].browse(
+                vals.get("payment_method_line_id", self.payment_method_line_id.id)
+            )
+            if method_line and journal and method_line.journal_id != journal:
+                vals = dict(vals)
+                available = journal._get_available_payment_method_lines("inbound")
+                vals["payment_method_line_id"] = available[:1]._origin.id or False
+        return super().write(vals)
+
+    @api.onchange("journal_id")
+    def _onchange_journal_id(self):
+        for line in self:
+            available = line.journal_id._get_available_payment_method_lines("inbound")
+            if line.payment_method_line_id not in available:
+                line.payment_method_line_id = available[:1]._origin
 
     @api.constrains("reference", "payment_method_line_id", "journal_id")
     def _check_global_reference(self):

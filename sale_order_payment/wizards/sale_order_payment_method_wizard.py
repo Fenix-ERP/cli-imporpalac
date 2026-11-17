@@ -136,11 +136,12 @@ class SaleOrderPaymentMethod(models.TransientModel):
         self.sale_order_payment_id.reference = self.reference
         self.sale_order_payment_id.card_id = self.card_id
         for line in self.method_line_ids:
+            payment_method_line = line._get_valid_payment_method_line()
             self.env["sale.order.payment.line"].create(
                 {
                     "payment_id": self.sale_order_payment_id.id,
                     "journal_id": line.journal_id.id,
-                    "payment_method_line_id": line.payment_method_line_id.id,
+                    "payment_method_line_id": payment_method_line.id,
                     "amount": line.amount,
                     "card_id": line.card_id.id,
                     "reference": line.reference,
@@ -238,11 +239,34 @@ class SaleOrderPaymentMethodLine(models.TransientModel):
                     _("Card Used is required for this type of journal")
                 )
 
+    def _get_valid_payment_method_line(self):
+        """Return a payment method line that belongs to the selected journal."""
+        self.ensure_one()
+        available = self.journal_id._get_available_payment_method_lines("inbound")
+        if self.payment_method_line_id in available:
+            return self.payment_method_line_id
+        return available[:1]._origin
+
     @api.onchange("journal_id")
     def _onchange_journal_id(self):
         for record in self:
+            available = record.journal_id._get_available_payment_method_lines("inbound")
+            if record.payment_method_line_id not in available:
+                record.payment_method_line_id = available[:1]._origin
+
+    @api.constrains("payment_method_line_id", "journal_id")
+    def _check_payment_method_line_journal(self):
+        for record in self:
             if (
                 record.payment_method_line_id
+                and record.journal_id
                 and record.payment_method_line_id.journal_id != record.journal_id
             ):
-                record.payment_method_line_id = False
+                raise ValidationError(
+                    _(
+                        "The payment method '%(method)s' does not belong to the "
+                        "journal '%(journal)s'.",
+                        method=record.payment_method_line_id.display_name,
+                        journal=record.journal_id.display_name,
+                    )
+                )
