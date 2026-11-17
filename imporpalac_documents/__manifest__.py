@@ -5,7 +5,7 @@
     "summary": "Imporpalac Documents",
     "author": "Jorge Armas / FenixERP",
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
-    "depends": ["base", "sale"],
+    "depends": ["base", "sale", "stock"],
     "data": [
         "views/stock_picking.xml",
         "views/sale_order.xml",

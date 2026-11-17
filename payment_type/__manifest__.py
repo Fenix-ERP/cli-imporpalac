@@ -4,7 +4,7 @@
     "version": "17.0.1.0.0",
     "author": "Jorge Armas",
     "summary": "This module allows to add the payment type in the quote",
-    "depends": ["sale_management", "account", "stock"],
+    "depends": ["sale_management", "account", "stock", "bi_so_po_catalog_view"],
     "data": [
         "security/ir.model.access.csv",
         "views/payment_type.xml",

@@ -3,11 +3,13 @@
     "version": "17.0.1.0.0",
     "depends": [
         "sale_management",
+        "sale_stock",
         "payment_type",
         "account_card_settlement",
         "devolutions",
         "stock_picking_flow",
         "pf_branch_base",
+        "post_dated_cheque_management_knk",
     ],
     "category": "Sales",
     "data": [

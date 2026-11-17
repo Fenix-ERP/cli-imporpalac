@@ -7,6 +7,7 @@
     "website": "https://github.com/Fenix-ERP/l10n-ecuador",
     "depends": [
         "stock",
+        "sale_stock",
         "l10n_ec_purchase_reception",
         "account",
         "stock_picking_flow",
